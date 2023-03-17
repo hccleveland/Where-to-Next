@@ -41,12 +41,12 @@ var config = {
     }
       return (
         <div>
-          <input name='email' className='email' onChange={(e)=>setEmail(e.target.value)}/>
-          <input name='password' className='password' onChange={(e)=>setPassword(e.target.value)}/>
-          <input name='first_name' className='first_name' onChange={(e)=>setFirst_name(e.target.value)}/>
-          <input name='last_name' className='last_name' onChange={(e)=>setLast_name(e.target.value)}/>
-          <input name='display_name' className='display_name' onChange={(e)=>setDisplay_name(e.target.value)}/>
-          <input name='airport' className='airport' onChange={(e)=>setAirport(e.target.value)}/>
+          <input name='email' className='email' placeholder='email' onChange={(e)=>setEmail(e.target.value)}/>
+          <input name='password' className='password' placeholder='password' onChange={(e)=>setPassword(e.target.value)}/>
+          <input name='first_name' className='first_name' placeholder='first_name' onChange={(e)=>setFirst_name(e.target.value)}/>
+          <input name='last_name' className='last_name' placeholder='last_name' onChange={(e)=>setLast_name(e.target.value)}/>
+          <input name='display_name' className='display_name' placeholder='display_name' onChange={(e)=>setDisplay_name(e.target.value)}/>
+          <input name='airport' className='airport' placeholder='airport' onChange={(e)=>setAirport(e.target.value)}/>
           <button onClick={register}>register email</button>
         </div>
       )
