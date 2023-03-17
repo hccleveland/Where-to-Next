@@ -1,14 +1,12 @@
 import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import L from 'leaflet';
 import { icon } from "leaflet";
 
 
 
-//divicon
 const customIcon = new icon({
-  iconUrl: "/landscape.png",//"https://www.domain.com/favicon.ico",
+  iconUrl: "/landscape.png",
   iconSize: [32, 32],
   iconAnchor: [22, 38],
   popupAnchor: [-3, -76],
@@ -68,13 +66,3 @@ const Map = () => {
 }
 
 export default Map
-
-
-
-
-
-
-
-
-
-  
