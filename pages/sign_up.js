@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/router';
 import 'firebase/compat/firestore';
+import { AppContext } from './components/Layout';
 
 var config = {
     apiKey: "AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE",
@@ -15,14 +16,16 @@ var config = {
   firebase.initializeApp(config);
   const db = firebase.firestore();
   const auth=getAuth();
+  
 
   export default function signup() {
-    const [email, setEmail]=useState('');
+    const {Email, Airport, Display_name, First_name, Last_name}=React.useContext(AppContext);
+    const [email, setEmail]=Email;
     const [password, setPassword]=useState('');
-    const [airport, setAirport]=useState('');
-    const [display_name, setDisplay_name]=useState('');
-    const [first_name, setFirst_name]=useState('');
-    const [last_name, setLast_name]=useState('');
+    const [airport, setAirport]=Airport;
+    const [display_name, setDisplay_name]=Display_name;
+    const [first_name, setFirst_name]=First_name;
+    const [last_name, setLast_name]=Last_name;
     const route = useRouter()
     
      async function register(){
