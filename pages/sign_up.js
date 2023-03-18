@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import firebase from "firebase/compat/app";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/router';
 import 'firebase/compat/firestore';
 import { AppContext } from './components/Layout';
+import Link from 'next/link';
 
 var config = {
     apiKey: "AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE",

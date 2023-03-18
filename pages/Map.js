@@ -3,7 +3,7 @@
 
 import dynamic from 'next/dynamic'
 
-const DynamicMap = dynamic(() => import('./components/Highlight_map/Highlight_map'), {
+const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
     ssr: false,
 })
 
