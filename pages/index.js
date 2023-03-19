@@ -1,26 +1,55 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
+  ssr: false,
+});
 
-import $ from 'jquery';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+var config = {
+  apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
+  authDomain: 'where-to-next-7bc5f.firebaseapp.com',
+  projectId: 'where-to-next-7bc5f',
+  storageBucket: 'where-to-next-7bc5f.appspot.com',
+  messagingSenderId: '873346829271',
+  appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+};
 
+firebase.initializeApp(config);
+const db = firebase.firestore();
 
-
-
-const { firebase, db } = require('./firebase.js');
-
-import { collection, getDocs } from "firebase/firestore"; 
-
-async function get_places_went() {
-  let data = await db.collection("places_went").get();
+export async function getServerSideProps() {
+  const coordinateToPlace = [];
+  let data = await db.collection('places_went').get();
   let docs = data.docs;
-  console.log(docs[0].data());
- }
+  docs.forEach((ele) => {
+    const lat = ele.data()['coordinate']['_lat'];
+    const lng = ele.data()['coordinate']['_long'];
 
+    coordinateToPlace.push({ lat: lat, lng: lng });
+  });
 
+  // let data2 = await db
+  //   .collection('places_went')
+  //   .where('city', '==', 'Paris')
+  //   .where('country', '==', 'France')
+  //   .get();
+  // let docs2 = data2.docs;
+  // console.log(docs2[0].data());
+  // let hightlights = await db
+  //   .collection('places_went')
+  //   .doc(docs2[0].id)
+  //   .collection('highlight')
+  //   .get();
+  // let hightlightdoc = hightlights.docs;
+  // console.log(hightlightdoc[0].data());
 
+  return { props: { data: coordinateToPlace } };
+}
 
-export default function Home() {
+export default function Home({ data }) {
   const router = useRouter();
 
   // useEffect(() => {
@@ -34,8 +63,8 @@ export default function Home() {
   // },[])
 
   useEffect(() => {
-    require('daterangepicker/daterangepicker.js')
-    require('daterangepicker/daterangepicker.css')
+    require('daterangepicker/daterangepicker.js');
+    require('daterangepicker/daterangepicker.css');
     const $ = require('jquery/dist/jquery.js');
 
     const today = new Date();
@@ -46,20 +75,28 @@ export default function Home() {
 
     startDate.innerText = minDate;
 
-    const calendar = $('#calendar').daterangepicker({
+    const calendar = $('#calendar').daterangepicker(
+      {
         opens: 'left',
-        minDate: minDate
-        }, function(start, end, label) {
-          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-          startDate.innerText = start.format('YYYY-MM-DD');
-          endDate.innerText = end.format('YYYY-MM-DD');
-      });
-  },[])
+        minDate: minDate,
+      },
+      function (start, end, label) {
+        console.log(
+          'A new date selection was made: ' +
+            start.format('YYYY-MM-DD') +
+            ' to ' +
+            end.format('YYYY-MM-DD')
+        );
+        startDate.innerText = start.format('YYYY-MM-DD');
+        endDate.innerText = end.format('YYYY-MM-DD');
+      }
+    );
+  }, []);
 
   const handleSearch = () => {
     const origin = document.querySelector('#origin').value;
-    const domestic = document.querySelector('#domestic').checked
-    const oneway = document.querySelector('#oneWay').checked
+    const domestic = document.querySelector('#domestic').checked;
+    const oneway = document.querySelector('#oneWay').checked;
     const budget = document.querySelector('#budget').value;
     const startDate = document.querySelector('#startDate').innerText;
     const endDate = document.querySelector('#endDate').innerText;
@@ -70,22 +107,22 @@ export default function Home() {
       oneway: oneway,
       budget: budget,
       startDate: startDate,
-      endDate: endDate
+      endDate: endDate,
     };
 
     router.push({
       pathname: '/results',
       query: { data: JSON.stringify(data) },
     });
-  }
+  };
 
   return (
     <div>
       <input type='text' id='origin' placeholder='NYC' />
       <input type='text' id='budget' placeholder='Budget' />
-      <input type="checkbox" id="domestic" name="domestic" />
-      <label htmlFor="domestic">Domestic</label>
-      <input type="text" id="calendar"/>
+      <input type='checkbox' id='domestic' name='domestic' />
+      <label htmlFor='domestic'>Domestic</label>
+      <input type='text' id='calendar' />
 
       {/* <div className="input-group date" data-provide="datepicker">
         <input type="text" id='calendar' />
@@ -93,42 +130,20 @@ export default function Home() {
           <span className="glyphicon glyphicon-th"></span>
         </div>
     </div> */}
-      <input type="checkbox" id="oneWay" name="oneWay" />
-      <label htmlFor="oneWay">One Way</label>
+      <input type='checkbox' id='oneWay' name='oneWay' />
+      <label htmlFor='oneWay'>One Way</label>
       <br />
-      <button type="button" className="btn btn-primary btn-lg" onClick={handleSearch}>Search</button>
-      <div id='startDate' style={{display: 'none'}}></div>
-      <div id='endDate' style={{display: 'none'}}></div>
+      <button
+        type='button'
+        className='btn btn-primary btn-lg'
+        onClick={handleSearch}
+      >
+        Search
+      </button>
+      <div id='startDate' style={{ display: 'none' }}></div>
+      <div id='endDate' style={{ display: 'none' }}></div>
+
+      <DynamicMap index={data}></DynamicMap>
     </div>
   );
 }
-
-// initialize firebase services
-
-
-
-
-////////////////// This part should move to Map.js but there is a conflict
-/////////The collection(db, 'X') or db.collection makes the map disapear 
-
-
-// get collection data
-/*
-getDocs(colRef)
-.then((result) => {
-  let places = [];
-  let coordinateToPlace = [];
-  result.docs.forEach((doc) => {
-  places.push({ ...doc.data(), id: doc.id })
-})
-console.log(places);
-places.forEach(element => {
-  const lat = element.coordinate._lat;
-  const lng = element.coordinate._long;
-  coordinateToPlace.push({lat, lng})
-  console.log(coordinateToPlace)
-})})
-.catch(err => {
-console.log(err.message)
-})
-*/

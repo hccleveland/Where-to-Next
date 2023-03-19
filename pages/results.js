@@ -2,14 +2,17 @@ import React from 'react';
 import ResultCard from './components/ResultCard';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
+  ssr: false,
+});
 
 const countries = [];
 const cities = [];
-const MAX_RESULTS=1;
+const MAX_RESULTS = 1;
 
 export async function getServerSideProps({ query }) {
-
-  const queryData = JSON.parse(query.data)
+  const queryData = JSON.parse(query.data);
 
   const countriesOptions = {
     method: 'GET',
@@ -33,8 +36,7 @@ export async function getServerSideProps({ query }) {
   const resCountries = await axios.request(countriesOptions);
   const countriesArray = resCountries.data.data;
 
-  if(!countriesArray)
-    return { props: { cities: [] }};
+  if (!countriesArray) return { props: { cities: [] } };
 
   let maxNumberOfCountries = countriesArray.length - 1;
   let budget = queryData.budget || 2000;
@@ -77,9 +79,8 @@ export async function getServerSideProps({ query }) {
     cities.push(city);
   }
 
-  return { props: { cities }};
+  return { props: { cities } };
 }
-
 
 const populateSearchResults = (
   countriesArray,
@@ -98,7 +99,7 @@ const populateSearchResults = (
       price: price,
       countryImageUrl: countryImageUrl,
     };
-    if (price <= budget){
+    if (price <= budget) {
       countries.push(result);
     }
   }
@@ -111,14 +112,16 @@ const getRandomInt = (max) => {
 export default function Result({ cities }) {
   const router = useRouter();
 
-  if(!cities)
-    return (<div>No matches found!  Recheck your search criteria.</div>)
+  if (!cities)
+    return <div>No matches found! Recheck your search criteria.</div>;
 
   return (
     <div>
       {cities.map((city) => (
         <ResultCard key={city} city={city} />
       ))}
+
+      <DynamicMap></DynamicMap>
 
       {/* <ResultCard />
       <ResultCard />
