@@ -1,6 +1,11 @@
+import axios from 'axios';
+import Message from './Message'
+import db from '../index';
+import { collection, getDocs } from 'firebase/firestore';
+
+
 import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import axios from 'axios';
 import { icon } from 'leaflet';
 
 const customIcon = new icon({
@@ -11,6 +16,8 @@ const customIcon = new icon({
 });
 
 const { MapContainer, TileLayer, Marker, Popup } = ReactLeaflet;
+
+
 
 /* memo for the geocoding API
 I am thinking about using https://nominatim.openstreetmap.org that is a free API
@@ -31,6 +38,8 @@ const getGeocode = async () => {
 
 getGeocode();
 
+// Hard coded example arrays
+
 let coords = [
   { lat: 48.8566, lng: 2.3522 },
   { lat: 35.6762, lng: 139.6503 },
@@ -39,10 +48,45 @@ let coords = [
   { lat: 39.9526, lng: -75.1652 },
 ];
 
+const example = [{
+  city: "Paris",
+  country: "France",
+  display_name: "Mireille",
+  timestamp: "2022/02/03",
+  comment: "Je vois pas en quoi c'est cense etre la plus belle ville du monde."
+  },
+  {
+  city: "Paris",
+  country: "France",
+  display_name: "Pierre",
+  timestamp: "2022/01/29",
+  comment: "J'adore le fromage."
+  },
+  {
+  city: "Tokyo",
+  country: "Japon",
+  display_name: "Mireille",
+  timestamp: "2022/01/15",
+  comment: "素晴らしかった"
+  },
+]
+
+
+
+function getCItyName(e) {
+  console.log(e.latlng) // need to get the corresponding city name to reiject it
+  // in the function to get the messages displayed
+}
+
 //Map
+
+
+
 
 const Map = () => {
   return (
+    <>
+    <div>
     <MapContainer
       style={{
         height: '75vh',
@@ -57,12 +101,20 @@ const Map = () => {
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
       {coords.map(({ lat, lng }) => (
-        <Marker position={[lat, lng]} icon={customIcon}>
-          <Popup>Hey</Popup>
+        <Marker position={[lat, lng]} icon={customIcon} eventHandlers= {{ click: getCItyName}}>
+          <Popup> Hey </Popup>
         </Marker>
       ))}
     </MapContainer>
+    </div>
+    <div>
+      {example.filter(example => example.city === "Paris").map((example) => (
+        <Message example={example} />
+      ))}</div>
+    </>
   );
 };
+// The .filter().map() is working accordingly but there is an warning in the console
+// Each child in a list should have a unique "key" prop
 
 export default Map;
