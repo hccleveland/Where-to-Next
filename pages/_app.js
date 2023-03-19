@@ -4,6 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useEffect } from 'react';
 import Script from 'next/script';
 
+
 export default function App({ Component, pageProps }) {
   useEffect(() => {
     require('bootstrap/dist/js/bootstrap.js');
