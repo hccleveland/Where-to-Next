@@ -1,20 +1,25 @@
 import React from 'react';
 import ResultCard from './components/ResultCard';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const countries = [];
 const cities = [];
+const MAX_RESULTS=1;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
+
+  const queryData = JSON.parse(query.data)
+
   const countriesOptions = {
     method: 'GET',
     url: 'https://skyscanner50.p.rapidapi.com/api/v1/searchFlightEverywhere',
     params: {
-      origin: 'JFK',
+      origin: queryData.origin,
       anytime: 'false',
-      oneWay: 'false',
-      travelDate: '2023-03-21',
-      returnDate: '2023-03-25',
+      oneWay: queryData.oneway,
+      travelDate: queryData.startDate,
+      returnDate: queryData.endDate,
       currency: 'USD',
       countryCode: 'US',
       market: 'en-US',
@@ -27,11 +32,15 @@ export async function getServerSideProps() {
 
   const resCountries = await axios.request(countriesOptions);
   const countriesArray = resCountries.data.data;
+
+  if(!countriesArray)
+    return { props: { cities: [] }};
+
   let maxNumberOfCountries = countriesArray.length - 1;
-  let budget = 2000;
+  let budget = queryData.budget || 2000;
   //pick 5 random countries - max tries 20x
   for (let i = 0; i < 20; i++) {
-    if (countries.length >= 3) break;
+    if (countries.length >= MAX_RESULTS) break;
     populateSearchResults(countriesArray, maxNumberOfCountries, budget);
   }
 
@@ -40,12 +49,12 @@ export async function getServerSideProps() {
       method: 'GET',
       url: 'https://skyscanner50.p.rapidapi.com/api/v1/searchFlightEverywhereDetails',
       params: {
-        origin: 'JFK',
+        origin: queryData.origin,
         CountryId: countryObj.countryId,
         anytime: 'false',
-        oneWay: 'false',
-        travelDate: '2023-03-21',
-        returnDate: '2023-03-25',
+        oneWay: queryData.oneway,
+        travelDate: queryData.startDate,
+        returnDate: queryData.endDate,
         currency: 'USD',
         countryCode: 'US',
         market: 'en-US',
@@ -68,19 +77,16 @@ export async function getServerSideProps() {
     cities.push(city);
   }
 
-  return {
-    props: {
-      cities,
-    },
-  };
+  return { props: { cities }};
 }
+
 
 const populateSearchResults = (
   countriesArray,
   maxNumberOfCountries,
   budget
 ) => {
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < MAX_RESULTS; i++) {
     let n = getRandomInt(maxNumberOfCountries);
     let countryNameEnglish = countriesArray[n]['CountryNameEnglish'];
     let countryId = countriesArray[n]['CountryId'];
@@ -92,7 +98,9 @@ const populateSearchResults = (
       price: price,
       countryImageUrl: countryImageUrl,
     };
-    if (price <= budget) countries.push(result);
+    if (price <= budget){
+      countries.push(result);
+    }
   }
 };
 
@@ -101,11 +109,22 @@ const getRandomInt = (max) => {
 };
 
 export default function Result({ cities }) {
+  const router = useRouter();
+
+  if(!cities)
+    return (<div>No matches found!  Recheck your search criteria.</div>)
+
   return (
     <div>
       {cities.map((city) => (
-        <ResultCard city={city} />
+        <ResultCard key={city} city={city} />
       ))}
+
+      {/* <ResultCard />
+      <ResultCard />
+      <ResultCard />
+      <ResultCard />
+      <ResultCard /> */}
     </div>
   );
 }
