@@ -44,29 +44,29 @@ export default function Navbar() {
   if (!display_name) {
     return (
       <>
-        <Link href="/">Index</Link>
+        <Link href='/'>Index</Link>
         <div>
           <input
-            name="email"
-            className="email"
+            name='email'
+            className='email'
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            type="password"
-            name="password"
-            className="password"
+            type='password'
+            name='password'
+            className='password'
             onChange={(e) => setPassword(e.target.value)}
           />
           <button onClick={login}>Login</button>
         </div>
-        <Link href="/sign_up">Sign-Up</Link>
+        <Link href='/signup'>Sign-Up</Link>
       </>
     );
   } else {
     return (
       <>
-        <Link href="/profile">{display_name}</Link>
-        <Link href="/">Index</Link>
+        <Link href='/profile'>{display_name}</Link>
+        <Link href='/'>Index</Link>
         <button onClick={logout}>Logout</button>
       </>
     );

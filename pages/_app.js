@@ -1,9 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css';
 import Layout from './components/Layout';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useEffect } from 'react';
-import Script from 'next/script';
-
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -11,8 +9,8 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 }

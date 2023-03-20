@@ -10,7 +10,6 @@ const Layout = ({ children }) => {
   const [display_name, setDisplay_name] = useState('');
   const [first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
-  const [currentPage, setCurrentPage] = useState('');
 
   return (
     <AppContext.Provider
@@ -20,7 +19,6 @@ const Layout = ({ children }) => {
         Display_name: [display_name, setDisplay_name],
         First_name: [first_name, setFirst_name],
         Last_name: [last_name, setLast_name],
-        Current_Page: [currentPage, setCurrentPage],
       }}
     >
       <Navbar />

@@ -9,7 +9,7 @@ export default function profile() {
     <div>
       profile
       <br />
-      <DynamicMap></DynamicMap>
+      {/* <DynamicMap></DynamicMap> */}
     </div>
   );
 }
