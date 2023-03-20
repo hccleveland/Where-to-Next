@@ -3,7 +3,7 @@ import firebase from 'firebase/compat/app';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import 'firebase/compat/firestore';
 import Link from 'next/link';
-
+import { AppContext } from './Layout';
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -18,18 +18,24 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function Navbar() {
+  const { Uid, Display_name } =React.useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [display_name, setDisplay_name] = useState('');
+  const [display_name, setDisplay_name] = Display_name;
+  const [uid, setUid] = Uid;
 
   async function getUserDisplayName(uid) {
+    console.log(uid);
     let data = await db.collection('users').where('__name__', '==', uid).get();
     let docs = data.docs;
-    setDisplay_name(docs[0].get('display_name'));
+    console.log(docs[0].data().display_name);
+    setDisplay_name(docs[0].data().display_name);
+    setUid(uid);
   }
 
   function login() {
     signInWithEmailAndPassword(auth, email, password).then((user) => {
+      console.log(user.user.uid);
       getUserDisplayName(user.user.uid);
     });
   }
@@ -39,11 +45,13 @@ export default function Navbar() {
     setEmail('');
     setPassword('');
     setDisplay_name('');
+    setUid('');
   }
 
-  if (!display_name) {
+  if (uid=='') {
     return (
-      <>
+      <div>
+        
         <Link href='/'>Index</Link>
         <div>
           <input
@@ -60,15 +68,16 @@ export default function Navbar() {
           <button onClick={login}>Login</button>
         </div>
         <Link href='/signup'>Sign-Up</Link>
-      </>
+      </div>
     );
   } else {
     return (
-      <>
+      <div>
+        {uid}
         <Link href='/profile'>{display_name}</Link>
         <Link href='/'>Index</Link>
         <button onClick={logout}>Logout</button>
-      </>
+      </div>
     );
   }
 }

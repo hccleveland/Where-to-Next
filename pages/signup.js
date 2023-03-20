@@ -25,14 +25,14 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function signup() {
-  const { Email, Airport, Display_name, First_name, Last_name } =
-    React.useContext(AppContext);
+  const { Email, Airport, Display_name, First_name, Last_name, Uid } =React.useContext(AppContext);
   const [email, setEmail] = Email;
   const [password, setPassword] = useState('');
   const [airport, setAirport] = Airport;
   const [display_name, setDisplay_name] = Display_name;
   const [first_name, setFirst_name] = First_name;
   const [last_name, setLast_name] = Last_name;
+  const [uid,setUid]= Uid;
   const route = useRouter();
 
   async function register() {
@@ -45,10 +45,18 @@ export default function signup() {
       first_name: first_name,
       last_name: last_name,
     });
-    //route.push("/login");
+    await signInWithEmailAndPassword(auth, email, password);
+    setUid(data.user.uid);
+    route.push("/");
+  }
+  if(uid!==''){
+    console.log("user is already logged in");
+    route.push("/");
   }
   return (
+
     <div>
+      {uid}
       <input
         name='email'
         className='email'
