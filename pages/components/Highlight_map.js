@@ -73,36 +73,77 @@ const example = [
   },
 ];
 
-function getCItyName(e) {
-  console.log(e.latlng); // need to get the corresponding city name to reiject it
-  // in the function to get the messages displayed
+async function getCommentByCity(e) {
+  let CityId = await getCityNameAndId(e);
+  let Comment = await getComments(CityId);
+
+}
+
+async function getCityNameAndId(e) {
+  const lat = e.latlng.lat;
+  const lng = e.latlng.lng;
+  let data = await db.collection('places_went').get();
+  let docs = data.docs;
+  let id;
+  docs.forEach((ele) => {
+    if (lat === ele.data().coordinate._lat && lng === ele.data().coordinate._long){
+      id = ele.id;
+    }
+  })
+  return id;
+}
+
+async function getComments (id) {
+  let comments = await db
+    .collection('places_went')
+    .doc(id)
+    .collection('highlight')
+    .get()
+  let commentsdocs = comments.docs;
+  commentsdocs.forEach(el => console.log(el.data().highlight))
 }
 
 //Map
 
 export default function Map(index) {
-  console.log(index);
+  let chemin;
+  if (index.road === '/') {
+      chemin = index.index;
+  }
+  if (index.road === '/profile' || index.road === '/Map'){
+      chemin = index.index.data;
+  }
+  
+  console.log(index)
+  console.log(index.road)
+ 
+  const maxBounds = [
+    [-90, -180], // Southwest coordinates
+    [90, 180], // Northeast coordinates
+  ];
   return (
     <>
       <div>
         <MapContainer
           style={{
             height: '75vh',
-            width: '100vh',
+            width: '120vh',
           }}
           center={[35.6762, 139.6503]}
-          zoom={7}
+          zoom={2}
           scrollWheelZoom={false}
+          nowrap={true}
+          maxBounds={maxBounds}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          {index.index.map(({ lat, lng }) => (
+          {chemin.map(({ lat, lng }) => (
             <Marker
               position={[lat, lng]}
               icon={customIcon}
-              eventHandlers={{ click: getCItyName }}
+              eventHandlers={{ click: getCommentByCity }}
             >
               <Popup> Hey </Popup>
             </Marker>
