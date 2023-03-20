@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { AppContext } from './components/Layout';
 import dynamic from 'next/dynamic';
 const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
   ssr: false,

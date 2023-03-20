@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/compat/app';
 import {
   getAuth,
@@ -9,6 +9,8 @@ import {
 } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import 'firebase/compat/firestore';
+import { AppContext } from './components/Layout';
+import Link from 'next/link';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -23,12 +25,14 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function signup() {
-  const [email, setEmail] = useState('');
+  const { Email, Airport, Display_name, First_name, Last_name } =
+    React.useContext(AppContext);
+  const [email, setEmail] = Email;
   const [password, setPassword] = useState('');
-  const [airport, setAirport] = useState('');
-  const [display_name, setDisplay_name] = useState('');
-  const [first_name, setFirst_name] = useState('');
-  const [last_name, setLast_name] = useState('');
+  const [airport, setAirport] = Airport;
+  const [display_name, setDisplay_name] = Display_name;
+  const [first_name, setFirst_name] = First_name;
+  const [last_name, setLast_name] = Last_name;
   const route = useRouter();
 
   async function register() {
@@ -48,34 +52,42 @@ export default function signup() {
       <input
         name='email'
         className='email'
+        placeholder='email'
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
         name='password'
         className='password'
+        placeholder='password'
         onChange={(e) => setPassword(e.target.value)}
       />
       <input
         name='first_name'
         className='first_name'
+        placeholder='first_name'
         onChange={(e) => setFirst_name(e.target.value)}
       />
       <input
         name='last_name'
         className='last_name'
+        placeholder='last_name'
         onChange={(e) => setLast_name(e.target.value)}
       />
       <input
         name='display_name'
         className='display_name'
+        placeholder='display_name'
         onChange={(e) => setDisplay_name(e.target.value)}
       />
       <input
         name='airport'
         className='airport'
+        placeholder='airport'
         onChange={(e) => setAirport(e.target.value)}
       />
-      <button onClick={register}>register email</button>
+      <button type='button' className='btn btn-dark' onClick={register}>
+        Register Email
+      </button>
     </div>
   );
 }

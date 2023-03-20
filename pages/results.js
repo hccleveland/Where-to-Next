@@ -9,7 +9,7 @@ const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
 
 const countries = [];
 const cities = [];
-const MAX_RESULTS = 1;
+const MAX_RESULTS = 5;
 
 export async function getServerSideProps({ query }) {
   const queryData = JSON.parse(query.data);
@@ -121,7 +121,7 @@ export default function Result({ cities }) {
         <ResultCard key={city} city={city} />
       ))}
 
-      <DynamicMap></DynamicMap>
+      {/* <DynamicMap></DynamicMap> */}
 
       {/* <ResultCard />
       <ResultCard />
