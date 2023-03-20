@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     require('bootstrap/dist/js/bootstrap.js');
   }, []);
-
+ console.log(pageProps);
   return (
     <Layout>
       <Component {...pageProps} />
