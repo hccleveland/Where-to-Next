@@ -3,6 +3,13 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from './components/Layout';
 import dynamic from 'next/dynamic';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
   ssr: false,
 });
@@ -20,6 +27,7 @@ var config = {
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
+const auth = getAuth();
 
 export async function getServerSideProps() {
   const coordinateToPlace = [];
@@ -51,7 +59,18 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ data }) {
+  const { Uid } =React.useContext(AppContext);
+  const [uid,setUid]= Uid;
   const router = useRouter();
+  useEffect(()=>{
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        setUid('');
+      }
+    })
+  })
 
   // useEffect(() => {
   //   require('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');

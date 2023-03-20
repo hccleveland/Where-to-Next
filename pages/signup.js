@@ -25,6 +25,7 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function signup() {
+  const { pathname } = useRouter();
   const { Email, Airport, Display_name, First_name, Last_name, Uid } =React.useContext(AppContext);
   const [email, setEmail] = Email;
   const [password, setPassword] = useState('');
@@ -34,6 +35,17 @@ export default function signup() {
   const [last_name, setLast_name] = Last_name;
   const [uid,setUid]= Uid;
   const route = useRouter();
+
+  useEffect(()=>{
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        setUser('');
+      }
+    })
+  })
+  
 
   async function register() {
     let data = await createUserWithEmailAndPassword(auth, email, password);
