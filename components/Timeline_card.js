@@ -1,11 +1,11 @@
 import React from 'react';
 
 export default function Timeline_card(props) {
-  const card_country = props.event.country;
-  const card_city = props.event.city;
-  const card_image_url = props.event.image_url;
-  const card_start_date = props.event.start_date;
-  const card_end_date = props.event.end_date;
+  const card_country = props.time.country;
+  const card_city = props.time.city;
+  const card_image_url = props.time.image_url;
+  const card_start_date = props.time.start_date;
+  const card_end_date = props.time.end_date;
 
   return (
     <div className="timeline_card">

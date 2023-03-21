@@ -45,6 +45,7 @@ export default function profile(data) {
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
   const [timeline, setTimeline] = useState([]);
+  const [test, setTest] = useState(false);
 
   async function getUserPlacesVisited(uid) {
     const events = [];
@@ -66,7 +67,11 @@ export default function profile(data) {
       events.push(event);
       setTimeline(events);
     }
-    return {props: {events}};
+
+  }
+  function hello(event){
+    console.log(event.target);
+   setTest(true);
   }
 
   useEffect(() => {
@@ -79,9 +84,10 @@ export default function profile(data) {
     <div>
       <h1>{display_name}</h1>
       <DynamicMap index={data} road={"/profile"} ></DynamicMap> 
-      {timeline.map((event) => (
-        <Timeline_card key={event} event={event} />
+      {timeline.map((time) => (
+        <div key={time} country="hello" onClick={hello}><Timeline_card key={time} time={time} /></div>
       ))}
+      {test && <input></input>}
     </div>
   );
 }
