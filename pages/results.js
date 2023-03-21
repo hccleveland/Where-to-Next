@@ -1,11 +1,8 @@
 import React from 'react';
-import ResultCard from './components/ResultCard';
+import ResultCard from '../components/ResultCard';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
-  ssr: false,
-});
 
 const MAX_RESULTS = 1;
 

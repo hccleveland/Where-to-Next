@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { AppContext } from './components/Layout';
+import { AppContext } from '../components/Layout';
 import dynamic from 'next/dynamic';
 
 import {
@@ -11,10 +11,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
-  ssr: false,
-});
-
+import DynamicMap from '@/components/DynamicMap';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 var config = {
