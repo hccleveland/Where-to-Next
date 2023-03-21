@@ -12,6 +12,7 @@ const Layout = ({ children }) => {
   const [last_name, setLast_name] = useState('');
   const [uid, setUid] = useState('');
 
+
   return (
     <AppContext.Provider
       value={{
@@ -22,7 +23,6 @@ const Layout = ({ children }) => {
         Last_name: [last_name, setLast_name],
         Uid: [uid, setUid],
       }}
-    >
       <Navbar />
       {children}
       <Footer />

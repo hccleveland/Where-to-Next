@@ -19,6 +19,7 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function Navbar() {
+
   const { Email, Airport, Display_name, First_name, Last_name, Uid } =
     React.useContext(AppContext);
   const [email, setEmail] = Email;
@@ -30,9 +31,12 @@ export default function Navbar() {
   const [uid, setUid] = Uid;
 
   async function getUserDisplayName(uid) {
+    console.log(uid);
     let data = await db.collection('users').where('__name__', '==', uid).get();
     let docs = data.docs;
-    setDisplay_name(docs[0].get('display_name'));
+    console.log(docs[0].data().display_name);
+    setDisplay_name(docs[0].data().display_name);
+    setUid(uid);
   }
 
   function login() {
@@ -50,9 +54,10 @@ export default function Navbar() {
     setUid('');
   }
 
-  if (!display_name) {
+  if (uid=='') {
     return (
-      <>
+      <div>
+        
         <Link href='/'>Index</Link>
         <div>
           <input
@@ -69,15 +74,16 @@ export default function Navbar() {
           <button onClick={login}>Login</button>
         </div>
         <Link href='/signup'>Sign-Up</Link>
-      </>
+      </div>
     );
   } else {
     return (
-      <>
+      <div>
+        {uid}
         <Link href='/profile'>{display_name}</Link>
         <Link href='/'>Index</Link>
         <button onClick={logout}>Logout</button>
-      </>
+      </div>
     );
   }
 }
