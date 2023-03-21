@@ -86,7 +86,35 @@ export default function Home({ data }) {
   useEffect(() => {
     require('daterangepicker/daterangepicker.js');
     require('daterangepicker/daterangepicker.css');
+    require('airport-autocomplete-js/dist/index.browser.min.js');
     const $ = require('jquery/dist/jquery.js');
+
+    const options = {
+      fuse_options: {
+        shouldSort: true,
+        threshold: 0.4,
+        maxPatternLength: 32,
+        keys: [
+          {
+            name: 'IATA',
+            weight: 0.25,
+          },
+          {
+            name: 'name',
+            weight: 0.25,
+          },
+          {
+            name: 'city',
+            weight: 0.5,
+          },
+        ],
+      },
+      formatting: `<div class="$(unique-result)"
+        data-index="$(i)">
+        $(name) $(IATA) - $(city) ,$(country)</div>`,
+    };
+
+    AirportInput('origin', options);
 
     const today = new Date();
     const minDate = today.toLocaleDateString('en-US');
@@ -115,12 +143,14 @@ export default function Home({ data }) {
   }, []);
 
   const handleSearch = () => {
-    const origin = document.querySelector('#origin').value;
+    let origin = document.querySelector('#origin').value;
     const domestic = document.querySelector('#domestic').checked;
     const oneway = document.querySelector('#oneWay').checked;
     const budget = document.querySelector('#budget').value;
     const startDate = document.querySelector('#startDate').innerText;
     const endDate = document.querySelector('#endDate').innerText;
+
+    origin = origin.split(' ')[0];
 
     const data = {
       origin: origin,
@@ -139,7 +169,8 @@ export default function Home({ data }) {
 
   return (
     <div>
-      <input type='text' id='origin' placeholder='NYC' />
+      {/* <input type='text' id='origin' placeholder='NYC' /> */}
+      <input type='text' id='origin' placeholder='From' />
       <input type='text' id='budget' placeholder='Budget' />
       <input type='checkbox' id='domestic' name='domestic' />
       <label htmlFor='domestic'>Domestic</label>
