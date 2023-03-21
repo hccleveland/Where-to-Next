@@ -86,7 +86,7 @@ async function getCityNameAndId(e) {
   let docs = data.docs;
   let id;
   docs.forEach((ele) => {
-    if (lat === ele.data().coordinate._lat && lng === ele.data().coordinate._long){
+    if (lat === ele.data().coordinates[1] && lng === ele.data().coordinates[0]){
       id = ele.id;
     }
   })
@@ -106,16 +106,27 @@ async function getComments (id) {
 //Map
 
 export default function Map(index) {
+  console.log(index.index)
   let chemin;
   if (index.road === '/') {
       chemin = index.index;
   }
-  if (index.road === '/profile' || index.road === '/Map'){
+  if (index.road === '/profile' ){
       chemin = index.index.data;
   }
+  if (index.road === '/results'){
+    let coordinates = []
+    index.index.map(el => {
+      let latitude = el.coordinates[1];
+      let longitude = el.coordinates[0];
+      coordinates.push({lat: latitude, lng: longitude})
+    })
+      chemin = coordinates;
+  }
   
-  console.log(index)
-  console.log(index.road)
+  
+  console.log('index',index)
+  console.log('road',index.road)
  
   const maxBounds = [
     [-90, -180], // Southwest coordinates

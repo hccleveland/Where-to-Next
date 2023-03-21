@@ -3,6 +3,7 @@ import ResultCard from '../components/ResultCard';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import DynamicMap from '@/components/DynamicMap';
 
 const MAX_RESULTS = 1;
 
@@ -87,6 +88,7 @@ export async function getServerSideProps({ query }) {
       city['startDate'] = queryData.startDate;
       city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
+      console.log(city['coordinates'])
       cities.push(city);
     }
   }
@@ -145,7 +147,7 @@ export default function Result({ cities }) {
         <ResultCard key={city} city={city} />
       ))}
 
-      {/* <DynamicMap></DynamicMap> */}
+      <DynamicMap index={cities} road={"/results"}></DynamicMap> 
 
       {/* <ResultCard />
       <ResultCard />
