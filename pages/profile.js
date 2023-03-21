@@ -4,6 +4,7 @@ import 'firebase/compat/firestore';
 import {AppContext} from '../components/Layout';
 import dynamic from 'next/dynamic';
 import Timeline_card from '../components/Timeline_card';
+import DynamicMap from '@/components/DynamicMap';
 
 
 
@@ -57,9 +58,11 @@ export default function profile(data) {
     for (const doc of docs) {
       const event = {};
       event['country'] = doc.data().country;
-      event['name_place'] = doc.data().name_place;
+      event['city'] = doc.data().city;
+      event['image_url'] = doc.data().image_url;
       event['start_date'] = doc.data().start_date;
       event['end_date'] = doc.data().end_date;
+      event['coordinates'] = doc.data().coordinates;
       events.push(event);
       setTimeline(events);
     }
