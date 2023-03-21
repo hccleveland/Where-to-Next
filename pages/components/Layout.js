@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         First_name: [first_name, setFirst_name],
         Last_name: [last_name, setLast_name],
         Uid: [uid, setUid],
-      }}
+      }}>
       <Navbar />
       {children}
       <Footer />
