@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from './components/Layout';
 import dynamic from 'next/dynamic';
+
 import {
   getAuth,
   onAuthStateChanged,
@@ -194,7 +195,7 @@ export default function Home({ data }) {
       <div id='startDate' style={{ display: 'none' }}></div>
       <div id='endDate' style={{ display: 'none' }}></div>
 
-      <DynamicMap index={data}></DynamicMap>
+      <DynamicMap index={data} road={"/"}></DynamicMap>
     </div>
   );
 }

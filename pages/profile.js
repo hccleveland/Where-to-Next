@@ -21,7 +21,26 @@ var config = {
 firebase.initializeApp(config);
 const db = firebase.firestore();
 
-export default function profile() {
+export async function getServerSideProps() {
+
+  const coordinateToPlace = [];
+  let data = await db
+    .collection("users")
+    .doc('RlMhiEFieBQgcPsGhouPd0Vr4Rx2') //hardcoded because uid context 
+    .collection('places_visited').get();
+  let docs = data.docs;
+  docs.forEach((ele) => {
+    console.log(ele.data())
+    const lat = ele.data()['geolocation'][0];
+    const lng = ele.data()['geolocation'][1];
+
+    coordinateToPlace.push({ lat: lat, lng: lng });
+  });
+  console.log(coordinateToPlace)
+  return { props: { data: coordinateToPlace } };
+}
+
+export default function profile(data) {
   const {Uid, Display_name} = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
@@ -57,7 +76,7 @@ export default function profile() {
   return (
     <div>
       <h1>{display_name}</h1>
-      {/* <DynamicMap></DynamicMap> */}
+      <DynamicMap index={data} road={"/profile"} ></DynamicMap> 
       {timeline.map((event) => (
         <Timeline_card key={event} event={event} />
       ))}
