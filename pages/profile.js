@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import {AppContext} from '../components/Layout';
-import dynamic from 'next/dynamic';
 import Timeline_card from '../components/Timeline_card';
+import DynamicMap from '@/components/DynamicMap';
 
 
 
@@ -28,13 +28,11 @@ export async function getServerSideProps() {
     .collection('places_visited').get();
   let docs = data.docs;
   docs.forEach((ele) => {
-    console.log(ele.data())
     const lat = ele.data()['geolocation'][0];
     const lng = ele.data()['geolocation'][1];
 
     coordinateToPlace.push({ lat: lat, lng: lng });
   });
-  console.log(coordinateToPlace)
   return { props: { data: coordinateToPlace } };
 }
 

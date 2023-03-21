@@ -119,7 +119,8 @@ export default function Map(index) {
     index.index.map(el => {
       let latitude = el.coordinates[1];
       let longitude = el.coordinates[0];
-      coordinates.push({lat: latitude, lng: longitude})
+      let price = "$" + el.price;
+      coordinates.push({lat: latitude, lng: longitude, price: price})
     })
       chemin = coordinates;
   }
@@ -150,13 +151,14 @@ export default function Map(index) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          {chemin.map(({ lat, lng }) => (
+          {chemin.map(({ lat, lng , counter, price}) => (
             <Marker
               position={[lat, lng]}
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              <Popup> Hey </Popup>
+              if { counter || price }{
+              <Popup> {counter} {price} </Popup>}
             </Marker>
           ))}
         </MapContainer>
