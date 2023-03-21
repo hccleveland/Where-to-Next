@@ -20,14 +20,10 @@ const auth = getAuth();
 
 export default function Navbar() {
 
-  const { Email, Airport, Display_name, First_name, Last_name, Uid } =
-    React.useContext(AppContext);
-  const [email, setEmail] = Email;
+  const { Uid, Display_name } =React.useContext(AppContext);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [airport, setAirport] = Airport;
   const [display_name, setDisplay_name] = Display_name;
-  const [first_name, setFirst_name] = First_name;
-  const [last_name, setLast_name] = Last_name;
   const [uid, setUid] = Uid;
 
   async function getUserDisplayName(uid) {
@@ -57,7 +53,6 @@ export default function Navbar() {
   if (uid=='') {
     return (
       <div>
-        
         <Link href='/'>Index</Link>
         <div>
           <input
@@ -79,7 +74,6 @@ export default function Navbar() {
   } else {
     return (
       <div>
-        {uid}
         <Link href='/profile'>{display_name}</Link>
         <Link href='/'>Index</Link>
         <button onClick={logout}>Logout</button>
