@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import {AppContext} from './components/Layout';
+import {AppContext} from '../components/Layout';
 import dynamic from 'next/dynamic';
-import Timeline_card from './components/Timeline_card';
+import Timeline_card from '../components/Timeline_card';
 
-const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
-  ssr: false,
-});
+
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',

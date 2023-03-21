@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import 'firebase/compat/firestore';
-import { AppContext } from './components/Layout';
+import { AppContext } from '../components/Layout';
 import Link from 'next/link';
 
 var config = {

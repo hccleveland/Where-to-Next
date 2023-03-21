@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Layout from './components/Layout';
+import Layout from '../components/Layout';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useEffect } from 'react';
 
