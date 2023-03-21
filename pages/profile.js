@@ -41,6 +41,7 @@ export async function getServerSideProps() {
 }
 
 export default function profile(data) {
+  console.log('ping');
   const {Uid, Display_name} = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
@@ -71,7 +72,7 @@ export default function profile(data) {
     if (uid) {
       getUserPlacesVisited(uid);
     }
-  });
+  }, [uid]);
 
   return (
     <div>
