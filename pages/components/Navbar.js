@@ -3,6 +3,7 @@ import firebase from 'firebase/compat/app';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import 'firebase/compat/firestore';
 import Link from 'next/link';
+import { AppContext } from './Layout';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -18,9 +19,15 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function Navbar() {
-  const [email, setEmail] = useState('');
+  const { Email, Airport, Display_name, First_name, Last_name, Uid } =
+    React.useContext(AppContext);
+  const [email, setEmail] = Email;
   const [password, setPassword] = useState('');
-  const [display_name, setDisplay_name] = useState('');
+  const [airport, setAirport] = Airport;
+  const [display_name, setDisplay_name] = Display_name;
+  const [first_name, setFirst_name] = First_name;
+  const [last_name, setLast_name] = Last_name;
+  const [uid, setUid] = Uid;
 
   async function getUserDisplayName(uid) {
     let data = await db.collection('users').where('__name__', '==', uid).get();
@@ -30,6 +37,7 @@ export default function Navbar() {
 
   function login() {
     signInWithEmailAndPassword(auth, email, password).then((user) => {
+      setUid(user.user.uid);
       getUserDisplayName(user.user.uid);
     });
   }
@@ -39,6 +47,7 @@ export default function Navbar() {
     setEmail('');
     setPassword('');
     setDisplay_name('');
+    setUid('');
   }
 
   if (!display_name) {

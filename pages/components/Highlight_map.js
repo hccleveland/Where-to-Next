@@ -81,7 +81,6 @@ function getCItyName(e) {
 //Map
 
 export default function Map(index) {
-  console.log(index);
   return (
     <>
       <div>

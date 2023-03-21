@@ -7,11 +7,12 @@ const DynamicMap = dynamic(() => import('./components/Highlight_map'), {
   ssr: false,
 });
 
-const countries = [];
-const cities = [];
-const MAX_RESULTS = 5;
+const MAX_RESULTS = 1;
 
 export async function getServerSideProps({ query }) {
+  const countries = [];
+  const cities = [];
+
   const queryData = JSON.parse(query.data);
 
   const countriesOptions = {
@@ -43,7 +44,12 @@ export async function getServerSideProps({ query }) {
   //pick 5 random countries - max tries 20x
   for (let i = 0; i < 20; i++) {
     if (countries.length >= MAX_RESULTS) break;
-    populateSearchResults(countriesArray, maxNumberOfCountries, budget);
+    populateSearchResults(
+      countries,
+      countriesArray,
+      maxNumberOfCountries,
+      budget
+    );
   }
 
   for (let countryObj of countries) {
@@ -68,21 +74,31 @@ export async function getServerSideProps({ query }) {
     };
 
     const resCities = await axios.request(citiesOptions);
-    const data = resCities.data.data[0];
     let city = {};
-    city['countryNameEnglish'] = countryObj.countryNameEnglish;
-    city['countryId'] = countryObj.countryId;
-    city['countryImageUrl'] = countryObj.countryImageUrl;
-    city['imageUrl'] = data['imageUrl'];
-    city['price'] = data['price'];
-    city['name'] = data['title'];
-    cities.push(city);
+    if (resCities.data.data) {
+      const data = resCities.data.data[0];
+      const coordinates = await getGeocode(
+        data['title'],
+        countryObj.countryNameEnglish
+      );
+      city['countryNameEnglish'] = countryObj.countryNameEnglish;
+      city['countryId'] = countryObj.countryId;
+      city['countryImageUrl'] = countryObj.countryImageUrl;
+      city['imageUrl'] = data['imageUrl'];
+      city['price'] = data['price'];
+      city['name'] = data['title'];
+      city['startDate'] = queryData.startDate;
+      city['endDate'] = queryData.endDate;
+      city['coordinates'] = coordinates;
+      cities.push(city);
+    }
   }
 
   return { props: { cities } };
 }
 
 const populateSearchResults = (
+  countries,
   countriesArray,
   maxNumberOfCountries,
   budget
@@ -107,6 +123,17 @@ const populateSearchResults = (
 
 const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
+};
+
+const getGeocode = async (city, country) => {
+  try {
+    const response = await axios.get(
+      `https://nominatim.openstreetmap.org/search?q=${city}+${country}&format=geojson`
+    );
+    return response.data.features[0].geometry.coordinates;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default function Result({ cities }) {
