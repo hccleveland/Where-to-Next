@@ -27,10 +27,10 @@ export default function Navbar() {
   const [uid, setUid] = Uid;
 
   async function getUserDisplayName(uid) {
-    console.log(uid);
+   // console.log(uid);
     let data = await db.collection('users').where('__name__', '==', uid).get();
     let docs = data.docs;
-    console.log(docs[0].data().display_name);
+   // console.log(docs[0].data().display_name);
     setDisplay_name(docs[0].data().display_name);
     setUid(uid);
   }
