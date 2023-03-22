@@ -100,22 +100,21 @@ async function getComments (id) {
     .collection('highlight')
     .get()
   let commentsdocs = comments.docs;
-  commentsdocs.forEach(el => console.log(el.data().highlight))
+//  commentsdocs.forEach(el => console.log(el.data().highlight))
 }
 
 //Map
 
 export default function Map(index) {
   let chemin;
+  console.log(index);
   if (index.road === '/') {
       chemin = index.index;
   }
   if (index.road === '/profile' || index.road === '/Map'){
-      chemin = index.index.data;
+      chemin = index.index;
   }
   
-  console.log(index)
-  console.log(index.road)
  
   const maxBounds = [
     [-90, -180], // Southwest coordinates
@@ -141,6 +140,7 @@ export default function Map(index) {
           />
           {chemin.map(({ lat, lng }) => (
             <Marker
+            key={lat + lng}
               position={[lat, lng]}
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}

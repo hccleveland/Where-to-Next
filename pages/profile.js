@@ -5,6 +5,8 @@ import {AppContext} from '../components/Layout';
 import dynamic from 'next/dynamic';
 import Timeline_card from '../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
+import NoSSR from 'react-no-ssr';
+import { getCookieParser } from 'next/dist/server/api-utils';
 
 
 
@@ -20,32 +22,34 @@ var config = {
 firebase.initializeApp(config);
 const db = firebase.firestore();
 
-export async function getServerSideProps() {
 
-  const coordinateToPlace = [];
-  let data = await db
-    .collection("users")
-    .doc('RlMhiEFieBQgcPsGhouPd0Vr4Rx2') //hardcoded because uid context 
-    .collection('places_visited').get();
-  let docs = data.docs;
-  docs.forEach((ele) => {
-    console.log(ele.data())
-    const lat = ele.data()['geolocation'][0];
-    const lng = ele.data()['geolocation'][1];
-
-    coordinateToPlace.push({ lat: lat, lng: lng });
-  });
-  console.log(coordinateToPlace)
-  return { props: { data: coordinateToPlace } };
-}
-
-export default function profile(data) {
-  console.log('ping');
+ export default function profile() {
   const {Uid, Display_name} = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
   const [timeline, setTimeline] = useState([]);
   const [test, setTest] = useState(false);
+  const [highlight, setHighlight] = useState('');
+  const [datan, setDatan] = useState(false);
+
+  console.log(datan);
+  async function getCooridnates() {
+    const coordinateToPlace = [];
+    let data = await db
+      .collection("users")
+      .doc(uid) //hardcoded because uid context 
+      .collection('places_visited').get();
+    let docs = data.docs;
+    docs.forEach((ele) => {
+      const lat = ele.data()['geolocation'][0];
+      const lng = ele.data()['geolocation'][1];
+  
+      coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
+    });
+    console.log(coordinateToPlace);
+    await setDatan({coordinateToPlace});
+
+  }
 
   async function getUserPlacesVisited(uid) {
     const events = [];
@@ -64,15 +68,23 @@ export default function profile(data) {
       event['start_date'] = doc.data().start_date;
       event['end_date'] = doc.data().end_date;
       event['coordinates'] = doc.data().coordinates;
+      event["docid"] = doc.id;
       events.push(event);
       setTimeline(events);
     }
 
   }
-  function hello(event){
-    console.log(event.target);
+  function showInput(event){
    setTest(true);
   }
+
+  function sendTheHightlight(event){
+    if(event.key==="Enter"){
+    db.collection('users').doc(event.target.getAttribute("owner")).collection("places_visited").doc(event.target.getAttribute("docid")).update({Highlight:highlight});
+    }
+  }
+  
+
 
   useEffect(() => {
     if (uid) {
@@ -80,14 +92,29 @@ export default function profile(data) {
     }
   }, [uid]);
 
+  useEffect(() => {
+    async function getcoord() {
+      if (uid) {
+        console.log("jasdjhashdjkashdkasjhdkjashd")
+        getCooridnates(uid);
+      }
+    }
+    getcoord();
+
+  }, []);
+
   return (
+    <NoSSR>
     <div>
       <h1>{display_name}</h1>
-      <DynamicMap index={data} road={"/profile"} ></DynamicMap> 
+      {datan && <DynamicMap index={datan.coordinateToPlace} road={"/profile"} ></DynamicMap>} 
       {timeline.map((time) => (
-        <div key={time} country="hello" onClick={hello}><Timeline_card key={time} time={time} /></div>
+        <div onClick={showInput}><Timeline_card key={time} time={time} test={test} highlight={setHighlight} send={sendTheHightlight}/></div>
       ))}
-      {test && <input></input>}
+     
     </div>
+    </NoSSR>
+    
   );
 }
+
