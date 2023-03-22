@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import {AppContext} from '../components/Layout';
-import dynamic from 'next/dynamic';
 import Timeline_card from '../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
@@ -21,6 +20,7 @@ var config = {
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
+
 
 
  export default function profile() {

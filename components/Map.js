@@ -86,7 +86,7 @@ async function getCityNameAndId(e) {
   let docs = data.docs;
   let id;
   docs.forEach((ele) => {
-    if (lat === ele.data().coordinate._lat && lng === ele.data().coordinate._long){
+    if (lat === ele.data().coordinates[1] && lng === ele.data().coordinates[0]){
       id = ele.id;
     }
   })
@@ -106,15 +106,30 @@ async function getComments (id) {
 //Map
 
 export default function Map(index) {
+  console.log(index.index)
   let chemin;
   console.log(index);
   if (index.road === '/') {
       chemin = index.index;
   }
+
   if (index.road === '/profile' || index.road === '/Map'){
       chemin = index.index;
+
+  }
+  if (index.road === '/results'){
+    let coordinates = []
+    index.index.map(el => {
+      let latitude = el.coordinates[1];
+      let longitude = el.coordinates[0];
+      let price = "$" + el.price;
+      coordinates.push({lat: latitude, lng: longitude, price: price})
+    })
+      chemin = coordinates;
   }
   
+  
+
  
   const maxBounds = [
     [-90, -180], // Southwest coordinates
@@ -138,14 +153,15 @@ export default function Map(index) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          {chemin.map(({ lat, lng }) => (
+          {chemin.map(({ lat, lng , counter, price}) => (
             <Marker
             key={lat + lng}
               position={[lat, lng]}
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              <Popup> Hey </Popup>
+              if { counter || price }{
+              <Popup> {counter} {price} </Popup>}
             </Marker>
           ))}
         </MapContainer>

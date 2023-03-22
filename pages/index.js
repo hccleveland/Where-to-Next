@@ -33,8 +33,8 @@ export async function getServerSideProps() {
   let docs = data.docs;
   docs.forEach((ele) => {
     console.log(ele.data().coordinates)
-    const lat = ele.data()['coordinates'][0];
-    const lng = ele.data()['coordinates'][1];
+    const lat = ele.data()['coordinates'][1];
+    const lng = ele.data()['coordinates'][0];
     const city = ele.data()['city'];
     console.log(ele.data()['city'])
     const counter = ele.data()['counter'];
