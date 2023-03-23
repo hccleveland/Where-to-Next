@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState }  from 'react';
 import Message from './Message';
 import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -73,7 +73,7 @@ const example = [
   },
 ];
 
-async function getCommentByCity(e) {
+/*async function getCommentByCity(e) {
   let CityId = await getCityNameAndId(e);
   let Comment = await getComments(CityId);
 
@@ -101,11 +101,61 @@ async function getComments (id) {
     .get()
   let commentsdocs = comments.docs;
 //  commentsdocs.forEach(el => console.log(el.data().highlight))
-}
+}*/
 
 //Map
 
 export default function Map(index) {
+
+  console.log("index",index.index);
+
+  const [cityHighlight, setCityHighlight] = useState();
+  const [comments, setComments] = useState([]);
+
+  async function getCommentByCity(e) {
+    let CityId = await getCityNameAndId(e);
+    let Comment = await getComments(CityId);
+  }
+
+  async function getCityNameAndId(e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    let data = await db.collection('places_went').get();
+    let docs = data.docs;
+    let id;
+    let objectToSend = {};
+    docs.forEach((ele) => {
+      if (lat === ele.data().coordinates[1] && lng === ele.data().coordinates[0]){
+        id = ele.id;
+        objectToSend = { city: ele.city, country: ele.country }
+
+      }
+    })
+    return id;
+  }
+
+  async function getComments (id) {
+    let comments = await db
+      .collection('places_went')
+      .doc(id)
+      .collection('highlight')
+      .get()
+      let commentsdocs = comments.docs;
+      if (commentsdocs.length > 0) {
+        let highlights = commentsdocs.map(el => [el.data().timestamp, el.data().display_name, el.data().highlight]);
+        console.log('highlights', highlights);
+        setCityHighlight(highlights[0]);
+        setComments(highlights);
+      } else {
+        setCityHighlight("");
+        setComments([]);
+      }
+  }
+
+
+
+
+
   console.log(index.index)
   let chemin;
   console.log(index);
@@ -118,6 +168,7 @@ export default function Map(index) {
 
   }
   if (index.road === '/results'){
+    console.log(index)
     let coordinates = []
     index.index.map(el => {
       let latitude = el.coordinates[1];
@@ -167,11 +218,9 @@ export default function Map(index) {
         </MapContainer>
       </div>
       <div>
-        {example
-          .filter((example) => example.city === 'Paris')
-          .map((example) => (
-            <Message example={example} />
-          ))}
+      {comments.map((comment, index) => (
+          <Message key={index} message={comment} />
+        ))}
       </div>
     </>
   );

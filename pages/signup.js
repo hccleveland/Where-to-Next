@@ -41,7 +41,7 @@ export default function signup() {
       if (user) {
         setUid(user.uid);
       } else {
-        setUser('');
+        setUid('');
       }
     })
   })
