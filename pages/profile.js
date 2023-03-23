@@ -41,8 +41,8 @@ const db = firebase.firestore();
       .collection('places_visited').get();
     let docs = data.docs;
     docs.forEach((ele) => {
-      const lat = ele.data()['geolocation'][0];
-      const lng = ele.data()['geolocation'][1];
+      const lat = ele.data()['coordinates'][1];
+      const lng = ele.data()['coordinates'][0];
   
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
