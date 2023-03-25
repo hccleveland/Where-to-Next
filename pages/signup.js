@@ -26,30 +26,29 @@ const auth = getAuth();
 
 export default function signup() {
   const { pathname } = useRouter();
-  const { Email, Airport, Display_name, First_name, Last_name, Uid } =React.useContext(AppContext);
+  const { Email, Airport, Display_name, First_name, Last_name, Uid } =
+    React.useContext(AppContext);
   const [email, setEmail] = Email;
   const [password, setPassword] = useState('');
   const [airport, setAirport] = Airport;
   const [display_name, setDisplay_name] = Display_name;
   const [first_name, setFirst_name] = First_name;
   const [last_name, setLast_name] = Last_name;
-  const [uid,setUid]= Uid;
+  const [uid, setUid] = Uid;
   const route = useRouter();
 
-  useEffect(()=>{
-    auth.onAuthStateChanged(user => {
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setUid(user.uid);
       } else {
         setUid('');
       }
-    })
-  })
-  
+    });
+  });
 
   async function register() {
     let data = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(data);
     db.collection('users').doc(data.user.uid).set({
       email: email,
       airport: airport,
@@ -60,14 +59,13 @@ export default function signup() {
     });
     await signInWithEmailAndPassword(auth, email, password);
     setUid(data.user.uid);
-    route.push("/");
+    route.push('/');
   }
-  if(uid!==''){
-    console.log("user is already logged in");
-    route.push("/");
+  if (uid !== '') {
+    console.log('user is already logged in');
+    route.push('/');
   }
   return (
-
     <div>
       {uid}
       <input
