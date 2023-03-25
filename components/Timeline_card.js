@@ -36,17 +36,6 @@ export default function Timeline_card(props) {
       </div>
       <div className='timeline_location' owner={uid} docid={doc_id}>
         {card_city}, {card_country}
-        {/* {props.test && (
-          <input
-            name='input'
-            className='input'
-            placeholder='put your highlight'
-            onKeyDown={(e) => props.send(e)}
-            onChange={(e) => props.highlight(e.target.value)}
-            owner={uid}
-            docid={props.time.docid}
-          ></input>
-        )} */}
       </div>
     </div>
   );
