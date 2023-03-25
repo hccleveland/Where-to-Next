@@ -2,9 +2,6 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from '../components/Layout';
-import dynamic from 'next/dynamic';
-import airports from '../data/records.json';
-import Item from '@/components/item';
 
 import {
   getAuth,
@@ -46,28 +43,12 @@ export async function getServerSideProps() {
     });
   });
 
-  // let data2 = await db
-  //   .collection('places_went')
-  //   .where('city', '==', 'Paris')
-  //   .where('country', '==', 'France')
-  //   .get();
-  // let docs2 = data2.docs;
-  // console.log(docs2[0].data());
-  // let hightlights = await db
-  //   .collection('places_went')
-  //   .doc(docs2[0].id)
-  //   .collection('highlight')
-  //   .get();
-  // let hightlightdoc = hightlights.docs;
-  // console.log(hightlightdoc[0].data());
-
   return { props: { data: coordinateToPlace } };
 }
 
 export default function Home({ data }) {
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
-  const [searchData, setSearchData] = useState(airports);
   const router = useRouter();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -78,16 +59,6 @@ export default function Home({ data }) {
       }
     });
   });
-
-  // useEffect(() => {
-  //   require('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');
-  //   require('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')
-
-  //   $('#calendar').datepicker({
-  //     format: 'yyyy-mm-dd',
-  //     // other options...
-  //   });
-  // },[])
 
   useEffect(() => {
     require('daterangepicker/daterangepicker.js');
@@ -173,43 +144,13 @@ export default function Home({ data }) {
     });
   };
 
-  const searchAirport = (query) => {
-    if (!query) setSearchData(airports);
-
-    query = query.toLowerCase();
-    const finalResult = [];
-    airports.forEach((item) => {
-      if (
-        item.name.toLowerCase().indexOf(query) !== -1 ||
-        item.city.includes(query)
-      ) {
-        finalResult.push(item);
-      }
-      setSearchData(finalResult);
-    });
-  };
-
   return (
     <div>
-      {/* <input type='text' id='origin' placeholder='NYC' /> */}
       <input type='text' id='origin' placeholder='From' />
-      <input type='search' onChange={(e) => searchAirport(e.target.value)} />
-      <div className='item-container'>
-        {searchData.map((item) => (
-          <Item {...item} key={item.name} />
-        ))}
-      </div>
       <input type='text' id='budget' placeholder='Budget' />
       <input type='checkbox' id='domestic' name='domestic' />
       <label htmlFor='domestic'>Domestic</label>
       <input type='text' id='calendar' />
-
-      {/* <div className="input-group date" data-provide="datepicker">
-        <input type="text" id='calendar' />
-        <div className="input-group-addon">
-          <span className="glyphicon glyphicon-th"></span>
-        </div>
-    </div> */}
       <input type='checkbox' id='oneWay' name='oneWay' />
       <label htmlFor='oneWay'>One Way</label>
       <br />
