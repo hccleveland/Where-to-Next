@@ -36,6 +36,7 @@ export async function getServerSideProps() {
     let rankingName =[];
     let rankingId =[];
     let rankingPoint= [];
+    let ranking = []
     let data = await db.collection('users').get();
     let docs = data.docs;
     docs.forEach((ele) => {
@@ -46,15 +47,22 @@ export async function getServerSideProps() {
 
     for (let i = 0; i < 10; i++) {
         let highest = Math.max(...pointsArray);
-        console.log(highest);
         let indexOfHighest = pointsArray.indexOf(highest);
         rankingPoint.push(pointsArray.splice(indexOfHighest,1));
         rankingName.push(display_nameArray.splice(indexOfHighest,1));
         rankingId.push(idArray.splice(indexOfHighest,1));
     }
-    console.log(rankingPoint, rankingName, rankingId);
 
-    console.log(2)
+    for (let i = 0; i < 10; i++) {
+        let temporary_object = { 
+            name: rankingName[i],
+            point: rankingPoint[i],
+            id: rankingId[i]
+        }
+        ranking.push(temporary_object)
+    }
+    
+
     
 
         const coordinatesOfNumberOne = [];
@@ -69,15 +77,9 @@ export async function getServerSideProps() {
         
         coordinatesOfNumberOne.push({ lat: Number(lat), lng: Number(lng) });
         });
-        rankingAndCoord = [[coordinatesOfNumberOne],[rankingName],[rankingPoint]];
-
-            //await setDatan({coordinateToPlace});
-    
-
-    console.log("rankcoor",rankingAndCoord);
+        rankingAndCoord = [{NumberOneCoord: coordinatesOfNumberOne, Rank : ranking}];
 
     
-
 
 
     return { props: { rankingCoord: rankingAndCoord } };
@@ -86,17 +88,22 @@ export async function getServerSideProps() {
 
 
 export default function Home({ rankingCoord }) {
-
-
+    const { NumberOneCoord, Rank } = rankingCoord[0];
 
     return (
     <>
-    <DynamicMap index={rankingCoord} road={"/"}></DynamicMap>
+    <DynamicMap index={NumberOneCoord} road={"/"}></DynamicMap>
     <br></br>
     <h2>Ranking</h2>
-    <Ranking index={rankingCoord}></Ranking>
+    {Rank.map((el, i) =>
+        <Ranking index={el} key={i} myKey={i} ></Ranking>    
+        )}
 
     </>
 
     );
 }
+
+/*
+
+*/

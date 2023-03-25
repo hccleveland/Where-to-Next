@@ -86,9 +86,10 @@ export default function Map(props) {
   console.log(props.index)
   let chemin;
   console.log(props);
-  if (props.road === '/') {
-      chemin = props.index[0][0];
-      console.log(chemin)
+  if (props.road === '/' || props.road === '/friend') {
+      console.log("props / /firend",props)
+      chemin= props.index
+      console.log('chemin',chemin)
   }
 
   if (props.road === '/profile' || props.road === '/Map'){
@@ -153,4 +154,9 @@ export default function Map(props) {
     </>
   );
 }
+/*
+
+
+
+*/
 
