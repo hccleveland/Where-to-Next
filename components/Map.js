@@ -27,86 +27,11 @@ const customIcon = new icon({
 
 const { MapContainer, TileLayer, Marker, Popup } = ReactLeaflet;
 
-/* memo for the geocoding API
-I am thinking about using https://nominatim.openstreetmap.org that is a free API
-for the query we could use
-https://nominatim.openstreetmap.org/search?q=`&{city}`+`&{country}`&format=geojson
-the country is in case there is multiple occurence of the same city*/
-
-const getGeocode = async () => {
-  try {
-    const response = await axios.get(
-      `https://nominatim.openstreetmap.org/search?q=paris+france&format=geojson`
-    );
-    //console.log(response.data.features[0].geometry.coordinates);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-getGeocode();
-
-// Hard coded example arrays
-
-const example = [
-  {
-    city: 'Paris',
-    country: 'France',
-    display_name: 'Mireille',
-    timestamp: '2022/02/03',
-    comment:
-      "Je vois pas en quoi c'est cense etre la plus belle ville du monde.",
-  },
-  {
-    city: 'Paris',
-    country: 'France',
-    display_name: 'Pierre',
-    timestamp: '2022/01/29',
-    comment: "J'adore le fromage.",
-  },
-  {
-    city: 'Tokyo',
-    country: 'Japon',
-    display_name: 'Mireille',
-    timestamp: '2022/01/15',
-    comment: '素晴らしかった',
-  },
-];
-
-/*async function getCommentByCity(e) {
-  let CityId = await getCityNameAndId(e);
-  let Comment = await getComments(CityId);
-
-}
-
-async function getCityNameAndId(e) {
-  const lat = e.latlng.lat;
-  const lng = e.latlng.lng;
-  let data = await db.collection('places_went').get();
-  let docs = data.docs;
-  let id;
-  docs.forEach((ele) => {
-    if (lat === ele.data().coordinates[1] && lng === ele.data().coordinates[0]){
-      id = ele.id;
-    }
-  })
-  return id;
-}
-
-async function getComments (id) {
-  let comments = await db
-    .collection('places_went')
-    .doc(id)
-    .collection('highlight')
-    .get()
-  let commentsdocs = comments.docs;
-//  commentsdocs.forEach(el => console.log(el.data().highlight))
-}*/
-
 //Map
 
-export default function Map(index) {
-  console.log('index', index.index);
+export default function Map(props) {
+  console.log('index', props.index);
+  console.log('road', props.road);
 
   const [cityHighlight, setCityHighlight] = useState();
   const [comments, setComments] = useState([]);
@@ -157,20 +82,21 @@ export default function Map(index) {
     }
   }
 
-  console.log(index.index);
+  console.log(props.index);
   let chemin;
-  console.log(index);
-  if (index.road === '/') {
-    chemin = index.index;
+  console.log(props);
+  if (props.road === '/' || props.road === '/friend') {
+    console.log('props / /firend', props);
+    chemin = props.index;
+    console.log('chemin', chemin);
   }
 
-  if (index.road === '/profile' || index.road === '/Map') {
-    chemin = index.index;
+  if (props.road === '/profile' || props.road === '/Map') {
+    chemin = props.index;
   }
-  if (index.road === '/results') {
-    console.log(index);
+  if (props.road === '/results') {
     let coordinates = [];
-    index.index.map((el) => {
+    props.index.map((el) => {
       let latitude = el.coordinates[1];
       let longitude = el.coordinates[0];
       let price = '$' + el.price;
@@ -201,20 +127,15 @@ export default function Map(index) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          {chemin.map(({ lat, lng, counter, price }) => (
+          {chemin.map(({ lat, lng, price }) => (
             <Marker
               key={lat + lng}
               position={[lat, lng]}
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              if {counter || price}
-              {
-                <Popup>
-                  {' '}
-                  {counter} {price}{' '}
-                </Popup>
-              }
+              if {price}
+              {<Popup> {price} </Popup>}
             </Marker>
           ))}
         </MapContainer>
@@ -227,5 +148,8 @@ export default function Map(index) {
     </>
   );
 }
-// The .filter().map() is working accordingly but there is an warning in the console
-// Each child in a list should have a unique "key" prop
+/*
+
+
+
+*/

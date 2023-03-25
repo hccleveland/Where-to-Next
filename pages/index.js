@@ -1,5 +1,6 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import Ranking from '../components/Ranking';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from '../components/Layout';
 
@@ -27,144 +28,72 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export async function getServerSideProps() {
-  const coordinateToPlace = [];
-  let data = await db.collection('places_went').get();
+  let rankingAndCoord = [];
+  let pointsArray = [];
+  let display_nameArray = [];
+  let idArray = [];
+  let rankingName = [];
+  let rankingId = [];
+  let rankingPoint = [];
+  let ranking = [];
+  let data = await db.collection('users').get();
   let docs = data.docs;
   docs.forEach((ele) => {
+    idArray.push(ele.id);
+    display_nameArray.push(ele.data().display_name);
+    pointsArray.push(ele.data().points);
+  });
+
+  for (let i = 0; i < 10; i++) {
+    let highest = Math.max(...pointsArray);
+    let indexOfHighest = pointsArray.indexOf(highest);
+    rankingPoint.push(pointsArray.splice(indexOfHighest, 1));
+    rankingName.push(display_nameArray.splice(indexOfHighest, 1));
+    rankingId.push(idArray.splice(indexOfHighest, 1));
+  }
+
+  for (let i = 0; i < 10; i++) {
+    let temporary_object = {
+      name: rankingName[i],
+      point: rankingPoint[i],
+      id: rankingId[i],
+    };
+    ranking.push(temporary_object);
+  }
+
+  const coordinatesOfNumberOne = [];
+  let resultCoordinates = await db
+    .collection('users')
+    .doc(rankingId[0][0])
+    .collection('places_visited')
+    .get();
+  let documents = resultCoordinates.docs;
+  documents.forEach((ele) => {
     const lat = ele.data()['coordinates'][1];
     const lng = ele.data()['coordinates'][0];
-    const city = ele.data()['city'];
-    const counter = ele.data()['counter'];
-    coordinateToPlace.push({
-      lat: lat,
-      lng: lng,
-      city: city,
-      counter: counter,
-    });
-  });
 
-  return { props: { data: coordinateToPlace } };
+    coordinatesOfNumberOne.push({ lat: Number(lat), lng: Number(lng) });
+  });
+  rankingAndCoord = [{ NumberOneCoord: coordinatesOfNumberOne, Rank: ranking }];
+
+  return { props: { rankingCoord: rankingAndCoord } };
 }
 
-export default function Home({ data }) {
-  const { Uid } = React.useContext(AppContext);
-  const [uid, setUid] = Uid;
-  const router = useRouter();
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUid(user.uid);
-      } else {
-        setUid('');
-      }
-    });
-  });
-
-  useEffect(() => {
-    require('daterangepicker/daterangepicker.js');
-    require('daterangepicker/daterangepicker.css');
-    require('airport-autocomplete-js/dist/index.browser.min.js');
-    const $ = require('jquery/dist/jquery.js');
-
-    const options = {
-      fuse_options: {
-        shouldSort: true,
-        threshold: 0.4,
-        maxPatternLength: 32,
-        keys: [
-          {
-            name: 'IATA',
-            weight: 0.25,
-          },
-          {
-            name: 'name',
-            weight: 0.25,
-          },
-          {
-            name: 'city',
-            weight: 0.5,
-          },
-        ],
-      },
-      formatting: `<div class="$(unique-result)"
-        data-index="$(i)">
-        $(name) $(IATA) - $(city) ,$(country)</div>`,
-    };
-
-    AirportInput('origin', options);
-
-    const today = new Date();
-    const minDate = today.toLocaleDateString('en-US');
-
-    let startDate = document.querySelector('#startDate');
-    let endDate = document.querySelector('#endDate');
-
-    startDate.innerText = minDate;
-
-    const calendar = $('#calendar').daterangepicker(
-      {
-        opens: 'left',
-        minDate: minDate,
-      },
-      function (start, end, label) {
-        console.log(
-          'A new date selection was made: ' +
-            start.format('YYYY-MM-DD') +
-            ' to ' +
-            end.format('YYYY-MM-DD')
-        );
-        startDate.innerText = start.format('YYYY-MM-DD');
-        endDate.innerText = end.format('YYYY-MM-DD');
-      }
-    );
-  }, []);
-
-  const handleSearch = () => {
-    let origin = document.querySelector('#origin').value;
-    const domestic = document.querySelector('#domestic').checked;
-    const oneway = document.querySelector('#oneWay').checked;
-    const budget = document.querySelector('#budget').value;
-    const startDate = document.querySelector('#startDate').innerText;
-    const endDate = document.querySelector('#endDate').innerText;
-
-    origin = origin.split(' ')[0];
-
-    const data = {
-      origin: origin,
-      domestic: domestic,
-      oneway: oneway,
-      budget: budget,
-      startDate: startDate,
-      endDate: endDate,
-    };
-
-    router.push({
-      pathname: '/results',
-      query: { data: JSON.stringify(data) },
-    });
-  };
+export default function Home({ rankingCoord }) {
+  const { NumberOneCoord, Rank } = rankingCoord[0];
 
   return (
-    <div>
-      <input type='text' id='origin' placeholder='From' />
-      <input type='text' id='budget' placeholder='Budget' />
-      <input type='checkbox' id='domestic' name='domestic' />
-      <label htmlFor='domestic'>Domestic</label>
-      <input type='text' id='calendar' />
-      <input type='checkbox' id='oneWay' name='oneWay' />
-      <label htmlFor='oneWay'>One Way</label>
-      <br />
-      <button
-        type='button'
-        className='btn btn-primary btn-lg'
-        onClick={handleSearch}
-      >
-        Search
-      </button>
-      <div id='startDate' style={{ display: 'none' }}></div>
-      <div id='endDate' style={{ display: 'none' }}></div>
-
-      <DynamicMap index={data} road={'/'}></DynamicMap>
-    </div>
+    <>
+      <DynamicMap index={NumberOneCoord} road={'/'}></DynamicMap>
+      <br></br>
+      <h2>Ranking</h2>
+      {Rank.map((el, i) => (
+        <Ranking index={el} key={i} myKey={i}></Ranking>
+      ))}
+    </>
   );
 }
+
+/*
+
+*/

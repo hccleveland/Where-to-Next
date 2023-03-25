@@ -55,6 +55,7 @@ export default function signup() {
       display_name: display_name,
       first_name: first_name,
       last_name: last_name,
+      points: 0,
     });
     await signInWithEmailAndPassword(auth, email, password);
     setUid(data.user.uid);
