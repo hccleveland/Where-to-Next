@@ -88,7 +88,6 @@ export async function getServerSideProps({ query }) {
       city['startDate'] = queryData.startDate;
       city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
-      console.log(city['coordinates'])
       cities.push(city);
     }
   }
@@ -147,7 +146,7 @@ export default function Result({ cities }) {
         <ResultCard key={city} city={city} />
       ))}
 
-      <DynamicMap index={cities} road={"/results"}></DynamicMap> 
+      <DynamicMap index={cities} road={'/results'}></DynamicMap>
 
       {/* <ResultCard />
       <ResultCard />

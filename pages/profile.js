@@ -1,13 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import {AppContext} from '../components/Layout';
+import { AppContext } from '../components/Layout';
 import Timeline_card from '../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
 import { getCookieParser } from 'next/dist/server/api-utils';
-
-
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -21,10 +19,8 @@ var config = {
 firebase.initializeApp(config);
 const db = firebase.firestore();
 
-
-
- export default function profile() {
-  const {Uid, Display_name} = React.useContext(AppContext);
+export default function profile() {
+  const { Uid, Display_name } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
   const [timeline, setTimeline] = useState([]);
@@ -32,23 +28,21 @@ const db = firebase.firestore();
   const [highlight, setHighlight] = useState('');
   const [datan, setDatan] = useState(false);
 
-  console.log(datan);
   async function getCooridnates() {
     const coordinateToPlace = [];
     let data = await db
-      .collection("users")
-      .doc(uid) //hardcoded because uid context 
-      .collection('places_visited').get();
+      .collection('users')
+      .doc(uid) //hardcoded because uid context
+      .collection('places_visited')
+      .get();
     let docs = data.docs;
     docs.forEach((ele) => {
-      const lat = ele.data()['coordinates'][1];
-      const lng = ele.data()['coordinates'][0];
-  
+      const lat = ele.data()['geolocation'][0];
+      const lng = ele.data()['geolocation'][1];
+
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
-    console.log(coordinateToPlace);
-    await setDatan({coordinateToPlace});
-
+    await setDatan({ coordinateToPlace });
   }
 
   async function getUserPlacesVisited(uid) {
@@ -68,23 +62,24 @@ const db = firebase.firestore();
       event['start_date'] = doc.data().start_date;
       event['end_date'] = doc.data().end_date;
       event['coordinates'] = doc.data().coordinates;
-      event["docid"] = doc.id;
+      event['docid'] = doc.id;
       events.push(event);
       setTimeline(events);
     }
-
   }
-  function showInput(event){
-   setTest(true);
+  function showInput(event) {
+    setTest(true);
   }
 
-  function sendTheHightlight(event){
-    if(event.key==="Enter"){
-    db.collection('users').doc(event.target.getAttribute("owner")).collection("places_visited").doc(event.target.getAttribute("docid")).update({Highlight:highlight});
+  function sendTheHightlight(event) {
+    if (event.key === 'Enter') {
+      db.collection('users')
+        .doc(event.target.getAttribute('owner'))
+        .collection('places_visited')
+        .doc(event.target.getAttribute('docid'))
+        .update({ Highlight: highlight });
     }
   }
-  
-
 
   useEffect(() => {
     if (uid) {
@@ -95,26 +90,34 @@ const db = firebase.firestore();
   useEffect(() => {
     async function getcoord() {
       if (uid) {
-        console.log("jasdjhashdjkashdkasjhdkjashd")
         getCooridnates(uid);
       }
     }
     getcoord();
-
   }, []);
 
   return (
     <NoSSR>
-    <div>
-      <h1>{display_name}</h1>
-      {datan && <DynamicMap index={datan.coordinateToPlace} road={"/profile"} ></DynamicMap>} 
-      {timeline.map((time) => (
-        <div onClick={showInput}><Timeline_card key={time} time={time} test={test} highlight={setHighlight} send={sendTheHightlight}/></div>
-      ))}
-     
-    </div>
+      <div>
+        <h1>{display_name}</h1>
+        {datan && (
+          <DynamicMap
+            index={datan.coordinateToPlace}
+            road={'/profile'}
+          ></DynamicMap>
+        )}
+        {timeline.map((time) => (
+          <div>
+            <Timeline_card
+              key={time}
+              time={time}
+              test={test}
+              highlight={setHighlight}
+              send={sendTheHightlight}
+            />
+          </div>
+        ))}
+      </div>
     </NoSSR>
-    
   );
 }
-

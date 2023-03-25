@@ -1,8 +1,10 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from '../components/Layout';
 import dynamic from 'next/dynamic';
+import airports from '../data/records.json';
+import Item from '@/components/item';
 
 import {
   getAuth,
@@ -32,14 +34,16 @@ export async function getServerSideProps() {
   let data = await db.collection('places_went').get();
   let docs = data.docs;
   docs.forEach((ele) => {
-    console.log(ele.data().coordinates)
     const lat = ele.data()['coordinates'][1];
     const lng = ele.data()['coordinates'][0];
     const city = ele.data()['city'];
-    console.log(ele.data()['city'])
     const counter = ele.data()['counter'];
-    coordinateToPlace.push({ lat: lat, lng: lng , city: city, counter: counter});
-    console.log(coordinateToPlace)
+    coordinateToPlace.push({
+      lat: lat,
+      lng: lng,
+      city: city,
+      counter: counter,
+    });
   });
 
   // let data2 = await db
@@ -61,18 +65,19 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ data }) {
-  const { Uid } =React.useContext(AppContext);
-  const [uid,setUid]= Uid;
+  const { Uid } = React.useContext(AppContext);
+  const [uid, setUid] = Uid;
+  const [searchData, setSearchData] = useState(airports);
   const router = useRouter();
-  useEffect(()=>{
-    auth.onAuthStateChanged(user => {
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setUid(user.uid);
       } else {
         setUid('');
       }
-    })
-  })
+    });
+  });
 
   // useEffect(() => {
   //   require('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');
@@ -168,10 +173,32 @@ export default function Home({ data }) {
     });
   };
 
+  const searchAirport = (query) => {
+    if (!query) setSearchData(airports);
+
+    query = query.toLowerCase();
+    const finalResult = [];
+    airports.forEach((item) => {
+      if (
+        item.name.toLowerCase().indexOf(query) !== -1 ||
+        item.city.includes(query)
+      ) {
+        finalResult.push(item);
+      }
+      setSearchData(finalResult);
+    });
+  };
+
   return (
     <div>
       {/* <input type='text' id='origin' placeholder='NYC' /> */}
       <input type='text' id='origin' placeholder='From' />
+      <input type='search' onChange={(e) => searchAirport(e.target.value)} />
+      <div className='item-container'>
+        {searchData.map((item) => (
+          <Item {...item} key={item.name} />
+        ))}
+      </div>
       <input type='text' id='budget' placeholder='Budget' />
       <input type='checkbox' id='domestic' name='domestic' />
       <label htmlFor='domestic'>Domestic</label>
@@ -196,7 +223,7 @@ export default function Home({ data }) {
       <div id='startDate' style={{ display: 'none' }}></div>
       <div id='endDate' style={{ display: 'none' }}></div>
 
-      <DynamicMap index={data} road={"/"}></DynamicMap>
+      <DynamicMap index={data} road={'/'}></DynamicMap>
     </div>
   );
 }
