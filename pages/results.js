@@ -7,7 +7,7 @@ import DynamicMap from '@/components/DynamicMap';
 const iatadata = require('airport-iata-codes');
 import citiesJSON from '../data/cities.json';
 
-const MAX_RESULTS = 3;
+const MAX_RESULTS = 1;
 
 export async function getServerSideProps({ query }) {
   const countries = [];
@@ -19,7 +19,9 @@ export async function getServerSideProps({ query }) {
   const iataorigin = iatadata(queryData.origin);
   const country_id = iataorigin[0].country_id;
 
-  console.log(domestic);
+  if (queryData.oneWay);
+  queryData.endDate = null;
+
   if (domestic) {
     cities = await getDomesticFlights(queryData, country_id);
     return { props: { cities } };
@@ -31,7 +33,7 @@ export async function getServerSideProps({ query }) {
     params: {
       origin: queryData.origin,
       anytime: 'false',
-      oneWay: queryData.oneway,
+      oneWay: queryData.oneWay,
       travelDate: queryData.startDate,
       returnDate: queryData.endDate,
       currency: 'USD',
@@ -70,7 +72,7 @@ export async function getServerSideProps({ query }) {
         origin: queryData.origin,
         CountryId: countryObj.countryId,
         anytime: 'false',
-        oneWay: queryData.oneway,
+        oneWay: queryData.oneWay,
         travelDate: queryData.startDate,
         returnDate: queryData.endDate,
         currency: 'USD',
@@ -104,7 +106,7 @@ export async function getServerSideProps({ query }) {
       city['price'] = data['price'];
       city['name'] = data['title'];
       city['startDate'] = queryData.startDate;
-      city['endDate'] = queryData.endDate;
+      if (!queryData.oneWay) city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
       //do not add duplicates
       let citiesPtr = 0;
@@ -159,7 +161,7 @@ const getDomesticFlights = async (queryData, country_id) => {
       origin: queryData.origin,
       CountryId: country_id,
       anytime: 'false',
-      oneWay: queryData.oneway,
+      oneWay: queryData.oneWay,
       travelDate: queryData.startDate,
       returnDate: queryData.endDate,
       currency: 'USD',
@@ -189,7 +191,7 @@ const getDomesticFlights = async (queryData, country_id) => {
       city['price'] = data['price'];
       city['name'] = data['title'];
       city['startDate'] = queryData.startDate;
-      city['endDate'] = queryData.endDate;
+      if (!queryData.oneWay) city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
       if (city['price'] < queryData.budget) cities.push(city);
     }
