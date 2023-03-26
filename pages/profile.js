@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import {AppContext} from '../components/Layout';
+import { AppContext } from '../components/Layout';
 import Timeline_card from '../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
 import { getCookieParser } from 'next/dist/server/api-utils';
 
-
+import Grid from '@mui/material/Grid';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -23,8 +23,8 @@ const db = firebase.firestore();
 
 
 
- export default function profile() {
-  const {Uid, Display_name} = React.useContext(AppContext);
+export default function profile() {
+  const { Uid, Display_name } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
   const [timeline, setTimeline] = useState([]);
@@ -43,11 +43,11 @@ const db = firebase.firestore();
     docs.forEach((ele) => {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
-  
+
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
     console.log(coordinateToPlace);
-    await setDatan({coordinateToPlace});
+    await setDatan({ coordinateToPlace });
 
   }
 
@@ -74,16 +74,16 @@ const db = firebase.firestore();
     }
 
   }
-  function showInput(event){
-   setTest(true);
+  function showInput(event) {
+    setTest(true);
   }
 
-  function sendTheHightlight(event){
-    if(event.key==="Enter"){
-    db.collection('users').doc(event.target.getAttribute("owner")).collection("places_visited").doc(event.target.getAttribute("docid")).update({Highlight:highlight});
+  function sendTheHightlight(event) {
+    if (event.key === "Enter") {
+      db.collection('users').doc(event.target.getAttribute("owner")).collection("places_visited").doc(event.target.getAttribute("docid")).update({ Highlight: highlight });
     }
   }
-  
+
 
 
   useEffect(() => {
@@ -105,16 +105,18 @@ const db = firebase.firestore();
 
   return (
     <NoSSR>
-    <div>
-      <h1>{display_name}</h1>
-      {datan && <DynamicMap index={datan.coordinateToPlace} road={"/profile"} ></DynamicMap>} 
-      {timeline.map((time) => (
-        <div onClick={showInput}><Timeline_card key={time} time={time} test={test} highlight={setHighlight} send={sendTheHightlight}/></div>
-      ))}
-     
-    </div>
+      <>
+        <h1>{display_name}</h1>
+        {datan && <DynamicMap index={datan.coordinateToPlace} road={"/profile"} ></DynamicMap>}
+        <br></br>
+        <Grid container spacing={2}>
+          {timeline.map((time) => (
+            <div onClick={showInput}><Timeline_card key={time} time={time} test={test} highlight={setHighlight} send={sendTheHightlight} /></div>
+          ))}
+        </Grid>
+      </>
     </NoSSR>
-    
+
   );
 }
 

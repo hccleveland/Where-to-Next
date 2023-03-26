@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import DynamicMap from '@/components/DynamicMap';
 
+import Grid from '@mui/material/Grid';
+
 const MAX_RESULTS = 1;
 
 export async function getServerSideProps({ query }) {
@@ -142,18 +144,15 @@ export default function Result({ cities }) {
     return <div>No matches found! Recheck your search criteria.</div>;
 
   return (
-    <div>
+    <>
+      <Grid container spacing={2}>
       {cities.map((city) => (
         <ResultCard key={city} city={city} />
       ))}
-
+      </Grid>
+      <br></br>
       <DynamicMap index={cities} road={"/results"}></DynamicMap> 
 
-      {/* <ResultCard />
-      <ResultCard />
-      <ResultCard />
-      <ResultCard />
-      <ResultCard /> */}
-    </div>
+    </>
   );
 }

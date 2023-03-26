@@ -3,6 +3,11 @@ import { AppContext } from './Layout';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -90,19 +95,28 @@ export default function ResultCard(props) {
   };
 
   return (
-    <div className='result-card'>
-      <img
-        className='result-card-image'
-        src={imageUrl}
-        onClick={handleImageClick}
-      ></img>
-      <div className='result-card-desc'>
-        {name}, {countryNameEnglish}
-        <br></br>
-        {startDate} - {endDate}
-        <br></br>${Math.floor(price)}
-      </div>
-    </div>
+    <Grid item xs={4}>
+      <Paper elevation={3} className='result-card'>
+        <img
+          className='result-card-image'
+          src={imageUrl}
+          onClick={handleImageClick}
+        ></img>
+        <Box padding={1}>
+          <Typography className='result-card-desc' variant="h6" component="h2" >
+            {name}, {countryNameEnglish}
+          </Typography>
+          <br></br>
+          <Typography variant="subtitle1" component="p" >
+            {startDate} - {endDate}
+          </Typography>
+          <Typography variant="subtitle2" component="h2" >
+            <br></br>${Math.floor(price)}
+          </Typography>
+        </Box>
+      </Paper>
+    </Grid>
+
 
     // <div className='result-card'>
     //   <img
