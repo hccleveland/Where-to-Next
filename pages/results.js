@@ -25,7 +25,6 @@ export async function getServerSideProps({ query }) {
     return { props: { cities } };
   }
 
-  return { props: { cities: [] } };
   const countriesOptions = {
     method: 'GET',
     url: 'https://skyscanner50.p.rapidapi.com/api/v1/searchFlightEverywhere',
