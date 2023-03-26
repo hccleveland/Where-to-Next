@@ -15,17 +15,6 @@ import citiesJson from '../data/cities.json';
 // firebase.initializeApp(config);
 // const db = firebase.firestore();
 
-// export async function getServerSideProps() {
-//     const countryList = {}
-//     citiesJson.forEach((city) => {
-//         if (!countryList[city.countryNameEnglish]) {
-//             countryList[city.countryNameEnglish] = [city.cityName];
-//         } else {
-//             countryList[city.countryNameEnglish].push(city.cityName)
-//         }
-//     })
-//     return { props: { countryList } };
-// }
 
 const createCountryAutoCompleteList = () => {
     const result = [];
@@ -52,11 +41,15 @@ export default function addTimeline() {
     const cityList = useState( () => createCityAutoCompleteList() );
     const [countryValue, setCountryValue] = useState('');
     const [showCountryList, setShowCountryList] = useState(false);
+    const [cityValue, setCityValue] = useState('');
+    const [showCityList, setShowCityList] = useState(false);
     const countryAutoFillRef = useRef();
+    const cityAutoFillRef = useRef();
 
-    const countryAutoFill = countryList[0].filter( country => country.toLowerCase().includes(countryValue.toLowerCase()))
+    const countryAutoFill = countryList[0].filter( (country) => country.toLowerCase().includes(countryValue.toLowerCase()));
+    const cityAutoFill = cityList[0].filter( (city) => city.toLowerCase().includes(cityValue.toLowerCase()));
 
-    const handleCountrySearchChange = e => {
+    const handleCountrySearchChange = (e) => {
         setCountryValue(e.target.value);
     }
 
@@ -77,6 +70,28 @@ export default function addTimeline() {
         }
     }, [])
 
+    const handleCitySearchChange = (e) => {
+        setCityValue(e.target.value);
+    }
+
+    const handleCityListClick = (city) => {
+        setCityValue(city);
+        setShowCityList(false);
+    }
+
+    useEffect(() => {
+        const handleOutsideCityClick = (e) => {
+            if (cityAutoFillRef.current && !cityAutoFillRef.current.contains(e.target)) {
+                setShowCityList(false);
+            }
+        }
+        document.addEventListener('click', handleOutsideCityClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideCityClick);
+        }
+    }, [])
+
+
     return (
         <div>
             <h1>Add Trip to Timeline</h1>
@@ -87,15 +102,30 @@ export default function addTimeline() {
                     onChange={handleCountrySearchChange} 
                     placeholder='Search Country'
                     onFocus={() => setShowCountryList(true)}
+                    required
                 />
                 {showCountryList && (
                     <ul className='countries'>
-                        {countryAutoFill.map(country => (
+                        {countryAutoFill.map((country) => (
                             <li onClick={() => handleCountryListClick(country)} key={country}>{country}</li>
                         ))}
                     </ul>
                 )}
-
+                <input
+                    ref={cityAutoFillRef}
+                    value={cityValue}
+                    onChange={handleCitySearchChange}
+                    placeholder='Search City'
+                    onFocus={() => setShowCityList(true)}
+                    required
+                />
+                {showCityList && (
+                    <ul className='cities'>
+                        {cityAutoFill.map((city) => (
+                            <li onClick={() => handleCityListClick(city)} key={city}>{city}</li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     )
