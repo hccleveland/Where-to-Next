@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppContext } from './Layout';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+const axios = require('axios');
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -18,90 +19,197 @@ const db = firebase.firestore();
 export default function ResultCard(props) {
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
+  const [cheapestFlights, setCheapestFlights] = useState([]);
 
+  let originIata = props.city['originIata'];
   let countryNameEnglish = props.city['countryNameEnglish'];
   let countryId = props.city['countryId'];
   let countryImageUrl = props.city['countryImageUrl'];
-  let name = props.city['name'];
+  let cityName = props.city['cityName'];
   let imageUrl = props.city['imageUrl'];
   let price = props.city['price'];
   let startDate = props.city['startDate'];
   let endDate = props.city['endDate'];
   let coordinates = props.city['coordinates'];
+  let oneWay = props.city['oneWay'];
 
   const handleImageClick = async () => {
-    await db
-      .collection('users')
-      .doc(uid)
-      .collection('places_visited')
-      .add({
+    if (cheapestFlights.length > 0) return;
+
+    //get all airports to that city first
+    //get cheapest flight to those airports
+
+    const cityAirports = [];
+    const cheapestFlightsAirportArr = [];
+    const airportOptions = {
+      method: 'GET',
+      url: 'https://skyscanner44.p.rapidapi.com/autocomplete',
+      params: { query: cityName },
+      headers: {
+        'X-RapidAPI-Key': 'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
+        'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+      },
+    };
+
+    await axios
+      .request(airportOptions)
+      .then(function (response) {
+        // 0: {iata_code: 'PTYA', name: 'Panama City', city: 'Panama City', country: 'Panama'}
+        for (let airport of response.data) {
+          cityAirports.push(airport);
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+    if (cityAirports[0]['iata_code'].length === 4) cityAirports.splice(1);
+
+    //loop through airports and get the cheapest flights for those
+    for (let airport of cityAirports) {
+      let bestFlightsOptions;
+      if (!oneWay) {
+        bestFlightsOptions = {
+          method: 'GET',
+          url: 'https://skyscanner44.p.rapidapi.com/search',
+          params: {
+            adults: '1',
+            origin: originIata.toLowerCase(),
+            destination: airport['iata_code'].toLowerCase(),
+            departureDate: startDate,
+            returnDate: endDate,
+            currency: 'USD',
+          },
+          headers: {
+            'X-RapidAPI-Key':
+              'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
+            'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+          },
+        };
+      } else {
+        bestFlightsOptions = {
+          method: 'GET',
+          url: 'https://skyscanner44.p.rapidapi.com/search',
+          params: {
+            adults: '1',
+            origin: originIata.toLowerCase(),
+            destination: airport['iata_code'].toLowerCase(),
+            departureDate: startDate,
+            currency: 'USD',
+          },
+          headers: {
+            'X-RapidAPI-Key':
+              'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
+            'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+          },
+        };
+      }
+
+      await axios
+        .request(bestFlightsOptions)
+        .then(function (response) {
+          const bucketArr = response.data.itineraries.buckets;
+          for (let bucket of bucketArr) {
+            if ((bucket.id = 'Cheapest')) {
+              bucket['destinationIata'] = airport['iata_code'];
+              bucket['name'] = airport['name'];
+              // cheapestFlightsAirportArr.push(bucket);
+              setCheapestFlights([...cheapestFlights, bucket]);
+              break;
+            }
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
+    if (uid) {
+      await db.collection('users').doc(uid).collection('places_visited').add({
         country: countryNameEnglish,
         country_id: countryId,
-        city: name,
+        city: cityName,
         coordinates: coordinates,
-        image_url: imageUrl,
-        start_date: convertDate(startDate),
-        end_date: convertDate(endDate),
+        city_image_url: imageUrl,
+        country_image_url: countryImageUrl,
+        start_date: startDate,
+        end_date: endDate,
       });
 
-    //increment counter OR all entire city
-    let data = await db
-      .collection('places_went')
-      .where('country', '==', countryNameEnglish)
-      .where('city', '==', name)
-      .limit(1)
-      .get();
-
-    if (data.docs[0]) {
-      await db
+      //increment counter OR all entire city
+      let data = await db
         .collection('places_went')
-        .doc(data.docs[0].ref.id)
-        .update({ counter: firebase.firestore.FieldValue.increment(1) });
-    } else {
-      await db.collection('places_went').add({
-        city: name,
-        country: countryNameEnglish,
-        coordinates: coordinates,
-        counter: 1,
-      });
+        .where('country', '==', countryNameEnglish)
+        .where('city', '==', cityName)
+        .limit(1)
+        .get();
+
+      if (data.docs[0]) {
+        await db
+          .collection('places_went')
+          .doc(data.docs[0].ref.id)
+          .update({ counter: firebase.firestore.FieldValue.increment(1) });
+      } else {
+        await db.collection('places_went').add({
+          country: countryNameEnglish,
+          country_id: countryId,
+          city: cityName,
+          coordinates: coordinates,
+          city_image_url: imageUrl,
+          country_image_url: countryImageUrl,
+          counter: 1,
+        });
+      }
     }
-  };
 
-  const convertDate = (date) => {
-    if (!date) return '';
+    const convertDate = (date) => {
+      if (!date) return '';
 
-    const dateArr = date.split('-');
-    const year = dateArr[0];
-    const month = dateArr[1];
-    const day = dateArr[2];
+      const dateArr = date.split('-');
+      const year = dateArr[0];
+      const month = dateArr[1];
+      const day = dateArr[2];
 
-    const convertedD = new Date(year, month, day).toDateString();
-    const convertedDArr = convertedD.split(' ');
+      const convertedD = new Date(year, month, day).toDateString();
+      const convertedDArr = convertedD.split(' ');
 
-    return (
-      convertedDArr[0] +
-      ', ' +
-      convertedDArr[1] +
-      ' ' +
-      convertedDArr[2] +
-      ' ' +
-      convertedDArr[3]
-    );
+      return (
+        convertedDArr[0] +
+        ', ' +
+        convertedDArr[1] +
+        ' ' +
+        convertedDArr[2] +
+        ' ' +
+        convertedDArr[3]
+      );
+    };
   };
 
   return (
     <div className='result-card'>
       <img
         className='result-card-image'
-        src={imageUrl}
+        src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
         onClick={handleImageClick}
       ></img>
       <div className='result-card-desc'>
-        {name}, {countryNameEnglish}
+        {cityName}, {countryNameEnglish}
         <br></br>
-        {startDate} {endDate && '-' + endDate}
-        <br></br>${Math.floor(price)}
+        {startDate} {!oneWay && ' - ' + endDate}
+        <br></br>From ${Math.floor(price)}
       </div>
+      {cheapestFlights.map((flight) => {
+        return (
+          <a
+            key={flight.items[0].deeplink}
+            href={flight.items[0].deeplink.replace(
+              'www.skyscanner.net',
+              'www.skyscanner.com'
+            )}
+          >
+            ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
+          </a>
+        );
+      })}
     </div>
 
     // <div className='result-card'>

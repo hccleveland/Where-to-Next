@@ -19,8 +19,7 @@ export async function getServerSideProps({ query }) {
   const iataorigin = iatadata(queryData.origin);
   const country_id = iataorigin[0].country_id;
 
-  if (queryData.oneWay);
-  queryData.endDate = null;
+  if (queryData.oneWay) queryData.endDate = null;
 
   if (domestic) {
     cities = await getDomesticFlights(queryData, country_id);
@@ -99,19 +98,21 @@ export async function getServerSideProps({ query }) {
         data['title'],
         countryObj.countryNameEnglish
       );
+      city['originIata'] = queryData.origin;
       city['countryNameEnglish'] = countryObj.countryNameEnglish;
       city['countryId'] = countryObj.countryId;
       city['countryImageUrl'] = countryObj.countryImageUrl;
       city['imageUrl'] = data['imageUrl'];
       city['price'] = data['price'];
-      city['name'] = data['title'];
+      city['cityName'] = data['title'];
       city['startDate'] = queryData.startDate;
-      if (!queryData.oneWay) city['endDate'] = queryData.endDate;
+      city['oneWay'] = queryData.oneWay;
+      city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
       //do not add duplicates
       let citiesPtr = 0;
       for (citiesPtr = 0; citiesPtr < cities.length; ++citiesPtr) {
-        if (cities[citiesPtr]['name'] === city['name']) break;
+        if (cities[citiesPtr]['cityName'] === city['cityName']) break;
       }
       if (citiesPtr >= cities.length) cities.push(city);
     }
@@ -184,14 +185,17 @@ const getDomesticFlights = async (queryData, country_id) => {
         domesticCountry.countryNameEnglish
       );
       let city = {};
+
+      city['originIata'] = queryData.origin;
       city['countryNameEnglish'] = domesticCountry.countryNameEnglish;
       city['countryId'] = domesticCountry.countryId;
       city['countryImageUrl'] = domesticCountry.countryImageUrl;
       city['imageUrl'] = data['imageUrl'];
       city['price'] = data['price'];
-      city['name'] = data['title'];
+      city['cityName'] = data['title'];
       city['startDate'] = queryData.startDate;
-      if (!queryData.oneWay) city['endDate'] = queryData.endDate;
+      city['oneWay'] = queryData.oneWay;
+      city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
       if (city['price'] < queryData.budget) cities.push(city);
     }
@@ -217,8 +221,7 @@ const getGeocode = async (city, country) => {
 export default function Result({ cities }) {
   const router = useRouter();
 
-  if (!cities)
-    return <div>No matches found! Recheck your search criteria.</div>;
+  if (!cities) return <div>No matches found! Try different another date.</div>;
 
   return (
     <div>
@@ -227,12 +230,6 @@ export default function Result({ cities }) {
       ))}
 
       <DynamicMap index={cities} road={'/results'}></DynamicMap>
-
-      {/* <ResultCard />
-      <ResultCard />
-      <ResultCard />
-      <ResultCard />
-      <ResultCard /> */}
     </div>
   );
 }
