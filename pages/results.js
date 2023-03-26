@@ -4,15 +4,28 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import DynamicMap from '@/components/DynamicMap';
+const iatadata = require('airport-iata-codes');
+import citiesJSON from '../data/cities.json';
 
-const MAX_RESULTS = 1;
+const MAX_RESULTS = 3;
 
 export async function getServerSideProps({ query }) {
   const countries = [];
-  const cities = [];
+  let cities = [];
 
   const queryData = JSON.parse(query.data);
+  const domestic = queryData.domestic;
 
+  const iataorigin = iatadata(queryData.origin);
+  const country_id = iataorigin[0].country_id;
+
+  console.log(domestic);
+  if (domestic) {
+    cities = await getDomesticFlights(queryData, country_id);
+    return { props: { cities } };
+  }
+
+  return { props: { cities: [] } };
   const countriesOptions = {
     method: 'GET',
     url: 'https://skyscanner50.p.rapidapi.com/api/v1/searchFlightEverywhere',
@@ -74,7 +87,13 @@ export async function getServerSideProps({ query }) {
     const resCities = await axios.request(citiesOptions);
     let city = {};
     if (resCities.data.data) {
-      const data = resCities.data.data[0];
+      let data;
+      while (!data) {
+        data =
+          resCities.data.data[getRandomInt(resCities.data.data.length - 1)];
+        if (data['price'] > budget) data = null;
+      }
+      // let data = resCities.data.data[0];
       const coordinates = await getGeocode(
         data['title'],
         countryObj.countryNameEnglish
@@ -88,7 +107,12 @@ export async function getServerSideProps({ query }) {
       city['startDate'] = queryData.startDate;
       city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
-      cities.push(city);
+      //do not add duplicates
+      let citiesPtr = 0;
+      for (citiesPtr = 0; citiesPtr < cities.length; ++citiesPtr) {
+        if (cities[citiesPtr]['name'] === city['name']) break;
+      }
+      if (citiesPtr >= cities.length) cities.push(city);
     }
   }
 
@@ -117,6 +141,61 @@ const populateSearchResults = (
       countries.push(result);
     }
   }
+};
+
+const getDomesticFlights = async (queryData, country_id) => {
+  let domesticCountry;
+  for (let country of citiesJSON) {
+    for (let key in country) {
+      if (key === 'countryId' && country[key] === country_id) {
+        domesticCountry = country;
+      }
+    }
+  }
+
+  const citiesOptions = {
+    method: 'GET',
+    url: 'https://skyscanner50.p.rapidapi.com/api/v1/searchFlightEverywhereDetails',
+    params: {
+      origin: queryData.origin,
+      CountryId: country_id,
+      anytime: 'false',
+      oneWay: queryData.oneway,
+      travelDate: queryData.startDate,
+      returnDate: queryData.endDate,
+      currency: 'USD',
+      countryCode: 'US',
+      market: 'en-US',
+    },
+    headers: {
+      'X-RapidAPI-Key': 'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
+      'X-RapidAPI-Host': 'skyscanner50.p.rapidapi.com',
+    },
+  };
+
+  const resCities = await axios.request(citiesOptions);
+  let cities = [];
+  if (resCities.data.data) {
+    for (let i = 0; i < MAX_RESULTS && i < resCities.data.data.length; i++) {
+      let data = resCities.data.data[i];
+      const coordinates = await getGeocode(
+        data['title'],
+        domesticCountry.countryNameEnglish
+      );
+      let city = {};
+      city['countryNameEnglish'] = domesticCountry.countryNameEnglish;
+      city['countryId'] = domesticCountry.countryId;
+      city['countryImageUrl'] = domesticCountry.countryImageUrl;
+      city['imageUrl'] = data['imageUrl'];
+      city['price'] = data['price'];
+      city['name'] = data['title'];
+      city['startDate'] = queryData.startDate;
+      city['endDate'] = queryData.endDate;
+      city['coordinates'] = coordinates;
+      if (city['price'] < queryData.budget) cities.push(city);
+    }
+  }
+  return cities;
 };
 
 const getRandomInt = (max) => {
