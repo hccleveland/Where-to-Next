@@ -99,7 +99,7 @@ export default function ResultCard(props) {
       <div className='result-card-desc'>
         {name}, {countryNameEnglish}
         <br></br>
-        {startDate} - {endDate}
+        {startDate} {endDate && '-' + endDate}
         <br></br>${Math.floor(price)}
       </div>
     </div>

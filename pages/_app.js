@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import Layout from '../components/Layout';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useEffect } from 'react';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export default function App({ Component, pageProps }) {
-
   const router = useRouter();
 
   if (router.pathname.startsWith('/friend/')) {
@@ -20,7 +20,9 @@ export default function App({ Component, pageProps }) {
   }, []);
   return (
     <Layout>
-      <Component {...pageProps} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Component {...pageProps} />
+      </LocalizationProvider>
     </Layout>
   );
 }
