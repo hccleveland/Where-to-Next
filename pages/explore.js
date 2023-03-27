@@ -2,6 +2,10 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from '../components/Layout';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+
+
 
 import {
   getAuth,
@@ -13,6 +17,7 @@ import {
 import DynamicMap from '@/components/DynamicMap';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import { start } from '@popperjs/core';
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -50,6 +55,10 @@ export default function Home({ data }) {
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const router = useRouter();
+  const [oneWay, setOneWay] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -86,56 +95,64 @@ export default function Home({ data }) {
           },
         ],
       },
+
       formatting: `<div class="$(unique-result)"
+        single-result"
         data-index="$(i)">
         $(name) $(IATA) - $(city) ,$(country)</div>`,
     };
 
     AirportInput('origin', options);
 
-    const today = new Date();
-    const minDate = today.toLocaleDateString('en-US');
+    // const today = new Date();
+    // const minDate = today.toLocaleDateString('en-US');
 
-    let startDate = document.querySelector('#startDate');
-    let endDate = document.querySelector('#endDate');
+    // let startDate = document.querySelector('#startDate');
+    // let endDate = document.querySelector('#endDate');
 
-    startDate.innerText = minDate;
+    // startDate.innerText = minDate;
 
-    const calendar = $('#calendar').daterangepicker(
-      {
-        opens: 'left',
-        minDate: minDate,
-      },
-      function (start, end, label) {
-        console.log(
-          'A new date selection was made: ' +
-            start.format('YYYY-MM-DD') +
-            ' to ' +
-            end.format('YYYY-MM-DD')
-        );
-        startDate.innerText = start.format('YYYY-MM-DD');
-        endDate.innerText = end.format('YYYY-MM-DD');
-      }
-    );
+    //   const calendar = $('#calendar').daterangepicker(
+    //     {
+    //       opens: 'left',
+    //       minDate: minDate,
+    //     },
+    //     function (start, end, label) {
+    //       console.log(
+    //         'A new date selection was made: ' +
+    //           start.format('YYYY-MM-DD') +
+    //           ' to ' +
+    //           end.format('YYYY-MM-DD')
+    //       );
+    //       startDate.innerText = start.format('YYYY-MM-DD');
+    //       endDate.innerText = end.format('YYYY-MM-DD');
+    //     }
+    //   );
   }, []);
+
+  const formatDate = (date) => {
+    let aDate = new Date(date);
+    aDate.setDate(aDate.getDate() + 1);
+    return aDate.toISOString().slice(0, 10);
+  };
 
   const handleSearch = () => {
     let origin = document.querySelector('#origin').value;
     const domestic = document.querySelector('#domestic').checked;
     const oneway = document.querySelector('#oneWay').checked;
     const budget = document.querySelector('#budget').value;
-    const startDate = document.querySelector('#startDate').innerText;
-    const endDate = document.querySelector('#endDate').innerText;
+    // const startDate = document.querySelector('#startDate').innerText;
+    // const endDate = document.querySelector('#endDate').innerText;
 
     origin = origin.split(' ')[0];
 
     const data = {
       origin: origin,
       domestic: domestic,
-      oneway: oneway,
+      oneWay: oneWay,
       budget: budget,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: formatDate(startDate),
+      endDate: formatDate(endDate),
     };
 
     router.push({
@@ -150,8 +167,15 @@ export default function Home({ data }) {
       <input type='text' id='budget' placeholder='Budget' />
       <input type='checkbox' id='domestic' name='domestic' />
       <label htmlFor='domestic'>Domestic</label>
-      <input type='text' id='calendar' />
-      <input type='checkbox' id='oneWay' name='oneWay' />
+      <DatePicker onChange={setStartDate} />
+      {!oneWay && <DatePicker onChange={setEndDate} />}
+      <input
+        type='checkbox'
+        id='oneWay'
+        name='oneWay'
+        checked={oneWay}
+        onChange={() => setOneWay(!oneWay)}
+      />
       <label htmlFor='oneWay'>One Way</label>
       <br />
       <button

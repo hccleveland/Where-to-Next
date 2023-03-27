@@ -7,6 +7,8 @@ import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
 import { getCookieParser } from 'next/dist/server/api-utils';
 
+import Grid from '@mui/material/Grid';
+
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -37,11 +39,12 @@ export default function profile() {
       .get();
     let docs = data.docs;
     docs.forEach((ele) => {
-      const lat = ele.data()['geolocation'][0];
-      const lng = ele.data()['geolocation'][1];
+      const lat = ele.data()['coordinates'][1];
+      const lng = ele.data()['coordinates'][0];
 
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
+    console.log(coordinateToPlace);
     await setDatan({ coordinateToPlace });
   }
 
@@ -98,7 +101,7 @@ export default function profile() {
 
   return (
     <NoSSR>
-      <div>
+      <>
         <h1>{display_name}</h1>
         {datan && (
           <DynamicMap
@@ -106,18 +109,21 @@ export default function profile() {
             road={'/profile'}
           ></DynamicMap>
         )}
-        {timeline.map((time) => (
-          <div>
-            <Timeline_card
-              key={time}
-              time={time}
-              test={test}
-              highlight={setHighlight}
-              send={sendTheHightlight}
-            />
-          </div>
-        ))}
-      </div>
+        <br></br>
+        <Grid container spacing={2}>
+          {timeline.map((time) => (
+            <div onClick={showInput}>
+              <Timeline_card
+                key={time}
+                time={time}
+                test={test}
+                highlight={setHighlight}
+                send={sendTheHightlight}
+              />
+            </div>
+          ))}
+        </Grid>
+      </>
     </NoSSR>
   );
 }
