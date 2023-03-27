@@ -1,25 +1,20 @@
-import React from 'react'
+import React from 'react';
 import { useRouter } from 'next/router';
 
-
 export async function getServerSideProps({ query }) {
-    const data = JSON.parse(query.data)
-    console.log('--------------', data)
+  const data = JSON.parse(query.data);
 
-    return {
-        props: {
-          '1':'1'
-        },
-      };
+  return {
+    props: {
+      1: '1',
+    },
+  };
 }
 
 export default function test() {
-    const router = useRouter();
+  const router = useRouter();
 
-  return (
-    <div>
-    </div>
-  )
+  return <div></div>;
 }
 
 // origin: origin,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import Message from './Message';
 import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -27,14 +27,11 @@ const customIcon = new icon({
 
 const { MapContainer, TileLayer, Marker, Popup } = ReactLeaflet;
 
-
-
 //Map
 
 export default function Map(props) {
-
-  console.log("index",props.index);
-  console.log("road",props.road)
+  console.log('index', props.index);
+  console.log('road', props.road);
 
   const [cityHighlight, setCityHighlight] = useState();
   const [comments, setComments] = useState([]);
@@ -52,64 +49,62 @@ export default function Map(props) {
     let id;
     let objectToSend = {};
     docs.forEach((ele) => {
-      if (lat === ele.data().coordinates[1] && lng === ele.data().coordinates[0]){
+      if (
+        lat === ele.data().coordinates[1] &&
+        lng === ele.data().coordinates[0]
+      ) {
         id = ele.id;
-        objectToSend = { city: ele.city, country: ele.country }
-
+        objectToSend = { city: ele.city, country: ele.country };
       }
-    })
+    });
     return id;
   }
 
-  async function getComments (id) {
+  async function getComments(id) {
     let comments = await db
       .collection('places_went')
       .doc(id)
       .collection('highlight')
-      .get()
-      let commentsdocs = comments.docs;
-      if (commentsdocs.length > 0) {
-        let highlights = commentsdocs.map(el => [el.data().timestamp, el.data().display_name, el.data().highlight]);
-        console.log('highlights', highlights);
-        setCityHighlight(highlights[0]);
-        setComments(highlights);
-      } else {
-        setCityHighlight("");
-        setComments([]);
-      }
+      .get();
+    let commentsdocs = comments.docs;
+    if (commentsdocs.length > 0) {
+      let highlights = commentsdocs.map((el) => [
+        el.data().timestamp,
+        el.data().display_name,
+        el.data().highlight,
+      ]);
+      console.log('highlights', highlights);
+      setCityHighlight(highlights[0]);
+      setComments(highlights);
+    } else {
+      setCityHighlight('');
+      setComments([]);
+    }
   }
 
-
-
-
-
-  console.log(props.index)
+  console.log(props.index);
   let chemin;
   console.log(props);
   if (props.road === '/' || props.road === '/friend') {
-      console.log("props / /firend",props)
-      chemin= props.index
-      console.log('chemin',chemin)
+    console.log('props / /firend', props);
+    chemin = props.index;
+    console.log('chemin', chemin);
   }
 
-  if (props.road === '/profile' || props.road === '/Map'){
-      chemin = props.index;
-
+  if (props.road === '/profile' || props.road === '/Map') {
+    chemin = props.index;
   }
-  if (props.road === '/results'){
-    let coordinates = []
-    props.index.map(el => {
+  if (props.road === '/results') {
+    let coordinates = [];
+    props.index.map((el) => {
       let latitude = el.coordinates[1];
       let longitude = el.coordinates[0];
-      let price = "$" + el.price;
-      coordinates.push({lat: latitude, lng: longitude, price: price})
-    })
-      chemin = coordinates;
+      let price = '$' + el.price;
+      coordinates.push({ lat: latitude, lng: longitude, price: price });
+    });
+    chemin = coordinates;
   }
-  
-  
 
- 
   const maxBounds = [
     [-90, -180], // Southwest coordinates
     [90, 180], // Northeast coordinates
@@ -132,22 +127,21 @@ export default function Map(props) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          {chemin.map(({ lat, lng , price}) => (
+          {chemin.map(({ lat, lng, price }) => (
             <Marker
-            key={lat + lng}
+              key={lat + lng}
               position={[lat, lng]}
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              if { price }{
-              <Popup> {price} </Popup>}
+              if {price}
+              {<Popup> {price} </Popup>}
             </Marker>
           ))}
-          
         </MapContainer>
       </div>
       <div>
-      {comments.map((comment, index) => (
+        {comments.map((comment, index) => (
           <Message key={index} message={comment} />
         ))}
       </div>
@@ -159,4 +153,3 @@ export default function Map(props) {
 
 
 */
-

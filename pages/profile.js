@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { AppContext } from '../components/Layout';
@@ -21,8 +21,6 @@ var config = {
 firebase.initializeApp(config);
 const db = firebase.firestore();
 
-
-
 export default function profile() {
   const { Uid, Display_name } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
@@ -32,13 +30,13 @@ export default function profile() {
   const [highlight, setHighlight] = useState('');
   const [datan, setDatan] = useState(false);
 
-  console.log(datan);
   async function getCooridnates() {
     const coordinateToPlace = [];
     let data = await db
-      .collection("users")
-      .doc(uid) //hardcoded because uid context 
-      .collection('places_visited').get();
+      .collection('users')
+      .doc(uid) //hardcoded because uid context
+      .collection('places_visited')
+      .get();
     let docs = data.docs;
     docs.forEach((ele) => {
       const lat = ele.data()['coordinates'][1];
@@ -48,7 +46,6 @@ export default function profile() {
     });
     console.log(coordinateToPlace);
     await setDatan({ coordinateToPlace });
-
   }
 
   async function getUserPlacesVisited(uid) {
@@ -68,23 +65,24 @@ export default function profile() {
       event['start_date'] = doc.data().start_date;
       event['end_date'] = doc.data().end_date;
       event['coordinates'] = doc.data().coordinates;
-      event["docid"] = doc.id;
+      event['docid'] = doc.id;
       events.push(event);
       setTimeline(events);
     }
-
   }
   function showInput(event) {
     setTest(true);
   }
 
   function sendTheHightlight(event) {
-    if (event.key === "Enter") {
-      db.collection('users').doc(event.target.getAttribute("owner")).collection("places_visited").doc(event.target.getAttribute("docid")).update({ Highlight: highlight });
+    if (event.key === 'Enter') {
+      db.collection('users')
+        .doc(event.target.getAttribute('owner'))
+        .collection('places_visited')
+        .doc(event.target.getAttribute('docid'))
+        .update({ Highlight: highlight });
     }
   }
-
-
 
   useEffect(() => {
     if (uid) {
@@ -95,28 +93,37 @@ export default function profile() {
   useEffect(() => {
     async function getcoord() {
       if (uid) {
-        console.log("jasdjhashdjkashdkasjhdkjashd")
         getCooridnates(uid);
       }
     }
     getcoord();
-
   }, []);
 
   return (
     <NoSSR>
       <>
         <h1>{display_name}</h1>
-        {datan && <DynamicMap index={datan.coordinateToPlace} road={"/profile"} ></DynamicMap>}
+        {datan && (
+          <DynamicMap
+            index={datan.coordinateToPlace}
+            road={'/profile'}
+          ></DynamicMap>
+        )}
         <br></br>
         <Grid container spacing={2}>
           {timeline.map((time) => (
-            <div onClick={showInput}><Timeline_card key={time} time={time} test={test} highlight={setHighlight} send={sendTheHightlight} /></div>
+            <div onClick={showInput}>
+              <Timeline_card
+                key={time}
+                time={time}
+                test={test}
+                highlight={setHighlight}
+                send={sendTheHightlight}
+              />
+            </div>
           ))}
         </Grid>
       </>
     </NoSSR>
-
   );
 }
-
