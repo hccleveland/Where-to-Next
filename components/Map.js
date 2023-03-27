@@ -115,7 +115,6 @@ export default function Map(props) {
         <MapContainer
           style={{
             height: '75vh',
-            width: '120vh',
           }}
           center={[35.6762, 139.6503]}
           zoom={2}
@@ -124,7 +123,7 @@ export default function Map(props) {
           maxBounds={maxBounds}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution=''
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
           {chemin.map(({ lat, lng, price }) => (
