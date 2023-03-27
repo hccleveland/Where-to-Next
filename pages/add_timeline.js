@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 // import firebase from 'firebase/compat/app';
 // import 'firebase/compat/firestore';
 import citiesJson from '../data/cities.json';
+import AddTripCard from '@/components/AddTripCard';
 
 // var config = {
 //     apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -43,11 +44,14 @@ export default function addTimeline() {
     const [showCountryList, setShowCountryList] = useState(false);
     const [cityValue, setCityValue] = useState('');
     const [showCityList, setShowCityList] = useState(false);
+    const [searchResult, setSearchResult] = useState({});
+    const [showSearchResult, setShowSearchResult] = useState(false);
     const countryAutoFillRef = useRef();
     const cityAutoFillRef = useRef();
 
     const countryAutoFill = countryList[0].filter( (country) => country.toLowerCase().includes(countryValue.toLowerCase()));
     const cityAutoFill = cityList[0].filter( (city) => city.toLowerCase().includes(cityValue.toLowerCase()));
+
 
     const handleCountrySearchChange = (e) => {
         setCountryValue(e.target.value);
@@ -91,40 +95,85 @@ export default function addTimeline() {
         }
     }, [])
 
+    const createSearchResults = (e) => {
+        e.preventDefault();
+        for (const city of citiesJson) {
+            if (city.countryNameEnglish === countryValue && city.cityName === cityValue) {
+                if (city.cityImageUrl.includes('placeholder')) {
+                    city.ImageUrl = city.countryImageUrl;
+                    const time = {
+                        city: city.cityName,
+                        country: city.countryNameEnglish,
+                        image_url: city.ImageUrl,
+                        country_id: city.countryId,
+                    }
+                    setSearchResult(time);
+                    setShowSearchResult(true);
+                } else {
+                    city.ImageUrl = city.cityImageUrl;
+                    const time = {
+                        city: city.cityName,
+                        country: city.countryNameEnglish,
+                        image_url: city.ImageUrl,
+                        country_id: city.countryId,
+                    }
+                    setSearchResult(time);
+                    setShowSearchResult(true);
+                }
+            } 
+        }
+        console.log('No Matching City Found');
+    }
+
+    useEffect(() => {
+        console.log(searchResult);
+    }, [searchResult])
+    
+
 
     return (
         <div>
             <h1>Add Trip to Timeline</h1>
             <div className='tripSearch'>
-                <input
-                    ref={countryAutoFillRef}
-                    value={countryValue}
-                    onChange={handleCountrySearchChange} 
-                    placeholder='Search Country'
-                    onFocus={() => setShowCountryList(true)}
-                    required
-                />
-                {showCountryList && (
-                    <ul className='countries'>
-                        {countryAutoFill.map((country) => (
-                            <li onClick={() => handleCountryListClick(country)} key={country}>{country}</li>
-                        ))}
-                    </ul>
-                )}
-                <input
-                    ref={cityAutoFillRef}
-                    value={cityValue}
-                    onChange={handleCitySearchChange}
-                    placeholder='Search City'
-                    onFocus={() => setShowCityList(true)}
-                    required
-                />
-                {showCityList && (
-                    <ul className='cities'>
-                        {cityAutoFill.map((city) => (
-                            <li onClick={() => handleCityListClick(city)} key={city}>{city}</li>
-                        ))}
-                    </ul>
+                <form>
+                    <input
+                        ref={countryAutoFillRef}
+                        value={countryValue}
+                        onChange={handleCountrySearchChange} 
+                        placeholder='Search Country'
+                        onFocus={() => setShowCountryList(true)}
+                        required
+                    />
+                    {showCountryList && (
+                        <ul className='countries'>
+                            {countryAutoFill.map((country) => (
+                                <li onClick={() => handleCountryListClick(country)} key={country}>{country}</li>
+                            ))}
+                        </ul>
+                    )}
+                    <input
+                        ref={cityAutoFillRef}
+                        value={cityValue}
+                        onChange={handleCitySearchChange}
+                        placeholder='Search City'
+                        onFocus={() => setShowCityList(true)}
+                        required
+                    />
+                    {showCityList && (
+                        <ul className='cities'>
+                            {cityAutoFill.map((city) => (
+                                <li onClick={() => handleCityListClick(city)} key={city}>{city}</li>
+                            ))}
+                        </ul>
+                    )}
+                    <input 
+                        type='submit'
+                        value='Find Trip Event'
+                        onClick={createSearchResults}
+                    />
+                </form>
+                {showSearchResult && (
+                <AddTripCard key={searchResult} time={searchResult}/>
                 )}
             </div>
         </div>
