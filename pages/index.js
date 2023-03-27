@@ -3,6 +3,12 @@ import Ranking from '../components/Ranking';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from '../components/Layout';
+import dynamic from 'next/dynamic';
+
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 import {
   getAuth,
@@ -86,10 +92,22 @@ export default function Home({ rankingCoord }) {
     <>
       <DynamicMap index={NumberOneCoord} road={'/'}></DynamicMap>
       <br></br>
-      <h2>Ranking</h2>
-      {Rank.map((el, i) => (
-        <Ranking index={el} key={i} myKey={i}></Ranking>
-      ))}
+      <Container>
+        <Grid container spacing={2}>
+          <Grid item xs={3}></Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box padding={1}>
+                <h2>Ranking</h2>
+                {Rank.map((el, i) => (
+                  <Ranking index={el} key={i} myKey={i}></Ranking>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+        <Grid item xs={3}></Grid>
+      </Container>
     </>
   );
 }

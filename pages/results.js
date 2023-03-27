@@ -7,6 +7,8 @@ import DynamicMap from '@/components/DynamicMap';
 const iatadata = require('airport-iata-codes');
 import citiesJSON from '../data/cities.json';
 
+import Grid from '@mui/material/Grid';
+
 const MAX_RESULTS = 1;
 
 export async function getServerSideProps({ query }) {
@@ -224,12 +226,14 @@ export default function Result({ cities }) {
   if (!cities) return <div>No matches found! Try different another date.</div>;
 
   return (
-    <div>
-      {cities.map((city) => (
-        <ResultCard key={city} city={city} />
-      ))}
-
+    <>
+      <Grid container spacing={2}>
+        {cities.map((city) => (
+          <ResultCard key={city} city={city} />
+        ))}
+      </Grid>
+      <br></br>
       <DynamicMap index={cities} road={'/results'}></DynamicMap>
-    </div>
+    </>
   );
 }

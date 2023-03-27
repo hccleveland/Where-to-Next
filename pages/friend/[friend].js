@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import {AppContext} from '../../components/Layout';
 import Timeline_card from '../../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
-import NoSSR from 'react-no-ssr';
-import { getCookieParser } from 'next/dist/server/api-utils';
 import Layout from "../../components/Layout";
+
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -37,21 +37,22 @@ export default function Friend({ friendId }) {
   const [coord, setCoord] = useState(false);
   const [timeline, setTimeline] = useState([]);
 
+
   async function getCooridnates() {
     const coordinateToPlace = [];
     let data = await db
       .collection("users")
-      .doc(friendId)  
-      .collection('places_visited').get();
+      .doc(friendId)
+      .collection('places_visited')
+      .get();
     let docs = data.docs;
     docs.forEach((ele) => {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
-  
+
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
-    console.log(coordinateToPlace);
-    await setCoord({coordinateToPlace});
+    await setCoord({ coordinateToPlace });
   }
 
   useEffect(() => {
@@ -96,12 +97,22 @@ export default function Friend({ friendId }) {
 
 
   return (
-    <Layout>
-      <p>This is the page of {friendId}!</p>
-      {coord && <DynamicMap index={coord.coordinateToPlace} road={"/friend"} ></DynamicMap>}
-      {timeline.map((time) => (
-        <Timeline_card key={time} time={time} />
-      ))}
-    </Layout>
-  );
+    <>
+     
+        <Grid container spacing={2}>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={10}>
+            {coord && <DynamicMap index={coord.coordinateToPlace} road={"/friend"} ></DynamicMap>}
+          </Grid>
+          <Grid item xs={1}></Grid>
+        </Grid>
+    
+        <br></br>
+        <Grid container spacing={2}>
+          {timeline.map((time) => (
+            <Timeline_card key={time} time={time} />
+          ))}
+        </Grid>
+      </>
+      );
 }
