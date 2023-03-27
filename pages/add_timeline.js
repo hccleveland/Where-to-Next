@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 // import 'firebase/compat/firestore';
 import citiesJson from '../data/cities.json';
 import AddTripCard from '@/components/AddTripCard';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // var config = {
 //     apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -44,6 +45,9 @@ export default function addTimeline() {
     const [showCountryList, setShowCountryList] = useState(false);
     const [cityValue, setCityValue] = useState('');
     const [showCityList, setShowCityList] = useState(false);
+    const [oneWay, setOneWay] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date ());
     const [searchResult, setSearchResult] = useState({});
     const [showSearchResult, setShowSearchResult] = useState(false);
     const countryAutoFillRef = useRef();
@@ -95,6 +99,12 @@ export default function addTimeline() {
         }
     }, [])
 
+    const formatDates = (date) => {
+        let dateObj = new Date(date);
+        dateObj.setDate(dateObj.getDate() +1);
+        return dateObj.toISOString().slice(0, 10);
+    }
+
     const createSearchResults = (e) => {
         e.preventDefault();
         for (const city of citiesJson) {
@@ -106,6 +116,8 @@ export default function addTimeline() {
                         country: city.countryNameEnglish,
                         image_url: city.ImageUrl,
                         country_id: city.countryId,
+                        start_date: formatDates(startDate),
+                        end_date: formatDates(endDate)
                     }
                     setSearchResult(time);
                     setShowSearchResult(true);
@@ -116,6 +128,8 @@ export default function addTimeline() {
                         country: city.countryNameEnglish,
                         image_url: city.ImageUrl,
                         country_id: city.countryId,
+                        start_date: formatDates(startDate),
+                        end_date: formatDates(endDate)
                     }
                     setSearchResult(time);
                     setShowSearchResult(true);
@@ -166,6 +180,16 @@ export default function addTimeline() {
                             ))}
                         </ul>
                     )}
+                    <DatePicker onChange={setStartDate} />
+                    {!oneWay && <DatePicker onChange={setEndDate} />}
+                    <input
+                        type='checkbox'
+                        id='oneWay'
+                        name='oneWay'
+                        checked={oneWay}
+                        onChange={() => setOneWay(!oneWay)}
+                    />
+                    <label htmlFor='oneWay'>One Way</label>
                     <input 
                         type='submit'
                         value='Find Trip Event'
