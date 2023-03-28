@@ -1,7 +1,20 @@
 import React from 'react';
 import axios from 'axios';
+import { AppContext } from './Layout';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
-// import { AppContext } from './Layout';
+var config = {
+  apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
+  authDomain: 'where-to-next-7bc5f.firebaseapp.com',
+  projectId: 'where-to-next-7bc5f',
+  storageBucket: 'where-to-next-7bc5f.appspot.com',
+  messagingSenderId: '873346829271',
+  appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+};
+
+firebase.initializeApp(config);
+const db = firebase.firestore();
 
 export default function AddTripCard(props) {
 
@@ -33,18 +46,14 @@ export default function AddTripCard(props) {
         }
       };
 
-//   const { Uid } = React.useContext(AppContext);
-//   const [uid, setUid] = Uid;
+  const { Uid } = React.useContext(AppContext);
+  const [uid, setUid] = Uid;
   const country = props.time.country;
   const country_id = props.time.country_id
   const city = props.time.city;
   const image_url = props.time.image_url;
   const start_date = convertDate(props.time.start_date);
   const end_date = convertDate(props.time.end_date);
-//   const doc_id = props.time.docid;
-
-//   props.time['uid'] = uid;
-
 
 const handleTimelineSubmission = async () => {
     const foundCoordinates = await getGeocode(city, country);
@@ -65,11 +74,30 @@ const handleTimelineSubmission = async () => {
         image_url: image_url,
         counter: 0
     }
-    console.log(userDBObj);
-    console.log(placeDBObj);
+    
+    await db
+      .collection('users')
+      .doc(uid)
+      .collection('places_visited')
+      .add(userDBObj);
+
+    let data = await db
+      .collection('places_went')
+      .where('country', '==', country)
+      .where('city', '==', city)
+      .limit(1)
+      .get();
+
+    if (data.docs[0]) {
+      await db
+        .collection('places_went')
+        .doc(data.docs[0].ref.id)
+        .update({ counter: firebase.firestore.FieldValue.increment(1) });
+    } else {
+      await db.collection('places_went').add(placeDBObj);
+    }
 }
   
-
   return (
     <div
       className={'timeline_card'}
