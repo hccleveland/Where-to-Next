@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AppContext } from './Layout';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import { useRouter } from 'next/router';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -18,33 +19,33 @@ const db = firebase.firestore();
 
 export default function AddTripCard(props) {
 
-    const convertDate = (date) => {
-        if (!date) return '';
+  const convertDate = (date) => {
+    if (!date) return '';
     
-        const convertedD = new Date(date).toDateString();
-        const convertedDArr = convertedD.split(' ');
+    const convertedD = new Date(date).toDateString();
+    const convertedDArr = convertedD.split(' ');
     
-        return (
-          convertedDArr[0] +
-          ', ' +
-          convertedDArr[1] +
-          ' ' +
-          convertedDArr[2] +
-          ' ' +
-          convertedDArr[3]
+    return (
+      convertedDArr[0] +
+      ', ' +
+      convertedDArr[1] +
+      ' ' +
+      convertedDArr[2] +
+      ' ' +
+      convertedDArr[3]
+    );
+  };
+    
+  const getGeocode = async (city, country) => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${city}+${country}&format=geojson`
         );
-      };
-    
-    const getGeocode = async (city, country) => {
-        try {
-          const response = await axios.get(
-            `https://nominatim.openstreetmap.org/search?q=${city}+${country}&format=geojson`
-          );
-          return response.data.features[0].geometry.coordinates;
-        } catch (error) {
-          console.error(error);
-        }
-      };
+      return response.data.features[0].geometry.coordinates;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
@@ -54,6 +55,7 @@ export default function AddTripCard(props) {
   const image_url = props.time.image_url;
   const start_date = convertDate(props.time.start_date);
   const end_date = convertDate(props.time.end_date);
+  const route = useRouter();
 
 const handleTimelineSubmission = async () => {
     const foundCoordinates = await getGeocode(city, country);
@@ -72,7 +74,7 @@ const handleTimelineSubmission = async () => {
         city: city,
         coordinates: foundCoordinates,
         image_url: image_url,
-        counter: 0
+        counter: 1
     }
     
     await db
@@ -96,6 +98,7 @@ const handleTimelineSubmission = async () => {
     } else {
       await db.collection('places_went').add(placeDBObj);
     }
+    route.push('/profile');
 }
   
   return (

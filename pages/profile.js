@@ -7,7 +7,7 @@ import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
 import { getCookieParser } from 'next/dist/server/api-utils';
 import { getAuth } from 'firebase/auth';
-
+import Link from 'next/link';
 import Grid from '@mui/material/Grid';
 
 var config = {
@@ -111,15 +111,18 @@ export default function profile() {
   }, [uid]);
 
   return (
-    <NoSSR>
+    
       <>
-        {} <h1>{display_name}</h1>
+
+       {} <h1>{display_name}'s Map</h1>
         {datan && (
           <DynamicMap
             index={datan.coordinateToPlace}
             road={'/profile'}
           ></DynamicMap>
         )}
+        <br></br>
+        <h2>{display_name}'s Timeline</h2>
         <br></br>
         <Grid container spacing={2}>
           {timeline.map((time, index) => (
@@ -128,13 +131,18 @@ export default function profile() {
                 key={index}
                 time={time}
                 test={test}
+                onClick={showInput}
                 highlight={setHighlight}
                 send={sendTheHightlight}
               />
-            </div>
+          
           ))}
         </Grid>
+        <br></br>
+        <Link href='/add_timeline'>Add a Trip to Your Timeline</Link>
+        <br></br>
+        <Link href='explore'>Start a Random Adventure</Link>
       </>
-    </NoSSR>
+  
   );
 }
