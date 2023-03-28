@@ -96,6 +96,8 @@ export default function Timeline_card(props) {
       </Grid>
       <Grid item xs={4}>
         <div owner={uid}>{highlight}</div>
+
+        <input placeholder='comment here'></input>
       </Grid>
     </>
   );
