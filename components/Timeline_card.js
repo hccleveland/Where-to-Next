@@ -89,7 +89,7 @@ export default function Timeline_card(props) {
             <Typography variant='subtitle1' component='p'>
               <div
                 className='timeline_dates'
-                owner={uid}
+                owner={props.friendId}
                 docid={props.time.docid}
               >
                 Visited : {card_start_date} {card_end_date}

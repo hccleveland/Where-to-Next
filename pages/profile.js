@@ -100,15 +100,15 @@ export default function profile() {
     }
     getcoord();
   }, [uid]);
-  useEffect(()=>{
-    auth.onAuthStateChanged(user => {
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setUid(user.uid);
       } else {
         setUid('');
       }
-    })
-  },[uid]);
+    });
+  }, [uid]);
 
   return (
     
@@ -125,10 +125,10 @@ export default function profile() {
         <h2>{display_name}'s Timeline</h2>
         <br></br>
         <Grid container spacing={2}>
-          {timeline.map((time) => (
-        
+          {timeline.map((time, index) => (
+            <div onClick={showInput}>
               <Timeline_card
-                key={time}
+                key={index}
                 time={time}
                 test={test}
                 onClick={showInput}
