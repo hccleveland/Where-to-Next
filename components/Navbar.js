@@ -4,6 +4,8 @@ import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import 'firebase/compat/firestore';
 import Link from 'next/link';
 import { AppContext } from './Layout';
+import { Button } from '@mui/material';
+import { ShoppingBagRounded } from '@mui/icons-material';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -66,7 +68,7 @@ export default function Navbar() {
             className='password'
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={login}>Login</button>
+           <Button variant="text" startIcon={<ShoppingBagRounded/>}onClick={login}>login</Button>
         </div>
         <Link href='/signup'>Sign-Up</Link>
       </div>
