@@ -41,7 +41,7 @@ export async function getServerSideProps({ query }) {
     .then((doc) => {
       if (doc.exists) {
         const picArray = doc.data().pictures;
-        queryData['highlight'] = doc.data().Highlight;
+        if (doc.data().Highlight) queryData['highlight'] = doc.data().Highlight;
         if (picArray) queryData['picArray'] = picArray;
       } else {
         console.log('No such document!');

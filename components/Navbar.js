@@ -21,18 +21,17 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function Navbar() {
-
-  const { Uid, Display_name } =React.useContext(AppContext);
+  const { Uid, Display_name } = React.useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [display_name, setDisplay_name] = Display_name;
   const [uid, setUid] = Uid;
 
   async function getUserDisplayName(uid) {
-   // console.log(uid);
+    // console.log(uid);
     let data = await db.collection('users').where('__name__', '==', uid).get();
     let docs = data.docs;
-   // console.log(docs[0].data().display_name);
+    // console.log(docs[0].data().display_name);
     setDisplay_name(docs[0].data().display_name);
     setUid(uid);
   }
@@ -62,7 +61,7 @@ export default function Navbar() {
     })
   },[uid]);
 
-  if (uid=='') {
+  if (uid == '') {
     return (
       <div>
         <Link href='/'>Index</Link>
