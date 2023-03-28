@@ -1,18 +1,22 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Roboto";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto';
 }
 
 .timeline_img {
-    width: 100%;
-    height: 20rem;
+  width: 100%;
+  height: 20rem;
 }
 
-.result-card-image{
-    width: 100%;
-    height: 20rem;
+.result-card-image {
+  width: 100%;
+  height: 20rem;
+}
+
+.leaflet-control-attribution {
+  display: none;
 }
 
 .medals{

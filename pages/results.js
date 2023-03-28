@@ -228,8 +228,8 @@ export default function Result({ cities }) {
   return (
     <>
       <Grid container spacing={2}>
-        {cities.map((city) => (
-          <ResultCard key={city} city={city} />
+        {cities.map((city, index) => (
+          <ResultCard key={index} city={city} />
         ))}
       </Grid>
       <br></br>

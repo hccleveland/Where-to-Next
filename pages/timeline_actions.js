@@ -41,7 +41,7 @@ export async function getServerSideProps({ query }) {
     .then((doc) => {
       if (doc.exists) {
         const picArray = doc.data().pictures;
-        queryData['highlight'] = doc.data().Highlight;
+        if (doc.data().Highlight) queryData['highlight'] = doc.data().Highlight;
         if (picArray) queryData['picArray'] = picArray;
       } else {
         console.log('No such document!');
@@ -100,10 +100,8 @@ export default function timeline_actions({ queryData }) {
   return (
     <div>
       {queryData.picArray &&
-        queryData.picArray.map((picture) => {
-          return (
-            <UploadedImage key={picture} imageUrl={picture}></UploadedImage>
-          );
+        queryData.picArray.map((picture, idex) => {
+          return <UploadedImage key={index} imageUrl={picture}></UploadedImage>;
         })}
       <input
         type='text'

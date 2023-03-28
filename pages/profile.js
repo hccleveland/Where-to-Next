@@ -5,10 +5,10 @@ import { AppContext } from '../components/Layout';
 import Timeline_card from '../components/Timeline_card';
 import Badges from '../components/Badges';
 import DynamicMap from '@/components/DynamicMap';
-import NoSSR from 'react-no-ssr';
-import { getCookieParser } from 'next/dist/server/api-utils';
-
+import { getAuth } from 'firebase/auth';
+import Link from 'next/link';
 import Grid from '@mui/material/Grid';
+import Profile_card from '@/components/Profile_card';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -21,21 +21,17 @@ var config = {
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
-
-
-
-
-
+const auth = getAuth();
 
 export default function profile() {
   const { Uid, Display_name } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
-  const [timeline, setTimeline] = useState([]);
+  const [profileCards, setProfileCards] = useState([]);
   const [test, setTest] = useState(false);
   const [highlight, setHighlight] = useState('');
   const [datan, setDatan] = useState(false);
-  const [counters, setCounters] = useState({})
+  const [counters, setCounters] = useState({});
 
   async function getCooridnates() {
     const coordinateToPlace = [];
@@ -74,7 +70,7 @@ export default function profile() {
       event['coordinates'] = doc.data().coordinates;
       event['docid'] = doc.id;
       events.push(event);
-      setTimeline(events);
+      setProfileCards(events);
     }
   }
 
@@ -106,24 +102,276 @@ export default function profile() {
     }
     getcoord();
   }, []);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        setUid('');
+      }
+    });
+  }, [uid]);
   //////////////////////////////////////////////////////////////////////////////////////
   // Update the continent counter on the DB
   //////////////////////////////////////////////////////////////////////////////////////
-  const asianCountry = ['Afghanistan', 'Armenia', 'Azerbaijan', 'Bahrain', 'Bangladesh', 'Bhutan', 'Brunei', 'Cambodia', 'China', 'Cyprus', 'East Timor', 'Georgia', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Israel', 'Japan', 'Jordan', 'Kazakhstan', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Lebanon', 'Macao', 'Malaysia', 'Maldives', 'Mongolia', 'Myanmar', 'Nepal', 'North Korea', 'Oman', 'Pakistan', 'Palestine', 'Philippines', 'Qatar', 'Saudi Arabia', 'Singapore', 'South Korea', 'Sri Lanka', 'Syria', 'Tajikistan', 'Thailand', 'Turkey', 'Turkmenistan', 'United Arab Emirates', 'Uzbekistan', 'Vietnam', 'Yemen'];
+  const asianCountry = [
+    'Afghanistan',
+    'Armenia',
+    'Azerbaijan',
+    'Bahrain',
+    'Bangladesh',
+    'Bhutan',
+    'Brunei',
+    'Cambodia',
+    'China',
+    'Cyprus',
+    'East Timor',
+    'Georgia',
+    'Hong Kong',
+    'India',
+    'Indonesia',
+    'Iran',
+    'Iraq',
+    'Israel',
+    'Japan',
+    'Jordan',
+    'Kazakhstan',
+    'Kuwait',
+    'Kyrgyzstan',
+    'Laos',
+    'Lebanon',
+    'Macao',
+    'Malaysia',
+    'Maldives',
+    'Mongolia',
+    'Myanmar',
+    'Nepal',
+    'North Korea',
+    'Oman',
+    'Pakistan',
+    'Palestine',
+    'Philippines',
+    'Qatar',
+    'Saudi Arabia',
+    'Singapore',
+    'South Korea',
+    'Sri Lanka',
+    'Syria',
+    'Tajikistan',
+    'Thailand',
+    'Turkey',
+    'Turkmenistan',
+    'United Arab Emirates',
+    'Uzbekistan',
+    'Vietnam',
+    'Yemen',
+  ];
 
-  const europeanCountry = ['Albania', 'Andorra', 'Austria', 'Belarus', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Czech Republic', 'Denmark', 'England', 'Estonia', 'Faroe Islands', 'Finland', 'France', 'Germany', 'Gibraltar', 'Greece', 'Holy See (Vatican City State)', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'North Macedonia', 'Malta', 'Moldova', 'Monaco', 'Montenegro', 'Netherlands', 'Northern Ireland', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'San Marino', 'Scotland', 'Serbia', 'Slovakia', 'Slovenia', 'Spain', 'Svalbard and Jan Mayen', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Wales'];
+  const europeanCountry = [
+    'Albania',
+    'Andorra',
+    'Austria',
+    'Belarus',
+    'Belgium',
+    'Bosnia and Herzegovina',
+    'Bulgaria',
+    'Croatia',
+    'Czech Republic',
+    'Denmark',
+    'England',
+    'Estonia',
+    'Faroe Islands',
+    'Finland',
+    'France',
+    'Germany',
+    'Gibraltar',
+    'Greece',
+    'Holy See (Vatican City State)',
+    'Hungary',
+    'Iceland',
+    'Ireland',
+    'Italy',
+    'Latvia',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'North Macedonia',
+    'Malta',
+    'Moldova',
+    'Monaco',
+    'Montenegro',
+    'Netherlands',
+    'Northern Ireland',
+    'Norway',
+    'Poland',
+    'Portugal',
+    'Romania',
+    'Russian Federation',
+    'San Marino',
+    'Scotland',
+    'Serbia',
+    'Slovakia',
+    'Slovenia',
+    'Spain',
+    'Svalbard and Jan Mayen',
+    'Sweden',
+    'Switzerland',
+    'Ukraine',
+    'United Kingdom',
+    'Wales',
+  ];
 
-  const africanCountry = ['Algeria', 'Angola', 'Benin', 'Botswana', 'British Indian Ocean Territory', 'Burkina Faso', 'Burundi', 'Cameroon', 'Cape Verde', 'Central African Republic', 'Chad', 'Comoros', 'Congo', 'Djibouti', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Ethiopia', 'Gabon', 'Gambia', 'Ghana', 'Guinea', 'Guinea-Bissau', 'Ivory Coast', 'Kenya', 'Lesotho', 'Liberia', 'Libyan Arab Jamahiriya', 'Madagascar', 'Malawi', 'Mali', 'Mauritania', 'Mauritius', 'Mayotte', 'Morocco', 'Mozambique', 'Namibia', 'Niger', 'Nigeria', 'Reunion', 'Rwanda', 'Saint Helena', 'Sao Tome and Principe', 'Senegal', 'Seychelles', 'Sierra Leone', 'Somalia', 'South Africa', 'South Sudan', 'Sudan', 'Swaziland', 'Tanzania', 'The Democratic Republic of Congo', 'Togo', 'Tunisia', 'Uganda', 'Western Sahara', 'Zambia', 'Zimbabwe'];
+  const africanCountry = [
+    'Algeria',
+    'Angola',
+    'Benin',
+    'Botswana',
+    'British Indian Ocean Territory',
+    'Burkina Faso',
+    'Burundi',
+    'Cameroon',
+    'Cape Verde',
+    'Central African Republic',
+    'Chad',
+    'Comoros',
+    'Congo',
+    'Djibouti',
+    'Egypt',
+    'Equatorial Guinea',
+    'Eritrea',
+    'Ethiopia',
+    'Gabon',
+    'Gambia',
+    'Ghana',
+    'Guinea',
+    'Guinea-Bissau',
+    'Ivory Coast',
+    'Kenya',
+    'Lesotho',
+    'Liberia',
+    'Libyan Arab Jamahiriya',
+    'Madagascar',
+    'Malawi',
+    'Mali',
+    'Mauritania',
+    'Mauritius',
+    'Mayotte',
+    'Morocco',
+    'Mozambique',
+    'Namibia',
+    'Niger',
+    'Nigeria',
+    'Reunion',
+    'Rwanda',
+    'Saint Helena',
+    'Sao Tome and Principe',
+    'Senegal',
+    'Seychelles',
+    'Sierra Leone',
+    'Somalia',
+    'South Africa',
+    'South Sudan',
+    'Sudan',
+    'Swaziland',
+    'Tanzania',
+    'The Democratic Republic of Congo',
+    'Togo',
+    'Tunisia',
+    'Uganda',
+    'Western Sahara',
+    'Zambia',
+    'Zimbabwe',
+  ];
 
-  const oceanianCountry = ['American Samoa', 'Australia', 'Christmas Island', 'Cocos (Keeling) Islands', 'Cook Islands', 'Fiji Islands', 'French Polynesia', 'Guam', 'Kiribati', 'Marshall Islands', 'Micronesia, Federated States of', 'Nauru', 'New Caledonia', 'New Zealand', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Palau', 'Papua New Guinea', 'Pitcairn', 'Samoa', 'Solomon Islands', 'Tokelau', 'Tonga', 'Tuvalu', 'United States Minor Outlying Islands', 'Vanuatu', 'Wallis and Futuna'];
+  const oceanianCountry = [
+    'American Samoa',
+    'Australia',
+    'Christmas Island',
+    'Cocos (Keeling) Islands',
+    'Cook Islands',
+    'Fiji Islands',
+    'French Polynesia',
+    'Guam',
+    'Kiribati',
+    'Marshall Islands',
+    'Micronesia, Federated States of',
+    'Nauru',
+    'New Caledonia',
+    'New Zealand',
+    'Niue',
+    'Norfolk Island',
+    'Northern Mariana Islands',
+    'Palau',
+    'Papua New Guinea',
+    'Pitcairn',
+    'Samoa',
+    'Solomon Islands',
+    'Tokelau',
+    'Tonga',
+    'Tuvalu',
+    'United States Minor Outlying Islands',
+    'Vanuatu',
+    'Wallis and Futuna',
+  ];
 
-  const southAmericanCountry = ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Ecuador', 'Falkland Islands', 'French Guiana', 'Guyana', 'Paraguay', 'Peru', 'Suriname', 'Uruguay', 'Venezuela'];
+  const southAmericanCountry = [
+    'Argentina',
+    'Bolivia',
+    'Brazil',
+    'Chile',
+    'Colombia',
+    'Ecuador',
+    'Falkland Islands',
+    'French Guiana',
+    'Guyana',
+    'Paraguay',
+    'Peru',
+    'Suriname',
+    'Uruguay',
+    'Venezuela',
+  ];
 
-  const northAmericanCountry = ['Anguilla', 'Antigua and Barbuda', 'Aruba', 'Bahamas', 'Barbados', 'Belize', 'Bermuda', 'Canada', 'Cayman Islands', 'Costa Rica', 'Cuba', 'Dominica', 'Dominican Republic', 'El Salvador', 'Greenland', 'Grenada', 'Guadeloupe', 'Guatemala', 'Haiti', 'Honduras', 'Jamaica', 'Martinique', 'Mexico', 'Montserrat', 'Netherlands Antilles', 'Nicaragua', 'Panama', 'Puerto Rico', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Pierre and Miquelon', 'Saint Vincent and the Grenadines', 'Trinidad and Tobago', 'Turks and Caicos Islands', 'United States', 'Virgin Islands, British', 'Virgin Islands, U.S.'];
-
+  const northAmericanCountry = [
+    'Anguilla',
+    'Antigua and Barbuda',
+    'Aruba',
+    'Bahamas',
+    'Barbados',
+    'Belize',
+    'Bermuda',
+    'Canada',
+    'Cayman Islands',
+    'Costa Rica',
+    'Cuba',
+    'Dominica',
+    'Dominican Republic',
+    'El Salvador',
+    'Greenland',
+    'Grenada',
+    'Guadeloupe',
+    'Guatemala',
+    'Haiti',
+    'Honduras',
+    'Jamaica',
+    'Martinique',
+    'Mexico',
+    'Montserrat',
+    'Netherlands Antilles',
+    'Nicaragua',
+    'Panama',
+    'Puerto Rico',
+    'Saint Kitts and Nevis',
+    'Saint Lucia',
+    'Saint Pierre and Miquelon',
+    'Saint Vincent and the Grenadines',
+    'Trinidad and Tobago',
+    'Turks and Caicos Islands',
+    'United States',
+    'Virgin Islands, British',
+    'Virgin Islands, U.S.',
+  ];
 
   async function getContinentCounter() {
-
     let visitedCountries = [];
     let asianCounter = 0;
     let africaCounter = 0;
@@ -145,7 +393,7 @@ export default function profile() {
       .collection('places_visited')
       .get();
     let docs = data.docs;
-    docs.forEach(el => visitedCountries.push(el.data().country));
+    docs.forEach((el) => visitedCountries.push(el.data().country));
 
     for (let i = 0; i < visitedCountries.length; i++) {
       if (asianCountry.includes(visitedCountries[i])) {
@@ -181,47 +429,43 @@ export default function profile() {
           northAmerica = docRef.data().north_america;
           southAmerica = docRef.data().south_america;
         })
-        .catch((error) => { });
+        .catch((error) => {});
 
       if (asianCounter != asia) {
-        db.collection("users").doc(uid).update({
-          "asia": asianCounter
-        })
+        db.collection('users').doc(uid).update({
+          asia: asianCounter,
+        });
       }
       if (africaCounter != africa) {
-        db.collection("users").doc(uid).update({
-          "africa": africaCounter
-        })
+        db.collection('users').doc(uid).update({
+          africa: africaCounter,
+        });
       }
       if (europeCounter != europe) {
-        db.collection("users").doc(uid).update({
-          "europe": europeCounter
-        })
+        db.collection('users').doc(uid).update({
+          europe: europeCounter,
+        });
       }
       if (oceaniaCounter != oceania) {
-        db.collection("users").doc(uid).update({
-          "oceania": oceaniaCounter
-        })
+        db.collection('users').doc(uid).update({
+          oceania: oceaniaCounter,
+        });
       }
       if (northAmericaCounter != northAmerica) {
-        db.collection("users").doc(uid).update({
-          "north_america": northAmericaCounter
-        })
+        db.collection('users').doc(uid).update({
+          north_america: northAmericaCounter,
+        });
       }
       if (southAmericaCounter != southAmerica) {
-        db.collection("users").doc(uid).update({
-          "south_america": southAmericaCounter
-        })
+        db.collection('users').doc(uid).update({
+          south_america: southAmericaCounter,
+        });
       }
-
     }
     //getCounterFromDB()
-
-
   }
   //getContinentCounter(uid)
   //////////////////////////////////////////////////////////////////////////////////////////
-
 
   async function getCounterToTransfert() {
     let counters = {};
@@ -239,10 +483,10 @@ export default function profile() {
           southAmerica: docRef.data().south_america,
           world: docRef.data().world,
           helperPoints: docRef.data().helper_points,
-        }
+        };
       })
-      .catch((error) => { });
-    setCounters( counters );  
+      .catch((error) => {});
+    setCounters(counters);
   }
 
   useEffect(() => {
@@ -251,38 +495,38 @@ export default function profile() {
     }
   }, [uid]);
 
- 
-
   return (
-    <NoSSR>
-      <>
-        <h1>{display_name}</h1>
-        {datan && (
-          <DynamicMap
-            index={datan.coordinateToPlace}
-            road={'/profile'}
-          ></DynamicMap>
-        )}
-        <br></br>
-        <Grid container spacing={2}>
-          <Badges index={counters}></Badges>
-        </Grid>
-        <br></br>
-        <Grid container spacing={2}>
-          {timeline.map((time) => (
-            <div onClick={showInput}>
-              <Timeline_card
-                key={time}
-                time={time}
-                test={test}
-                highlight={setHighlight}
-                send={sendTheHightlight}
-              />
-            </div>
-          ))}
-        </Grid>
-        
-      </>
-    </NoSSR>
+    <>
+      <h1>{display_name}'s Map</h1>
+      {datan && (
+        <DynamicMap
+          index={datan.coordinateToPlace}
+          road={'/profile'}
+        ></DynamicMap>
+      )}
+      <br></br>
+      <h2>{display_name}'s Timeline</h2>
+      <br></br>
+      <Grid container spacing={2}>
+        <Badges index={counters}></Badges>
+      </Grid>
+      <br></br>
+      <Grid container spacing={2}>
+        {profileCards.map((pcard, index) => (
+          <Profile_card
+            key={index}
+            profileCard={pcard}
+            test={test}
+            onClick={showInput}
+            highlight={setHighlight}
+            send={sendTheHightlight}
+          />
+        ))}
+      </Grid>
+      <br></br>
+      <Link href='/add_timeline'>Add a Trip to Your Timeline</Link>
+      <br></br>
+      <Link href='explore'>Start a Random Adventure</Link>
+    </>
   );
 }

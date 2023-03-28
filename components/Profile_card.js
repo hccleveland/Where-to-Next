@@ -19,22 +19,18 @@ var config = {
 firebase.initializeApp(config);
 const db = firebase.firestore();
 
-export default function Timeline_card(props) {
+export default function Profile_card(props) {
   const router = useRouter();
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
-  const card_country = props.time.country;
-  const card_city = props.time.city;
-  const card_image_url = props.time.image_url;
-  const card_start_date = props.time.start_date;
-  const card_end_date = props.time.end_date;
-  const doc_id = props.time.docid;
+  const card_country = props.profileCard.country;
+  const card_city = props.profileCard.city;
+  const card_image_url = props.profileCard.image_url;
+  const card_start_date = props.profileCard.start_date;
+  const card_end_date = props.profileCard.end_date;
+  const doc_id = props.profileCard.docid;
   const [highlight, setHighlight] = React.useState('');
   const friendId = props.friendId;
-
-  console.log(friendId);
-
-  props.time['uid'] = uid;
 
   async function getHigh() {
     let data = await db
@@ -57,7 +53,7 @@ export default function Timeline_card(props) {
   const handleClick = () => {
     router.push({
       pathname: '/timeline_actions',
-      query: { data: JSON.stringify(props.time) },
+      query: { data: JSON.stringify(props.profileCard) },
     });
   };
 
@@ -66,9 +62,9 @@ export default function Timeline_card(props) {
       <Grid item xs={6}>
         <Paper
           elevation={3}
-          className={'timeline_card'}
-          owner={props.friendId}
-          docid={props.time.docid}
+          className={'profile_card'}
+          owner={uid}
+          docid={props.profileCard.docid}
           onClick={handleClick}
         >
           <img src={card_image_url} className='timeline_img' />
@@ -76,20 +72,20 @@ export default function Timeline_card(props) {
             <Typography variant='h6' component='h2'>
               <div
                 className='timeline_location'
-                owner={props.friendId}
-                docid={props.time.docid}
+                owner={uid}
+                docid={props.profileCard.docid}
               >
                 {card_city}, {card_country}
               </div>
             </Typography>
             <Typography variant='subtitle1' component='p'>
-              <span
+              <div
                 className='timeline_dates'
-                owner={props.friendId}
-                docid={props.time.docid}
+                owner={uid}
+                docid={props.profileCard.docid}
               >
                 Visited : {card_start_date} {card_end_date}
-              </span>
+              </div>
             </Typography>
           </Box>
         </Paper>
