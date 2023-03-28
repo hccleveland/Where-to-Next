@@ -111,38 +111,33 @@ export default function profile() {
   }, [uid]);
 
   return (
-    
-      <>
-
-       {} <h1>{display_name}'s Map</h1>
-        {datan && (
-          <DynamicMap
-            index={datan.coordinateToPlace}
-            road={'/profile'}
-          ></DynamicMap>
-        )}
-        <br></br>
-        <h2>{display_name}'s Timeline</h2>
-        <br></br>
-        <Grid container spacing={2}>
-          {timeline.map((time, index) => (
-            <div onClick={showInput}>
-              <Timeline_card
-                key={index}
-                time={time}
-                test={test}
-                onClick={showInput}
-                highlight={setHighlight}
-                send={sendTheHightlight}
-              />
-          
-          ))}
-        </Grid>
-        <br></br>
-        <Link href='/add_timeline'>Add a Trip to Your Timeline</Link>
-        <br></br>
-        <Link href='explore'>Start a Random Adventure</Link>
-      </>
-  
+    <>
+      <h1>{display_name}'s Map</h1>
+      {datan && (
+        <DynamicMap
+          index={datan.coordinateToPlace}
+          road={'/profile'}
+        ></DynamicMap>
+      )}
+      <br></br>
+      <h2>{display_name}'s Timeline</h2>
+      <br></br>
+      <Grid container spacing={2}>
+        {timeline.map((time) => (
+          <Timeline_card
+            key={time}
+            time={time}
+            test={test}
+            onClick={showInput}
+            highlight={setHighlight}
+            send={sendTheHightlight}
+          />
+        ))}
+      </Grid>
+      <br></br>
+      <Link href='/add_timeline'>Add a Trip to Your Timeline</Link>
+      <br></br>
+      <Link href='explore'>Start a Random Adventure</Link>
+    </>
   );
 }

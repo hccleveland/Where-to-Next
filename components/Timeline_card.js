@@ -80,7 +80,7 @@ export default function Timeline_card(props) {
                     placeholder='put your highlight'
                     onKeyDown={(e) => props.send(e)}
                     onChange={(e) => props.highlight(e.target.value)}
-                    owner={uid}
+                    owner={props.fiendId}
                     docid={props.time.docid}
                   ></input>
                 )}
