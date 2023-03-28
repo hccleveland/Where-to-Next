@@ -92,6 +92,7 @@ export default function Profile_card(props) {
       </Grid>
       <Grid item xs={4}>
         <div owner={uid}>{highlight}</div>
+        <input placeholder='commment here'></input>
       </Grid>
     </>
   );

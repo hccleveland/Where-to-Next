@@ -87,7 +87,7 @@ export default function Navbar() {
       <div>
         <Link href='/profile'>{display_name}</Link>
         <Link href='/'>Index</Link>
-        <button onClick={logout}>Logout</button>
+        <Button variant="outlined" onClick={logout}>Logout</Button>
       </div>
     );
   }

@@ -517,7 +517,6 @@ export default function profile() {
             key={index}
             profileCard={pcard}
             test={test}
-            onClick={showInput}
             highlight={setHighlight}
             send={sendTheHightlight}
           />

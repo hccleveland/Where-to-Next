@@ -1,8 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import 'bootstrap/dist/css/bootstrap.css';
 import Layout from '../components/Layout';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useEffect } from 'react';
 
 import Container from '@mui/material/Container';
@@ -23,10 +21,6 @@ export default function App({ Component, pageProps }) {
       </Layout>
     );
   }
-
-  useEffect(() => {
-    require('bootstrap/dist/js/bootstrap.js');
-  }, []);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Layout>
