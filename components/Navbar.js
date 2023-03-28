@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import 'firebase/compat/firestore';
@@ -51,6 +51,16 @@ export default function Navbar() {
     setDisplay_name('');
     setUid('');
   }
+  useEffect(()=>{
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setUid(user.uid);
+        getUserDisplayName(user.uid);
+      } else {
+        setUid('');
+      }
+    })
+  },[uid]);
 
   if (uid=='') {
     return (
