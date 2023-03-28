@@ -100,20 +100,20 @@ export default function profile() {
     }
     getcoord();
   }, [uid]);
-  useEffect(()=>{
-    auth.onAuthStateChanged(user => {
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setUid(user.uid);
       } else {
         setUid('');
       }
-    })
-  },[uid]);
+    });
+  }, [uid]);
 
   return (
     <NoSSR>
       <>
-       {} <h1>{display_name}</h1>
+        {} <h1>{display_name}</h1>
         {datan && (
           <DynamicMap
             index={datan.coordinateToPlace}
@@ -122,10 +122,10 @@ export default function profile() {
         )}
         <br></br>
         <Grid container spacing={2}>
-          {timeline.map((time) => (
+          {timeline.map((time, index) => (
             <div onClick={showInput}>
               <Timeline_card
-                key={time}
+                key={index}
                 time={time}
                 test={test}
                 highlight={setHighlight}
