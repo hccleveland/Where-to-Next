@@ -5,8 +5,6 @@ import { AppContext } from '../components/Layout';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 
-
-
 import {
   getAuth,
   onAuthStateChanged,
@@ -141,8 +139,6 @@ export default function Home({ data }) {
     const domestic = document.querySelector('#domestic').checked;
     const oneway = document.querySelector('#oneWay').checked;
     const budget = document.querySelector('#budget').value;
-    // const startDate = document.querySelector('#startDate').innerText;
-    // const endDate = document.querySelector('#endDate').innerText;
 
     origin = origin.split(' ')[0];
 
@@ -185,8 +181,6 @@ export default function Home({ data }) {
       >
         Search
       </button>
-      <div id='startDate' style={{ display: 'none' }}></div>
-      <div id='endDate' style={{ display: 'none' }}></div>
 
       <DynamicMap index={data} road={'/'}></DynamicMap>
     </div>

@@ -28,10 +28,12 @@ export default function App({ Component, pageProps }) {
     require('bootstrap/dist/js/bootstrap.js');
   }, []);
   return (
-    <Layout>
-      <Container>
-        <Component {...pageProps} />
-      </Container>
-    </Layout>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Layout>
+        <Container>
+          <Component {...pageProps} />
+        </Container>
+      </Layout>
+    </LocalizationProvider>
   );
 }
