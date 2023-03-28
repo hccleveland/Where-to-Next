@@ -7,6 +7,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import theme from '../config/theme';
 import createEmotionCache from '../config/createEmotionCache';
+import {LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 const AppContext = createContext();
 
 const clientSideEmotionCache = createEmotionCache();
@@ -22,6 +24,7 @@ const Layout = ({ children}, props) => {
 
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <CacheProvider value={emotionCache}>
     <Head>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -43,6 +46,7 @@ const Layout = ({ children}, props) => {
     </AppContext.Provider>
     </ThemeProvider>
     </CacheProvider>
+    </LocalizationProvider>
   );
 };
 
