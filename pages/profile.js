@@ -6,6 +6,7 @@ import Timeline_card from '../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
 import { getCookieParser } from 'next/dist/server/api-utils';
+import { getAuth } from 'firebase/auth';
 
 import Grid from '@mui/material/Grid';
 
@@ -20,6 +21,7 @@ var config = {
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
+const auth = getAuth();
 
 export default function profile() {
   const { Uid, Display_name } = React.useContext(AppContext);
@@ -97,12 +99,21 @@ export default function profile() {
       }
     }
     getcoord();
-  }, []);
+  }, [uid]);
+  useEffect(()=>{
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        setUid('');
+      }
+    })
+  },[uid]);
 
   return (
     <NoSSR>
       <>
-        <h1>{display_name}</h1>
+       {} <h1>{display_name}</h1>
         {datan && (
           <DynamicMap
             index={datan.coordinateToPlace}
