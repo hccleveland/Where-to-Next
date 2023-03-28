@@ -7,7 +7,6 @@ import DynamicMap from '@/components/DynamicMap';
 import NoSSR from 'react-no-ssr';
 import { getCookieParser } from 'next/dist/server/api-utils';
 import { getAuth } from 'firebase/auth';
-
 import Grid from '@mui/material/Grid';
 
 var config = {
@@ -111,9 +110,9 @@ export default function profile() {
   },[uid]);
 
   return (
-    <NoSSR>
+    
       <>
-       {} <h1>{display_name}</h1>
+       {}<h1>{display_name}</h1>
         {datan && (
           <DynamicMap
             index={datan.coordinateToPlace}
@@ -123,18 +122,19 @@ export default function profile() {
         <br></br>
         <Grid container spacing={2}>
           {timeline.map((time) => (
-            <div onClick={showInput}>
+        
               <Timeline_card
                 key={time}
                 time={time}
                 test={test}
+                onClick={showInput}
                 highlight={setHighlight}
                 send={sendTheHightlight}
               />
-            </div>
+          
           ))}
         </Grid>
       </>
-    </NoSSR>
+  
   );
 }
