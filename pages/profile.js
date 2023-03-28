@@ -2,13 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { AppContext } from '../components/Layout';
-import Timeline_card from '../components/Timeline_card';
 import DynamicMap from '@/components/DynamicMap';
-import NoSSR from 'react-no-ssr';
-import { getCookieParser } from 'next/dist/server/api-utils';
 import { getAuth } from 'firebase/auth';
 import Link from 'next/link';
 import Grid from '@mui/material/Grid';
+import Profile_card from '@/components/Profile_card';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -27,7 +25,7 @@ export default function profile() {
   const { Uid, Display_name } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const [display_name, setDisplay_name] = Display_name;
-  const [timeline, setTimeline] = useState([]);
+  const [profileCards, setProfileCards] = useState([]);
   const [test, setTest] = useState(false);
   const [highlight, setHighlight] = useState('');
   const [datan, setDatan] = useState(false);
@@ -69,7 +67,7 @@ export default function profile() {
       event['coordinates'] = doc.data().coordinates;
       event['docid'] = doc.id;
       events.push(event);
-      setTimeline(events);
+      setProfileCards(events);
     }
   }
   function showInput(event) {
@@ -123,10 +121,10 @@ export default function profile() {
       <h2>{display_name}'s Timeline</h2>
       <br></br>
       <Grid container spacing={2}>
-        {timeline.map((time) => (
-          <Timeline_card
-            key={time}
-            time={time}
+        {profileCards.map((pcard, index) => (
+          <Profile_card
+            key={index}
+            profileCard={pcard}
             test={test}
             onClick={showInput}
             highlight={setHighlight}
