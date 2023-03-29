@@ -56,8 +56,8 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function timeline_actions({ queryData }) {
-  const { Email, Airport, Display_name, First_name, Last_name, Uid } =
-    React.useContext(AppContext);
+  const { Email, Airport, Display_name, First_name, Last_name, Uid }=React.useContext(AppContext);
+  const [display_name, setDisplay_name] = Display_name;
   const [uid, setUid] = Uid;
   const docid = queryData.docid;
   const [file, setFile] = useState(null);
@@ -95,8 +95,18 @@ export default function timeline_actions({ queryData }) {
         .doc(uid)
         .collection('places_visited')
         .doc(docid);
+        docRef.update({ Highlight: highlight });
+      console.log("HELLO");
+      await db.collection("places_went").add({
+      display_name: display_name,
+      country: queryData.country,
+      city: queryData.city,
+      highlight: highlight,
+      time_stamp: firebase.firestore.FieldValue.serverTimestamp()
 
-      docRef.update({ Highlight: highlight });
+    })
+
+
     }
   }
 
