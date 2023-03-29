@@ -11,10 +11,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { AppContext } from './Layout';
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { Uid, Display_name } = React.useContext(AppContext);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
