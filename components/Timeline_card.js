@@ -21,7 +21,8 @@ const db = firebase.firestore();
 
 export default function Timeline_card(props) {
   const router = useRouter();
-  const { Uid } = React.useContext(AppContext);
+  const { Uid,Display_name } = React.useContext(AppContext);
+  const [display_name, setDisplay_name] = Display_name;
   const [uid, setUid] = Uid;
   const card_country = props.time.country;
   const card_city = props.time.city;
@@ -31,6 +32,8 @@ export default function Timeline_card(props) {
   const doc_id = props.time.docid;
   const [highlight, setHighlight] = React.useState('');
   const friendId = props.friendId;
+  const [madeComments, setMadeComments] = React.useState('');
+  const [comment, setComment] = React.useState('');
 
   console.log(friendId);
 
@@ -39,7 +42,7 @@ export default function Timeline_card(props) {
   async function getHigh() {
     let data = await db
       .collection('users')
-      .doc(uid)
+      .doc(friendId)
       .collection('places_visited')
       .where('city', '==', card_city)
       .where('country', '==', card_country)
@@ -49,9 +52,34 @@ export default function Timeline_card(props) {
       setHighlight(docs[0].data().Highlight);
     }
   }
+  async function get_made_comments() {
+    let data = await db
+      .collection('users')
+      .doc(friendId)
+      .collection('places_visited')
+      .doc(doc_id)
+      .collection('comments').orderBy('time_stamp')
+      .get();
+    let docs = data.docs;
+    setMadeComments(docs);
+  }
+  async function handleComment(event) {
+    setComment(event.target.value);
+    if (event.key === 'Enter') {
+      const docRef = await db
+        .collection('users')
+        .doc(friendId)
+        .collection('places_visited')
+        .doc(doc_id)
+        .collection('comments')
+
+      .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
+    }
+  }
 
   useEffect(() => {
     getHigh();
+    get_made_comments()
   }, []);
 
   const handleClick = () => {
@@ -95,9 +123,15 @@ export default function Timeline_card(props) {
         </Paper>
       </Grid>
       <Grid item xs={4}>
-        <div owner={uid}>{highlight}</div>
-
-        <input placeholder='comment here'></input>
+      <div owner={uid}>{highlight}</div>
+        {madeComments.length > 0 && (
+                  madeComments.map((doc) => (
+                    <div>
+                    <div key={doc.id}> {doc.data().display_name} : {doc.data().comment}</div>
+                    </div>
+                  ))
+                )}
+        <input onChange={handleComment} onKeyDown={handleComment} placeholder='commment here'></input>
       </Grid>
     </>
   );

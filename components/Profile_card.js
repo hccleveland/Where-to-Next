@@ -21,7 +21,8 @@ const db = firebase.firestore();
 
 export default function Profile_card(props) {
   const router = useRouter();
-  const { Uid } = React.useContext(AppContext);
+  const { Uid, Display_name } = React.useContext(AppContext);
+  const [display_name, setDisplay_name] = Display_name;
   const [uid, setUid] = Uid;
   const card_country = props.profileCard.country;
   const card_city = props.profileCard.city;
@@ -31,6 +32,8 @@ export default function Profile_card(props) {
   const doc_id = props.profileCard.docid;
   const [highlight, setHighlight] = React.useState('');
   const friendId = props.friendId;
+  const [comment, setComment] = React.useState('');
+  const [madeComments, setMadeComments] = React.useState([]);
 
   async function getHigh() {
     let data = await db
@@ -45,9 +48,21 @@ export default function Profile_card(props) {
       setHighlight(docs[0].data().Highlight);
     }
   }
+  async function get_made_comments() {
+    let data = await db
+      .collection('users')
+      .doc(uid)
+      .collection('places_visited')
+      .doc(doc_id)
+      .collection('comments').orderBy('time_stamp')
+      .get();
+    let docs = data.docs;
+    setMadeComments(docs);
+  }
 
   useEffect(() => {
     getHigh();
+    get_made_comments();
   }, []);
 
   const handleClick = () => {
@@ -56,6 +71,21 @@ export default function Profile_card(props) {
       query: { data: JSON.stringify(props.profileCard) },
     });
   };
+
+  
+  async function handleComment(event) {
+    setComment(event.target.value);
+    if (event.key === 'Enter') {
+      const docRef = await db
+        .collection('users')
+        .doc(uid)
+        .collection('places_visited')
+        .doc(doc_id)
+        .collection('comments')
+
+      .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
+    }
+  }
 
   return (
     <>
@@ -92,7 +122,14 @@ export default function Profile_card(props) {
       </Grid>
       <Grid item xs={4}>
         <div owner={uid}>{highlight}</div>
-        <input placeholder='commment here'></input>
+        {madeComments.length > 0 && (
+                  madeComments.map((doc) => (
+                    <div>
+                    <div key={doc.id}> {doc.data().display_name} : {doc.data().comment}</div>
+                    </div>
+                  ))
+                )}
+        <input onChange={handleComment} onKeyDown={handleComment} placeholder='commment here'></input>
       </Grid>
     </>
   );
