@@ -595,8 +595,6 @@ export default function ResultCard(props) {
               'www.skyscanner.net',
               'www.skyscanner.com'
             )}
-            target="_blank" 
-            rel="noopener noreferrer"
             
           >
             ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
