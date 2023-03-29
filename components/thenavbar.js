@@ -95,6 +95,3 @@ export default function MenuAppBar() {
     </Box>
   );
 }
-
-
-//test
