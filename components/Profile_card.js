@@ -26,7 +26,10 @@ export default function Profile_card(props) {
   const [uid, setUid] = Uid;
   const card_country = props.profileCard.country;
   const card_city = props.profileCard.city;
-  const card_image_url = props.profileCard.image_url;
+  const card_image_url = props.profileCard.image_url.replace(
+    'crop=400px:400px&quality=75',
+    'crop=1920px:1080px&quality=75'
+  );
   const card_start_date = props.profileCard.start_date;
   const card_end_date = props.profileCard.end_date;
   const doc_id = props.profileCard.docid;
@@ -54,7 +57,8 @@ export default function Profile_card(props) {
       .doc(uid)
       .collection('places_visited')
       .doc(doc_id)
-      .collection('comments').orderBy('time_stamp')
+      .collection('comments')
+      .orderBy('time_stamp')
       .get();
     let docs = data.docs;
     setMadeComments(docs);
@@ -72,7 +76,6 @@ export default function Profile_card(props) {
     });
   };
 
-  
   async function handleComment(event) {
     setComment(event.target.value);
     if (event.key === 'Enter') {
@@ -83,7 +86,11 @@ export default function Profile_card(props) {
         .doc(doc_id)
         .collection('comments')
 
-      .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
+        .add({
+          comment: comment,
+          display_name: display_name,
+          time_stamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
     }
   }
 
@@ -97,7 +104,9 @@ export default function Profile_card(props) {
           docid={props.profileCard.docid}
           onClick={handleClick}
         >
-          <img src={card_image_url} className='timeline_img' />
+          <div className='img-hover-zoom'>
+            <img src={card_image_url} className='timeline_img' />
+          </div>
           <Box padding={1}>
             <Typography variant='h6' component='h2'>
               <div
@@ -122,14 +131,20 @@ export default function Profile_card(props) {
       </Grid>
       <Grid item xs={4}>
         <div owner={uid}>{highlight}</div>
-        {madeComments.length > 0 && (
-                  madeComments.map((doc) => (
-                    <div>
-                    <div key={doc.id}> {doc.data().display_name} : {doc.data().comment}</div>
-                    </div>
-                  ))
-                )}
-        <input onChange={handleComment} onKeyDown={handleComment} placeholder='commment here'></input>
+        {madeComments.length > 0 &&
+          madeComments.map((doc) => (
+            <div>
+              <div key={doc.id}>
+                {' '}
+                {doc.data().display_name} : {doc.data().comment}
+              </div>
+            </div>
+          ))}
+        <input
+          onChange={handleComment}
+          onKeyDown={handleComment}
+          placeholder='commment here'
+        ></input>
       </Grid>
     </>
   );

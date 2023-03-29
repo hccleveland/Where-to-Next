@@ -26,7 +26,10 @@ export default function Timeline_card(props) {
   const [uid, setUid] = Uid;
   const card_country = props.time.country;
   const card_city = props.time.city;
-  const card_image_url = props.time.image_url;
+  const card_image_url = props.time.image_url.replace(
+    'crop=400px:400px&quality=75',
+    'crop=1920px:1080px&quality=75'
+  );
   const card_start_date = props.time.start_date;
   const card_end_date = props.time.end_date;
   const doc_id = props.time.docid;
@@ -34,8 +37,6 @@ export default function Timeline_card(props) {
   const friendId = props.friendId;
   const [madeComments, setMadeComments] = React.useState('');
   const [comment, setComment] = React.useState('');
-
-  console.log(friendId);
 
   props.time['uid'] = uid;
 
@@ -99,7 +100,9 @@ export default function Timeline_card(props) {
           docid={props.time.docid}
           onClick={handleClick}
         >
-          <img src={card_image_url} className='timeline_img' />
+          <div className='img-hover-zoom'>
+            <img src={card_image_url} className='timeline_img' />
+          </div>
           <Box padding={1}>
             <Typography variant='h6' component='h2'>
               <div
@@ -111,13 +114,13 @@ export default function Timeline_card(props) {
               </div>
             </Typography>
             <Typography variant='subtitle1' component='p'>
-              <div
+              <span
                 className='timeline_dates'
                 owner={props.friendId}
                 docid={props.time.docid}
               >
                 Visited : {card_start_date} {card_end_date}
-              </div>
+              </span>
             </Typography>
           </Box>
         </Paper>

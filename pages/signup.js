@@ -56,6 +56,15 @@ export default function signup() {
       first_name: first_name,
       last_name: last_name,
       points: 0,
+      helper_points: 0,
+      asia: 0,
+      africa: 0,
+      oceania: 0,
+      europe: 0,
+      north_america: 0,
+      south_america: 0,
+      world: 0,
+
     });
     await signInWithEmailAndPassword(auth, email, password);
     setUid(data.user.uid);

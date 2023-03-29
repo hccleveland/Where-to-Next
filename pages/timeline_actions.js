@@ -20,7 +20,6 @@ firebase.initializeApp(fbConfig);
 const db = firebase.firestore();
 
 export async function getServerSideProps({ query }) {
-  
   const queryData = JSON.parse(query.data);
   const uid = queryData.uid;
   const country = queryData.country;
@@ -57,7 +56,8 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function timeline_actions({ queryData }) {
-  const { Email, Airport, Display_name, First_name, Last_name, Uid }=React.useContext(AppContext);
+  const { Email, Airport, Display_name, First_name, Last_name, Uid } =
+    React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const docid = queryData.docid;
   const [file, setFile] = useState(null);
@@ -103,7 +103,7 @@ export default function timeline_actions({ queryData }) {
   return (
     <div>
       {queryData.picArray &&
-        queryData.picArray.map((picture, idex) => {
+        queryData.picArray.map((picture, index) => {
           return <UploadedImage key={index} imageUrl={picture}></UploadedImage>;
         })}
       <input
