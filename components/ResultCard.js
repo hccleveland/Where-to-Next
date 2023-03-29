@@ -225,6 +225,8 @@ export default function ResultCard(props) {
           <a
             key={flight.items[0].deeplink}
             onClick={addToPlacesVisited}
+            target='_blank'
+            rel='noopener noreferrer'
             href={flight.items[0].deeplink.replace(
               'www.skyscanner.net',
               'www.skyscanner.com'
