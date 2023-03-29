@@ -57,9 +57,10 @@ export default function Profile_card(props) {
       .collection('comments').orderBy('time_stamp')
       .get();
     let docs = data.docs;
-    setMadeComments(docs);
+    for (const doc of docs) {
+    setMadeComments([...madeComments, doc.data()]);
   }
-
+  }
   useEffect(() => {
     getHigh();
     get_made_comments();
@@ -84,6 +85,7 @@ export default function Profile_card(props) {
         .collection('comments')
 
       .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
+      setMadeComments([...madeComments, { comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() }]);
     }
   }
 
@@ -125,7 +127,7 @@ export default function Profile_card(props) {
         {madeComments.length > 0 && (
                   madeComments.map((doc) => (
                     <div>
-                    <div key={doc.id}> {doc.data().display_name} : {doc.data().comment}</div>
+                    <div key={doc.id}> {doc.display_name} : {doc.comment}</div>
                     </div>
                   ))
                 )}
