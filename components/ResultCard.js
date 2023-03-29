@@ -30,15 +30,21 @@ export default function ResultCard(props) {
   let countryNameEnglish = props.city['countryNameEnglish'];
   let countryId = props.city['countryId'];
   let countryImageUrl = props.city['countryImageUrl'];
-  let cityName = props.city['cityName'];
-  let imageUrl = props.city['imageUrl'];
+  let cityName = props.city['cityName'].replace(
+    'crop=400px:400px&quality=75',
+    'crop=1920px:1080px&quality=75'
+  );
+  let imageUrl = props.city['imageUrl'].replace(
+    'crop=400px:400px&quality=75',
+    'crop=1920px:1080px&quality=75'
+  );
   let price = props.city['price'];
   let startDate = props.city['startDate'];
   let endDate = props.city['endDate'];
   let coordinates = props.city['coordinates'];
   let oneWay = props.city['oneWay'];
 
-  const handleImageClick = async () => {
+  const getCheapestFlights = async () => {
     if (cheapestFlights.length > 0) return;
 
     //get all airports to that city first
@@ -128,84 +134,97 @@ export default function ResultCard(props) {
           console.error(error);
         });
     }
-    if (uid) {
-      await db.collection('users').doc(uid).collection('places_visited').add({
-        country: countryNameEnglish,
-        country_id: countryId,
-        city: cityName,
-        coordinates: coordinates,
-        city_image_url: imageUrl,
-        country_image_url: countryImageUrl,
-        start_date: startDate,
-        end_date: endDate,
-      });
+    // if (uid) {
+    //   await db.collection('users').doc(uid).collection('places_visited').add({
+    //     country: countryNameEnglish,
+    //     country_id: countryId,
+    //     city: cityName,
+    //     coordinates: coordinates,
+    //     image_url: imageUrl,
+    //     start_date: startDate,
+    //     end_date: endDate,
+    //   });
 
-      //increment counter OR all entire city
-      let data = await db
-        .collection('places_went')
-        .where('country', '==', countryNameEnglish)
-        .where('city', '==', cityName)
-        .limit(1)
-        .get();
+    //increment counter OR all entire city
+    // let data = await db
+    //   .collection('places_went')
+    //   .where('country', '==', countryNameEnglish)
+    //   .where('city', '==', cityName)
+    //   .limit(1)
+    //   .get();
 
-      if (data.docs[0]) {
-        await db
-          .collection('places_went')
-          .doc(data.docs[0].ref.id)
-          .update({ counter: firebase.firestore.FieldValue.increment(1) });
-      } else {
-        await db.collection('places_went').add({
-          country: countryNameEnglish,
-          country_id: countryId,
-          city: cityName,
-          coordinates: coordinates,
-          city_image_url: imageUrl,
-          country_image_url: countryImageUrl,
-          counter: 1,
-        });
-      }
-    }
-
-    const convertDate = (date) => {
-      if (!date) return '';
-
-      const dateArr = date.split('-');
-      const year = dateArr[0];
-      const month = dateArr[1];
-      const day = dateArr[2];
-
-      const convertedD = new Date(year, month, day).toDateString();
-      const convertedDArr = convertedD.split(' ');
-
-      return (
-        convertedDArr[0] +
-        ', ' +
-        convertedDArr[1] +
-        ' ' +
-        convertedDArr[2] +
-        ' ' +
-        convertedDArr[3]
-      );
-    };
+    // if (data.docs[0]) {
+    //   await db
+    //     .collection('places_went')
+    //     .doc(data.docs[0].ref.id)
+    //     .update({ counter: firebase.firestore.FieldValue.increment(1) });
+    // } else {
+    //   await db.collection('places_went').add({
+    //     country: countryNameEnglish,
+    //     country_id: countryId,
+    //     city: cityName,
+    //     coordinates: coordinates,
+    //     image_url: imageUrl,
+    //     counter: 1,
+    //   });
+    // }
+    // }
   };
+  const convertDate = (date) => {
+    if (!date) return '';
+
+    const dateArr = date.split('-');
+    const year = dateArr[0];
+    const month = dateArr[1];
+    const day = dateArr[2];
+
+    const convertedD = new Date(year, month, day).toDateString();
+    const convertedDArr = convertedD.split(' ');
+
+    return (
+      convertedDArr[0] +
+      ', ' +
+      convertedDArr[1] +
+      ' ' +
+      convertedDArr[2] +
+      ' ' +
+      convertedDArr[3]
+    );
+  };
+
+  const addToPlacesVisited = async () => {
+    await db.collection('users').doc(uid).collection('places_visited').add({
+      country: countryNameEnglish,
+      country_id: countryId,
+      city: cityName,
+      coordinates: coordinates,
+      image_url: imageUrl,
+      start_date: startDate,
+      end_date: endDate,
+    });
+  };
+
+  getCheapestFlights();
 
   return (
     <div className='result-card'>
-      <img
-        className='result-card-image'
-        src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
-        onClick={handleImageClick}
-      ></img>
+      <div className='img-hover-zoom'>
+        <img
+          className='result-card-image'
+          src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
+        ></img>
+      </div>
       <div className='result-card-desc'>
         {cityName}, {countryNameEnglish}
         <br></br>
-        {startDate} {!oneWay && ' - ' + endDate}
+        {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
         <br></br>From ${Math.floor(price)}
       </div>
       {cheapestFlights.map((flight) => {
         return (
           <a
             key={flight.items[0].deeplink}
+            onClick={addToPlacesVisited}
             href={flight.items[0].deeplink.replace(
               'www.skyscanner.net',
               'www.skyscanner.com'
@@ -216,22 +235,5 @@ export default function ResultCard(props) {
         );
       })}
     </div>
-
-    // <div className='result-card'>
-    //   <img
-    //     className='result-card-image'
-    //     onClick={handleImageClick}
-    //     src={
-    //       'https://content.skyscnr.com/53628704cd04914234be0037f639b2f7/GettyImages-476817068.jpg?crop=400px:400px&quality=75'
-    //     }
-    //   ></img>
-    //   <div className='result-card-desc'>
-    //     city, country
-    //     <br></br>
-    //     Mon, Jan 01 - Sun, Jan 07
-    //     <br></br>
-    //     $100
-    //   </div>
-    // </div>
   );
 }

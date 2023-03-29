@@ -25,12 +25,16 @@ export default function Profile_card(props) {
   const [uid, setUid] = Uid;
   const card_country = props.profileCard.country;
   const card_city = props.profileCard.city;
-  const card_image_url = props.profileCard.image_url;
+  const card_image_url = props.profileCard.image_url.replace(
+    'crop=400px:400px&quality=75',
+    'crop=1920px:1080px&quality=75'
+  );
   const card_start_date = props.profileCard.start_date;
   const card_end_date = props.profileCard.end_date;
   const doc_id = props.profileCard.docid;
   const [highlight, setHighlight] = React.useState('');
   const friendId = props.friendId;
+  props.profileCard['uid'] = uid;
 
   async function getHigh() {
     let data = await db
@@ -67,7 +71,9 @@ export default function Profile_card(props) {
           docid={props.profileCard.docid}
           onClick={handleClick}
         >
-          <img src={card_image_url} className='timeline_img' />
+          <div className='img-hover-zoom'>
+            <img src={card_image_url} className='timeline_img' />
+          </div>
           <Box padding={1}>
             <Typography variant='h6' component='h2'>
               <div
