@@ -37,6 +37,7 @@ export default function Profile_card(props) {
   const friendId = props.friendId;
   const [comment, setComment] = React.useState('');
   const [madeComments, setMadeComments] = React.useState([]);
+  props.profileCard['uid'] = uid;
 
   async function getHigh() {
     let data = await db
