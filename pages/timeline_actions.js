@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { AppContext } from '../components/Layout';
@@ -19,6 +20,7 @@ firebase.initializeApp(fbConfig);
 const db = firebase.firestore();
 
 export async function getServerSideProps({ query }) {
+  
   const queryData = JSON.parse(query.data);
   const uid = queryData.uid;
   const country = queryData.country;
@@ -55,7 +57,8 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function timeline_actions({ queryData }) {
-  const uid = queryData.uid;
+  const { Email, Airport, Display_name, First_name, Last_name, Uid }=React.useContext(AppContext);
+  const [uid, setUid] = Uid;
   const docid = queryData.docid;
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
