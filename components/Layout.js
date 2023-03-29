@@ -9,6 +9,7 @@ import theme from '../config/theme';
 import createEmotionCache from '../config/createEmotionCache';
 import {LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import Thenavbar from '../components/thenavbar';
 const AppContext = createContext();
 
 const clientSideEmotionCache = createEmotionCache();
@@ -40,6 +41,7 @@ const Layout = ({ children}, props) => {
         Last_name: [last_name, setLast_name],
         Uid: [uid, setUid],
       }}>
+      <Thenavbar />
       <Navbar />
       {children}
       <Footer />

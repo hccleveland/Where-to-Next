@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { AppContext } from './Layout';
 import { Button } from '@mui/material';
 import { ShoppingBagRounded } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -21,6 +22,7 @@ const db = firebase.firestore();
 const auth = getAuth();
 
 export default function Navbar() {
+  const router = useRouter();
   const { Uid, Display_name } = React.useContext(AppContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,6 +51,8 @@ export default function Navbar() {
     setPassword('');
     setDisplay_name('');
     setUid('');
+    router.push('/');
+    
   }
   useEffect(()=>{
     auth.onAuthStateChanged(user => {

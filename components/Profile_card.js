@@ -37,6 +37,7 @@ export default function Profile_card(props) {
   const friendId = props.friendId;
   const [comment, setComment] = React.useState('');
   const [madeComments, setMadeComments] = React.useState([]);
+  props.profileCard['uid'] = uid;
 
   async function getHigh() {
     let data = await db
@@ -62,8 +63,11 @@ export default function Profile_card(props) {
       .get();
     let docs = data.docs;
     setMadeComments(docs);
+    //   let docs = data.docs;
+    //   for (const doc of docs) {
+    //   setMadeComments([...madeComments, doc.data()]);
+    // }
   }
-
   useEffect(() => {
     getHigh();
     get_made_comments();
@@ -85,12 +89,12 @@ export default function Profile_card(props) {
         .collection('places_visited')
         .doc(doc_id)
         .collection('comments')
-
         .add({
           comment: comment,
           display_name: display_name,
           time_stamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
+      //setMadeComments([...madeComments, { comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() }]);
     }
   }
 
@@ -138,6 +142,7 @@ export default function Profile_card(props) {
                 {' '}
                 {doc.data().display_name} : {doc.data().comment}
               </div>
+              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
             </div>
           ))}
         <input
