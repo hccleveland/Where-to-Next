@@ -61,9 +61,10 @@ export default function Profile_card(props) {
       .orderBy('time_stamp')
       .get();
     let docs = data.docs;
-    setMadeComments(docs);
+    for (const doc of docs) {
+    setMadeComments([...madeComments, doc.data()]);
   }
-
+  }
   useEffect(() => {
     getHigh();
     get_made_comments();
@@ -86,11 +87,8 @@ export default function Profile_card(props) {
         .doc(doc_id)
         .collection('comments')
 
-        .add({
-          comment: comment,
-          display_name: display_name,
-          time_stamp: firebase.firestore.FieldValue.serverTimestamp(),
-        });
+      .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
+      setMadeComments([...madeComments, { comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() }]);
     }
   }
 
@@ -131,6 +129,16 @@ export default function Profile_card(props) {
       </Grid>
       <Grid item xs={4}>
         <div owner={uid}>{highlight}</div>
+<<<<<<< HEAD
+        {madeComments.length > 0 && (
+                  madeComments.map((doc) => (
+                    <div>
+                    <div key={doc.id}> {doc.display_name} : {doc.comment}</div>
+                    </div>
+                  ))
+                )}
+        <input onChange={handleComment} onKeyDown={handleComment} placeholder='commment here'></input>
+=======
         {madeComments.length > 0 &&
           madeComments.map((doc) => (
             <div>
@@ -145,6 +153,7 @@ export default function Profile_card(props) {
           onKeyDown={handleComment}
           placeholder='commment here'
         ></input>
+>>>>>>> main
       </Grid>
     </>
   );
