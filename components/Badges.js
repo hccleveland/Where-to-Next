@@ -148,19 +148,19 @@ export default function Badges(props) {
   let imageWorld = '';
   let titleWorld = '';
   switch (true) {
-    case SAmericaCounter >= 150:
+    case worldCounter >= 150:
       imageWorld = '/worldGold.png';
       titleWorld = 'Explorator';
       break;
-    case SAmericaCounter >= 50 && SAmericaCounter < 100:
+    case worldCounter >= 50 && worldCounter < 100:
       imageWorld = '/worldSilver.png';
       titleWorld = 'Connoisseur';
       break;
-    case SAmericaCounter >= 5 && SAmericaCounter < 50:
+    case worldCounter >= 5 && worldCounter < 50:
       imageWorld = '/worldBronze.png';
       titleWorld = 'Traveler';
       break;
-    case SAmericaCounter < 5:
+    case worldCounter < 5:
       imageWorld = '/world.png';
       titleWorld = 'Rookie';
       break;
@@ -170,19 +170,19 @@ export default function Badges(props) {
   let imageHelper = '';
   let titleHelper = '';
   switch (true) {
-    case SAmericaCounter >= 20000:
+    case helperCounter >= 20000:
       imageHelper = '/helperGold.png';
       titleHelper = 'Explorator';
       break;
-    case SAmericaCounter >= 2000 && SAmericaCounter < 20000:
+    case helperCounter >= 2000 && helperCounter < 20000:
       imageHelper = '/helperSilver.png';
       titleHelper = 'Connoisseur';
       break;
-    case SAmericaCounter >= 200 && SAmericaCounter < 2000:
+    case helperCounter >= 200 && helperCounter < 2000:
       imageHelper = '/helperBronze.png';
       titleHelper = 'Traveler';
       break;
-    case SAmericaCounter < 200:
+    case helperCounter < 200:
       imageHelper = '/helper.png';
       titleHelper = 'Rookie';
       break;
