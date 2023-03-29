@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import Timeline_card from '../../components/Timeline_card';
+import Badges from '../../components/Badges';
 import DynamicMap from '@/components/DynamicMap';
 import Grid from '@mui/material/Grid';
 
@@ -30,6 +31,7 @@ export async function getServerSideProps(context) {
 export default function Friend({ friendId }) {
   const [coord, setCoord] = useState(false);
   const [timeline, setTimeline] = useState([]);
+  const [counters, setCounters] = useState({});
 
   async function getCooridnates() {
     const coordinateToPlace = [];
@@ -86,6 +88,34 @@ export default function Friend({ friendId }) {
     }
   }, []);
 
+  async function getCounterToTransfert() {
+    let counters = {};
+    let data = await db
+      .collection('users')
+      .doc(friendId)
+      .get()
+      .then((docRef) => {
+        counters = {
+          asia: docRef.data().asia,
+          africa: docRef.data().africa,
+          europe: docRef.data().europe,
+          oceania: docRef.data().oceania,
+          northAmerica: docRef.data().north_america,
+          southAmerica: docRef.data().south_america,
+          world: docRef.data().world,
+          helperPoints: docRef.data().helper_points,
+        };
+      })
+      .catch((error) => { });
+    setCounters(counters);
+  }
+
+  useEffect(() => {
+    if (friendId) {
+      getCounterToTransfert(friendId);
+    }
+  }, [friendId]);
+
   return (
     <>
       <Grid container spacing={2}>
@@ -100,7 +130,10 @@ export default function Friend({ friendId }) {
         </Grid>
         <Grid item xs={1}></Grid>
       </Grid>
-
+      <br></br>
+      <Grid container spacing={2}>
+        <Badges index={counters}></Badges>
+      </Grid>
       <br></br>
       <Grid container spacing={2}>
         {timeline.map((time, index) => (

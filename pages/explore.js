@@ -68,8 +68,6 @@ export default function Home({ data }) {
   });
 
   useEffect(() => {
-    require('daterangepicker/daterangepicker.js');
-    require('daterangepicker/daterangepicker.css');
     require('airport-autocomplete-js/dist/index.browser.min.js');
     const $ = require('jquery/dist/jquery.js');
 
@@ -101,31 +99,6 @@ export default function Home({ data }) {
     };
 
     AirportInput('origin', options);
-
-    // const today = new Date();
-    // const minDate = today.toLocaleDateString('en-US');
-
-    // let startDate = document.querySelector('#startDate');
-    // let endDate = document.querySelector('#endDate');
-
-    // startDate.innerText = minDate;
-
-    //   const calendar = $('#calendar').daterangepicker(
-    //     {
-    //       opens: 'left',
-    //       minDate: minDate,
-    //     },
-    //     function (start, end, label) {
-    //       console.log(
-    //         'A new date selection was made: ' +
-    //           start.format('YYYY-MM-DD') +
-    //           ' to ' +
-    //           end.format('YYYY-MM-DD')
-    //       );
-    //       startDate.innerText = start.format('YYYY-MM-DD');
-    //       endDate.innerText = end.format('YYYY-MM-DD');
-    //     }
-    //   );
   }, []);
 
   const formatDate = (date) => {
