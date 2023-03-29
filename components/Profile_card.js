@@ -34,6 +34,7 @@ export default function Profile_card(props) {
   const doc_id = props.profileCard.docid;
   const [highlight, setHighlight] = React.useState('');
   const friendId = props.friendId;
+  props.profileCard['uid'] = uid;
 
   async function getHigh() {
     let data = await db

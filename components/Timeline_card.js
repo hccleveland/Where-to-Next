@@ -35,8 +35,6 @@ export default function Timeline_card(props) {
   const [highlight, setHighlight] = React.useState('');
   const friendId = props.friendId;
 
-  console.log(friendId);
-
   props.time['uid'] = uid;
 
   async function getHigh() {
