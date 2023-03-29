@@ -60,10 +60,12 @@ export default function Profile_card(props) {
       .collection('comments')
       .orderBy('time_stamp')
       .get();
-    let docs = data.docs;
-    for (const doc of docs) {
-    setMadeComments([...madeComments, doc.data()]);
-  }
+      let docs = data.docs;
+      setMadeComments(docs);
+ //   let docs = data.docs;
+ //   for (const doc of docs) {
+ //   setMadeComments([...madeComments, doc.data()]);
+ // }
   }
   useEffect(() => {
     getHigh();
@@ -86,9 +88,8 @@ export default function Profile_card(props) {
         .collection('places_visited')
         .doc(doc_id)
         .collection('comments')
-
-      .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
-      setMadeComments([...madeComments, { comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() }]);
+         .add({ comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() });
+      //setMadeComments([...madeComments, { comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() }]);
     }
   }
 
@@ -133,7 +134,8 @@ export default function Profile_card(props) {
         {madeComments.length > 0 && (
                   madeComments.map((doc) => (
                     <div>
-                    <div key={doc.id}> {doc.display_name} : {doc.comment}</div>
+                       <div key={doc.id}> {doc.data().display_name} : {doc.data().comment}</div>
+                    {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
                     </div>
                   ))
                 )}

@@ -61,10 +61,11 @@ export default function Timeline_card(props) {
       .doc(doc_id)
       .collection('comments').orderBy('time_stamp')
       .get();
-    let docs = data.docs;
-     for (const doc of docs) {
-      setMadeComments([...madeComments, doc.data()]);
-    }
+      let docs = data.docs;
+      setMadeComments(docs);
+    // for (const doc of docs) {
+    //  setMadeComments([...madeComments, doc.data()]);
+    //}
   }
   async function handleComment(event) {
     setComment(event.target.value);
@@ -132,7 +133,8 @@ export default function Timeline_card(props) {
         {madeComments.length > 0 && (
                   madeComments.map((doc) => (
                     <div>
-                    <div key={doc.id}> {doc.display_name} : {doc.comment}</div>
+                      <div key={doc.id}> {doc.data().display_name} : {doc.data().comment}</div>
+                    {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
                     </div>
                   ))
                 )}
