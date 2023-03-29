@@ -416,7 +416,7 @@ export default function profile() {
       }
     }
 
-    async function getCounterFromDB() {
+    async function updateCounterFromDB() {
       let data = await db
         .collection('users')
         .doc(uid)
@@ -462,7 +462,7 @@ export default function profile() {
         });
       }
     }
-    //getCounterFromDB()
+    //updateCounterFromDB()
   }
   //getContinentCounter(uid)
   //////////////////////////////////////////////////////////////////////////////////////////
