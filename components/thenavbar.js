@@ -89,21 +89,25 @@ export default function MenuAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
 
-      <AppBar position="static">
+      <AppBar style={{ background: 'grey', color:"yellow" }} position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link href='/profile'>{display_name}</Link></Grid><Grid item xs={2} style={{cursor:"default"}}>AddTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>FindTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>Achievements</Grid><Grid item xs={2} onClick={logout}style={{cursor:"default"}}>Logout</Grid></Grid>:<Grid container spacing={2}>
+          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none"}} href='/profile'>{display_name}</Link></Grid><Grid item xs={2} style={{cursor:"default"}}>AddTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>FindTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>Achievements</Grid><Grid item xs={2} onClick={logout}style={{cursor:"default"}}>Logout</Grid></Grid>:<Grid container spacing={2}>
         <Grid item xs={2}><TextField
+                 variant='filled'
                  label="Email"
                  id="outlined-size-small"
                  size="small"
+                 sx={{ input: { color: 'pink' } }}
         onChange={(event) => {setEmail(event.target.value);}}/></Grid>
         <Grid item xs={2}><TextField
+                 variant='filled' 
                  label="Password"
                  id="outlined-size-small"
                  size="small"
+                 sx={{ input: { color: 'pink' } }}
         onChange={(event) => {setPassword(event.target.value);}}/></Grid>
-         <Grid item xs={2}onClick={login} style={{cursor:"default"}}>Login</Grid>
+         <Grid item xs={2}onClick={login} style={{cursor:"default", textDecoration:"none"}}>Login</Grid>
         <Grid item xs={2} style={{cursor:"default"}}>Register</Grid></Grid>}
           </Typography>
           {uid && (
