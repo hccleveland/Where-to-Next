@@ -51,7 +51,6 @@ const Layout = ({ children}, props) => {
       }}>
       <Thenavbar />
       {children}
-      <Footer style={{position:"absolute", width:"100%"}} />
     </AppContext.Provider>
     </ThemeProvider>
     </CacheProvider>

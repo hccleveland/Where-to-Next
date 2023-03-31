@@ -112,7 +112,7 @@ export default function Map(props) {
       <div>
         <MapContainer
           style={{
-            height: '75vh',
+            height: '107vh',
           }}
           center={[35.6762, 139.6503]}
           zoom={2}
