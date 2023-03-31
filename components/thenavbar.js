@@ -20,6 +20,7 @@ import TextField from '@mui/material/TextField';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -47,6 +48,14 @@ export default function MenuAppBar() {
     signInWithEmailAndPassword(auth, email, password).then((user) => {
       setUid(user.user.uid);
       getUserDisplayName(user.user.uid);
+    }).catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Wrong password or email`,
+      });
     });
   }
 
@@ -89,10 +98,10 @@ export default function MenuAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
 
-      <AppBar style={{ background: 'grey', color:"yellow" }} position="static">
+      <AppBar style={{ background: 'grey', color:"pink", opacity:0.5 }} position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none"}} href='/profile'>{display_name}</Link></Grid><Grid item xs={2} style={{cursor:"default"}}>AddTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>FindTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>Achievements</Grid><Grid item xs={2} onClick={logout}style={{cursor:"default"}}>Logout</Grid></Grid>:<Grid container spacing={2}>
+          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none", color:'inherit'}} href='/profile'>{display_name}</Link></Grid><Grid item xs={2} style={{cursor:"default", textDecoration:"none"}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="add_timeline">AddTrip</Link></Grid><Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/explore">FindTrip</Link></Grid><Grid item xs={2}style={{cursor:"default", textDecoration:"none"}}>Achievements</Grid><Grid item xs={2} onClick={logout}style={{cursor:"default", textDecoration:"none"}}>Logout</Grid></Grid>:<Grid container spacing={2}>
         <Grid item xs={2}><TextField
                  variant='filled'
                  label="Email"
