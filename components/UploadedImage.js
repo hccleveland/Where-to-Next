@@ -3,7 +3,12 @@ import React from 'react';
 export default function UploadedImage(props) {
   return (
     <div>
-      <img src={'http://localhost:3000/uploads/' + props.imageUrl}></img>
+      <img
+        src={
+          'https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/' +
+          props.imageUrl
+        }
+      ></img>
     </div>
   );
 }
