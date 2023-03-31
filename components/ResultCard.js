@@ -4,7 +4,6 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 const axios = require('axios');
 import { useRouter } from 'next/router';
-
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -27,7 +26,7 @@ export default function ResultCard(props) {
   const [uid, setUid] = Uid;
   const [cheapestFlights, setCheapestFlights] = useState([]);
   const route = useRouter();
-
+  const [madeHighlights,setMadeHighlights] = useState(false);
   let originIata = props.city['originIata'];
   let countryNameEnglish = props.city['countryNameEnglish'];
   let countryId = props.city['countryId'];
@@ -45,6 +44,16 @@ export default function ResultCard(props) {
   let endDate = props.city['endDate'];
   let coordinates = props.city['coordinates'];
   let oneWay = props.city['oneWay'];
+
+  async function getMadeHighlights(){
+    let data = await db.collection('places_went').where('city', '==', cityName).where('country', '==', countryNameEnglish).get();
+    let docs=data.docs;
+    setMadeHighlights(docs);
+  }
+
+  useEffect(() => {
+    getMadeHighlights();
+  })
 
   const getCheapestFlights = async () => {
     if (cheapestFlights.length > 0) return;
@@ -570,6 +579,8 @@ export default function ResultCard(props) {
   getCheapestFlights();
 
   return (
+    <>
+    <Grid item xs={6}>
     <div className='result-card'>
       <div className='img-hover-zoom'>
         <img
@@ -602,6 +613,21 @@ export default function ResultCard(props) {
         );
       })}
     </div>
+    </Grid>
+    <Grid item xs={6}>
+    {madeHighlights.length > 0 &&
+          madeHighlights.map((doc) => (
+            <div>
+              <div>
+                {' '}
+                {doc.data().display_name} : {doc.data().highlight}
+              </div>
+              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
+            </div>
+          ))}
+
+    </Grid>
+    </>
   );
 }
 

@@ -7,10 +7,9 @@ receive the props and display the messages related to that place */
 import React from 'react';
 
 export default function Message(props) {
-  //console.log(props.city);
-  //console.log(props.example.city);
+
   const user = "hello";
-  console.log("props", props)
+ 
   return (
     <>
       <br></br>

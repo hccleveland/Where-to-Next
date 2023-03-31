@@ -30,8 +30,7 @@ const { MapContainer, TileLayer, Marker, Popup } = ReactLeaflet;
 //Map
 
 export default function Map(props) {
-  console.log('index', props.index);
-  console.log('road', props.road);
+
 
   const [cityHighlight, setCityHighlight] = useState();
   const [comments, setComments] = useState([]);
@@ -73,7 +72,6 @@ export default function Map(props) {
         el.data().display_name,
         el.data().highlight,
       ]);
-      console.log('highlights', highlights);
       setCityHighlight(highlights[0]);
       setComments(highlights);
     } else {
@@ -82,13 +80,13 @@ export default function Map(props) {
     }
   }
 
-  console.log(props.index);
+ 
   let chemin;
-  console.log(props);
+ 
   if (props.road === '/' || props.road === '/friend') {
-    console.log('props / /firend', props);
+    
     chemin = props.index;
-    console.log('chemin', chemin);
+    
   }
 
   if (props.road === '/profile' || props.road === '/Map') {
