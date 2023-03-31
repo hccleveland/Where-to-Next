@@ -19,9 +19,9 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 
 const customIcon = new icon({
-  iconUrl: '/landscape.png',
-  iconSize: [32, 32],
-  iconAnchor: [22, 38],
+  iconUrl: '/bold cross.png',
+  iconSize: [20, 20],
+  iconAnchor: [10, 5],
   popupAnchor: [-3, -76],
 });
 
@@ -122,7 +122,7 @@ export default function Map(props) {
         >
           <TileLayer
             attribution=''
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            url='https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg'
           />
           {chemin.map(({ lat, lng, price }) => (
             <Marker
