@@ -34,16 +34,20 @@ export async function getServerSideProps() {
   let data = await db.collection('places_went').get();
   let docs = data.docs;
   docs.forEach((ele) => {
-    const lat = ele.data()['coordinates'][1];
-    const lng = ele.data()['coordinates'][0];
-    const city = ele.data()['city'];
-    const counter = ele.data()['counter'];
-    coordinateToPlace.push({
-      lat: lat,
-      lng: lng,
-      city: city,
-      counter: counter,
-    });
+
+    if(ele.data()['coordinates']){
+      const lat = ele.data()['coordinates'][1];
+      const lng = ele.data()['coordinates'][0];
+      const city = ele.data()['city'];
+      const counter = ele.data()['counter'];
+      coordinateToPlace.push({
+        lat: lat,
+        lng: lng,
+        city: city,
+        counter: counter,
+      });
+    }
+    
   });
 
   return { props: { data: coordinateToPlace } };
