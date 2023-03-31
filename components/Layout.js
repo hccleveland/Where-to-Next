@@ -42,7 +42,6 @@ const Layout = ({ children}, props) => {
         Uid: [uid, setUid],
       }}>
       <Thenavbar />
-      <Navbar />
       {children}
       <Footer />
     </AppContext.Provider>

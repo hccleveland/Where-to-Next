@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import TextField from '@mui/material/TextField';
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
+import Link from 'next/link';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -76,7 +77,7 @@ export default function MenuAppBar() {
         setUid('');
       }
     })
-  },[uid]);
+  },[]);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -90,10 +91,8 @@ export default function MenuAppBar() {
 
       <AppBar position="static">
         <Toolbar>
-
-          
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {uid ? <Grid container spacing={2}><Grid item xs={2}>{display_name}</Grid><Grid item xs={2}>AddTrip</Grid><Grid item xs={2}>FindTrip</Grid><Grid item xs={2}>Achievements</Grid><Grid item xs={2} onClick={logout}>Logout</Grid></Grid>:<Grid container spacing={2}>
+          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link href='/profile'>{display_name}</Link></Grid><Grid item xs={2} style={{cursor:"default"}}>AddTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>FindTrip</Grid><Grid item xs={2}style={{cursor:"default"}}>Achievements</Grid><Grid item xs={2} onClick={logout}style={{cursor:"default"}}>Logout</Grid></Grid>:<Grid container spacing={2}>
         <Grid item xs={2}><TextField
                  label="Email"
                  id="outlined-size-small"
@@ -104,8 +103,8 @@ export default function MenuAppBar() {
                  id="outlined-size-small"
                  size="small"
         onChange={(event) => {setPassword(event.target.value);}}/></Grid>
-         <Grid item xs={2}>Login</Grid>
-        <Grid item xs={2}>Register</Grid></Grid>}
+         <Grid item xs={2}onClick={login} style={{cursor:"default"}}>Login</Grid>
+        <Grid item xs={2} style={{cursor:"default"}}>Register</Grid></Grid>}
           </Typography>
           {uid && (
             <div>
@@ -134,9 +133,9 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Home</MenuItem>
-                <MenuItem onClick={handleClose}>Ranking</MenuItem>
-                <MenuItem onClick={handleClose}>Setting</MenuItem>
+                <MenuItem onClick={handleClose} style={{cursor:"default"}}><Link href={"/"}>Home</Link></MenuItem>
+                <MenuItem onClick={handleClose} style={{cursor:"default"}}>Ranking</MenuItem>
+                <MenuItem onClick={handleClose} style={{cursor:"default"}}><Link href={"/settings"}>Setting</Link></MenuItem>
               </Menu>
             </div>
           )}
