@@ -522,10 +522,6 @@ export default function profile() {
           />
         ))}
       </Grid>
-      <br></br>
-      <Link href='/add_timeline'>Add a Trip to Your Timeline</Link>
-      <br></br>
-      <Link href='explore'>Start a Random Adventure</Link>
     </>
   );
 }

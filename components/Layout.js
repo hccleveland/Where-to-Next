@@ -10,9 +10,17 @@ import createEmotionCache from '../config/createEmotionCache';
 import {LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Thenavbar from '../components/thenavbar';
+import { createTheme } from '@material-ui/core/styles';
+
+import { DarkMode } from '@mui/icons-material';
 const AppContext = createContext();
 
 const clientSideEmotionCache = createEmotionCache();
+const darkTheme = createTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
 const Layout = ({ children}, props) => {
   const {emotionCache = clientSideEmotionCache} = props;
@@ -30,7 +38,7 @@ const Layout = ({ children}, props) => {
     <Head>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
     </Head>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
     <CssBaseline />
     <AppContext.Provider
       value={{
@@ -43,7 +51,7 @@ const Layout = ({ children}, props) => {
       }}>
       <Thenavbar />
       {children}
-      <Footer />
+      <Footer style={{position:"absolute", width:"100%"}} />
     </AppContext.Provider>
     </ThemeProvider>
     </CacheProvider>
