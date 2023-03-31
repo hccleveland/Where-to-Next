@@ -43,7 +43,7 @@ export default function AddTripCard(props) {
         );
       return response.data.features[0].geometry.coordinates;
     } catch (error) {
-      console.error(error);
+      
     }
   };
 
@@ -363,7 +363,7 @@ const handleTimelineSubmission = async () => {
   ];
 
   async function getContinentCounter() {
-    console.log("enter?");
+    
     let visitedCountries = [];
     let asianCounter = 0;
     let africaCounter = 0;

@@ -45,11 +45,9 @@ export async function getServerSideProps({ query }) {
         if (doc.data().Highlight) queryData['highlight'] = doc.data().Highlight;
         if (picArray) queryData['picArray'] = picArray;
       } else {
-        console.log('No such document!');
       }
     })
     .catch((error) => {
-      console.log('Error getting document:', error);
     });
 
   return { props: { queryData } };
@@ -83,7 +81,7 @@ export default function timeline_actions({ queryData }) {
         formData
       )
       .then((res) => {
-        // console.log(res);
+       
       });
   };
 
@@ -96,7 +94,6 @@ export default function timeline_actions({ queryData }) {
         .collection('places_visited')
         .doc(docid);
         docRef.update({ Highlight: highlight });
-      console.log("HELLO");
       await db.collection("places_went").add({
       display_name: display_name,
       country: queryData.country,

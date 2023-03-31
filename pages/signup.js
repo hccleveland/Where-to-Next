@@ -71,7 +71,6 @@ export default function signup() {
     route.push('/');
   }
   if (uid !== '') {
-    console.log('user is already logged in');
     route.push('/');
   }
   return (

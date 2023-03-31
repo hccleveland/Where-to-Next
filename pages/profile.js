@@ -47,7 +47,7 @@ export default function profile() {
 
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
-    console.log(coordinateToPlace);
+    
     await setDatan({ coordinateToPlace });
   }
 

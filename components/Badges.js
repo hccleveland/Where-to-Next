@@ -3,7 +3,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
 export default function Badges(props) {
-  console.log('Badgesprops', props);
 
   let asiaCounter = props.index.asia;
   let imageAsia = '';
@@ -114,7 +113,7 @@ export default function Badges(props) {
       titleNAmerica = 'Rookie';
       break;
   }
-  console.log(NAmericaCounter, imageNAmerica);
+ 
 
   let SAmericaCounter = props.index.southAmerica;
   let imageSAmerica = '';

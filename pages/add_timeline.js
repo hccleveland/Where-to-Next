@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import firebase from 'firebase/compat/app';
-// import 'firebase/compat/firestore';
+ import firebase from 'firebase/compat/app';
+ import 'firebase/compat/firestore';
 import citiesJson from '../data/cities.json';
 import AddTripCard from '@/components/AddTripCard';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Container } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
-// var config = {
-//     apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
-//     authDomain: 'where-to-next-7bc5f.firebaseapp.com',
-//     projectId: 'where-to-next-7bc5f',
-//     storageBucket: 'where-to-next-7bc5f.appspot.com',
-//     messagingSenderId: '873346829271',
-//     appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
-//   };
-  
-// firebase.initializeApp(config);
-// const db = firebase.firestore();
+ var config = {
+     apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
+     authDomain: 'where-to-next-7bc5f.firebaseapp.com',
+     projectId: 'where-to-next-7bc5f',
+     storageBucket: 'where-to-next-7bc5f.appspot.com',
+     messagingSenderId: '873346829271',
+     appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+   };
+ firebase.initializeApp(config);
+ const db = firebase.firestore();
 
 
 const createCountryAutoCompleteList = () => {
@@ -50,6 +51,7 @@ export default function addTimeline() {
     const [endDate, setEndDate] = useState(new Date ());
     const [searchResult, setSearchResult] = useState({});
     const [showSearchResult, setShowSearchResult] = useState(false);
+    const [madeHighlights,setMadeHighlights] = useState(false);
     const countryAutoFillRef = useRef();
     const cityAutoFillRef = useRef();
 
@@ -105,7 +107,7 @@ export default function addTimeline() {
         return dateObj.toISOString().slice(0, 10);
     }
 
-    const createSearchResults = (e) => {
+     const createSearchResults = async (e) => {
         e.preventDefault();
         for (const city of citiesJson) {
             if (city.countryNameEnglish === countryValue && city.cityName === cityValue) {
@@ -134,15 +136,15 @@ export default function addTimeline() {
                     setSearchResult(time);
                     setShowSearchResult(true);
                 }
-            } 
+            }
+            let data = await db.collection('places_went').where('city', '==', cityValue).where('country', '==', countryValue).get();
+            let docs=data.docs;
+            setMadeHighlights(docs);
         }
-        console.log('No Matching City Found');
+        
     }
 
-    useEffect(() => {
-        console.log(searchResult);
-    }, [searchResult])
-    
+
 
 
     return (
@@ -196,9 +198,26 @@ export default function addTimeline() {
                         onClick={createSearchResults}
                     />
                 </form>
+                <Grid container spacing={2}>
                 {showSearchResult && (
+                <Grid item xs={6}>
                 <AddTripCard key={searchResult} time={searchResult}/>
+                </Grid>
                 )}
+                <Grid item xs={6}>
+                {madeHighlights.length > 0 &&
+          madeHighlights.map((doc) => (
+            <div>
+              <div>
+                {' '}
+                {doc.data().display_name} : {doc.data().highlight}
+              </div>
+              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
+            </div>
+          ))}
+                </Grid>
+                </Grid>
+              
             </div>
         </div>
     )
