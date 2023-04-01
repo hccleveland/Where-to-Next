@@ -43,7 +43,6 @@ export default function Timeline_card(props) {
   const [comment, setComment] = React.useState('');
   const [uploadedImages, setUploadedImages] = React.useState([]);
   const [cardImage, setCardImage] = React.useState(card_image_url);
-
   props.time['uid'] = uid;
 
   async function getHigh() {
@@ -171,7 +170,11 @@ export default function Timeline_card(props) {
             rowHeight={164}
           >
             {uploadedImages.map((item, index) => (
-              <ImageListItem key={index} onClick={handleImageClick}>
+              <ImageListItem
+                key={index}
+                className='image-list-item'
+                onClick={handleImageClick}
+              >
                 <img
                   src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
                   data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}

@@ -147,5 +147,11 @@ font-face {
   padding-left: 1rem;
 }
 
-.comment-input {
+.friends-page,
+.profile-page {
+  background-color: rgb(101 117 133);
+}
+
+.image-list-item:hover {
+  cursor: pointer;
 }
