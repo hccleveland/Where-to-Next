@@ -106,7 +106,7 @@ export default function Friend({ friendId }) {
           helperPoints: docRef.data().helper_points,
         };
       })
-      .catch((error) => { });
+      .catch((error) => {});
     setCounters(counters);
   }
 
