@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import aws from './api/uploadS3';
 import { AppContext } from '../components/Layout';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import UploadedImage from '@/components/UploadedImage';
+import UploadedImage from '../components/UploadedImage';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import Grid from '@mui/material/Grid';
+import { Button, TextField, Box } from '@mui/material';
 
 var fbConfig = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -45,44 +47,38 @@ export async function getServerSideProps({ query }) {
         if (doc.data().Highlight) queryData['highlight'] = doc.data().Highlight;
         if (picArray) queryData['picArray'] = picArray;
       } else {
+        console.log('No such document!');
       }
     })
     .catch((error) => {
+      console.log('Error getting document:', error);
     });
 
   return { props: { queryData } };
 }
 
 export default function timeline_actions({ queryData }) {
-  const { Email, Airport, Display_name, First_name, Last_name, Uid }=React.useContext(AppContext);
-  const [display_name, setDisplay_name] = Display_name;
+  const { Email, Airport, Display_name, First_name, Last_name, Uid } =
+    React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const docid = queryData.docid;
   const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setMessage] = useState(null);
   const [highlight, setHighlight] = useState(queryData.highlight);
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setError(null);
-    } else {
-      setFile(null);
-      setError('Please select a file to upload');
-    }
-  };
-  const handleUpload = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('file', file);
-    axios
-      .post(
-        'http://localhost:3000/api/upload?uid=' + uid + '&docid=' + docid,
-        formData
-      )
-      .then((res) => {
-       
-      });
+
+  function storeFile(e) {
+    setFile(e.target.files[0]);
+  }
+
+  const uploadFile = async () => {
+    setMessage('Uploading...');
+
+    var returnData = await aws(file, uid, docid); //upload file
+
+    setMessage(String(returnData));
+    location.reload();
+
+    setFile(null);
   };
 
   async function handleHighlightChange(event) {
@@ -93,45 +89,49 @@ export default function timeline_actions({ queryData }) {
         .doc(uid)
         .collection('places_visited')
         .doc(docid);
-        docRef.update({ Highlight: highlight });
-      await db.collection("places_went").add({
-      display_name: display_name,
-      country: queryData.country,
-      city: queryData.city,
-      highlight: highlight,
-      time_stamp: firebase.firestore.FieldValue.serverTimestamp()
 
-    })
-
-
+      docRef.update({ Highlight: highlight });
     }
   }
+  useEffect(() => {
+    if (file) uploadFile();
+  }, [file]);
 
   return (
-    <div>
-      {queryData.picArray &&
-        queryData.picArray.map((picture, index) => {
-          return <UploadedImage key={index} imageUrl={picture}></UploadedImage>;
-        })}
-      <input
-        type='text'
-        onChange={handleHighlightChange}
-        onKeyDown={handleHighlightChange}
-        defaultValue={highlight}
-      ></input>
-
-      <div className='file-select'>
-        <form className='uploadForm'>
-          <input
-            type='file'
-            name='file'
-            className='inputfile'
-            onChange={handleFileChange}
-          />
-          <p>Drag your image here or click in this area.</p>
-          <button onClick={handleUpload}>Upload</button>
-        </form>
-      </div>
+    <div className='timeline-actions-container'>
+      <Box id='highlight-container'>
+        <TextField
+          id='timeline-actions-highlight'
+          variant='standard'
+          onChange={handleHighlightChange}
+          onKeyDown={handleHighlightChange}
+          defaultValue={highlight}
+        />
+      </Box>
+      <Grid item xs={12}>
+        <ImageList
+          sx={{ width: 1000, height: 1000 }}
+          variant='quilted'
+          cols={4}
+          rowHeight={200}
+        >
+          {queryData.picArray.map((item, index) => (
+            <ImageListItem key={index}>
+              <img
+                src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
+                data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
+                alt={item.title}
+                loading='lazy'
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Grid>
+      <p style={{ color: 'red' }}>{error}</p>
+      <Button variant='contained' component='label' id='upload-file-button'>
+        Upload File
+        <input type='file' hidden onChange={(e) => storeFile(e)} />
+      </Button>
     </div>
   );
 }

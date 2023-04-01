@@ -90,12 +90,11 @@ export default function Home({ rankingCoord }) {
 
   return (
     <>
-      <DynamicMap index={NumberOneCoord} road={'/'}></DynamicMap>
+      
       <br></br>
       <Container>
         <Grid container spacing={2}>
-          <Grid item xs={3}></Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Paper elevation={3}>
               <Box padding={1}>
                 <h2>Ranking</h2>
@@ -105,8 +104,8 @@ export default function Home({ rankingCoord }) {
               </Box>
             </Paper>
           </Grid>
+          <Grid item xs={6}><DynamicMap index={NumberOneCoord} road={'/'} style={{innerHeight:"100%"}}></DynamicMap></Grid>
         </Grid>
-        <Grid item xs={3}></Grid>
       </Container>
     </>
   );

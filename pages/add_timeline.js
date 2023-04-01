@@ -6,6 +6,7 @@ import AddTripCard from '@/components/AddTripCard';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import Swal from 'sweetalert2';
 
  var config = {
      apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',

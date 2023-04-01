@@ -7,12 +7,10 @@
 
 .timeline_img {
   width: 100%;
-  height: 20rem;
 }
 
 .result-card-image {
   width: 100%;
-  height: 20rem;
 }
 
 .leaflet-control-attribution {
@@ -27,17 +25,18 @@
 
 /* [1] The container */
 .img-hover-zoom {
-  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+  width: 100%; /* set the width of the container */
+  height: 30rem; /* set the height of the container */
+  display: flex; /* use flexbox to center the image */
+  justify-content: center; /* center the content horizontally */
+  align-items: center; /* center the content vertically */
 }
 
 /* [2] Transition property for smooth transformation of images */
 .img-hover-zoom img {
-  transition: transform 0.75s ease;
-}
-
-/* [3] Finally, transforming the image when container gets hovered */
-.img-hover-zoom:hover img {
-  transform: scale(1.05);
+  max-width: 100%; /* set the maximum width of the image to 100% of the container */
+  max-height: 100%; /* set the maximum height of the image to 100% of the container */
+  object-fit: contain;
 }
 
 .rankimage {
@@ -48,4 +47,33 @@
 .medals {
   width: 150px;
   height: 200px;
+}
+
+.timeline-actions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center the content horizontally */
+  align-items: center; /* center the content vertically */
+  /* background-image: url('../public/background-image.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; */
+}
+
+#timeline-actions-highlight {
+  font-size: 5rem;
+  width: 75vw;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+#highlight-container {
+  padding: 2rem;
+}
+
+#upload-file-button {
+  width: 10rem;
+  height: 5rem;
+  font-size: 1rem;
 }
