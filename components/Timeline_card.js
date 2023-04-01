@@ -8,6 +8,9 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -37,6 +40,8 @@ export default function Timeline_card(props) {
   const friendId = props.friendId;
   const [madeComments, setMadeComments] = React.useState('');
   const [comment, setComment] = React.useState('');
+  const [uploadedImages, setUploadedImages] = React.useState([]);
+  const [cardImage, setCardImage] = React.useState(card_image_url);
 
   props.time['uid'] = uid;
 
@@ -86,14 +91,43 @@ export default function Timeline_card(props) {
     }
   }
 
+  async function getUploadedImages() {
+    //get all previously uploaded images
+    const docRef = await db
+      .collection('users')
+      .doc(uid)
+      .collection('places_visited')
+      .doc(doc_id);
+
+    await docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          const picArray = doc.data().pictures;
+          if (picArray) setUploadedImages(picArray);
+        } else {
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
+  }
+
+  const handleImageClick = (event) => {
+    setCardImage(event.target.dataset.fsrc);
+  };
+
   useEffect(() => {
     getHigh();
     get_made_comments();
+    getUploadedImages();
   }, []);
 
   return (
     <>
-      <Grid item xs={6}>
+      <Grid item xs={0.5}></Grid>
+      <Grid item xs={5}>
         <Paper
           elevation={3}
           className={'timeline_card'}
@@ -101,7 +135,7 @@ export default function Timeline_card(props) {
           docid={props.time.docid}
         >
           <div className='img-hover-zoom'>
-            <img src={card_image_url} className='timeline_img' />
+            <img src={cardImage} className='timeline_img' />
           </div>
           <Box padding={1}>
             <Typography variant='h6' component='h2'>
@@ -125,7 +159,26 @@ export default function Timeline_card(props) {
           </Box>
         </Paper>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
+        <ImageList
+          sx={{ width: 500, height: 550 }}
+          variant='quilted'
+          cols={4}
+          rowHeight={164}
+        >
+          {uploadedImages.map((item, index) => (
+            <ImageListItem key={index} onClick={handleImageClick}>
+              <img
+                src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
+                data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
+                alt={item.title}
+                loading='lazy'
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Grid>
+      <Grid item xs={3}>
         <div owner={uid}>{highlight}</div>
         {madeComments.length > 0 &&
           madeComments.map((doc) => (
@@ -143,6 +196,7 @@ export default function Timeline_card(props) {
           placeholder='commment here'
         ></input>
       </Grid>
+      <Grid item xs={0.5}></Grid>
     </>
   );
 }
