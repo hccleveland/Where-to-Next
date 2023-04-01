@@ -5,6 +5,7 @@ import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { icon } from 'leaflet';
 import firebase from 'firebase/compat/app';
+import countriesCoordinates from '../public/worldCoordinates.json';
 import 'firebase/compat/firestore';
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -25,11 +26,16 @@ const customIcon = new icon({
   popupAnchor: [-3, -76],
 });
 
-const { MapContainer, TileLayer, Marker, Popup } = ReactLeaflet;
+const { MapContainer, TileLayer, Marker, Popup, GeoJSON } = ReactLeaflet;
+//const { countries } = require('./Countries');
+//console.log("countries",countries)
 
 //Map
 
 export default function Map(props) {
+
+  console.log(props)
+  const countries = countriesCoordinates;
 
 
   const [cityHighlight, setCityHighlight] = useState();
@@ -107,6 +113,19 @@ export default function Map(props) {
     [-90, -180], // Southwest coordinates
     [90, 180], // Northeast coordinates
   ];
+
+
+  const style = (feature) => {
+    return {
+      fillColor: feature.properties.color,
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
+    }
+  };
+
   return (
     <>
       <div>
@@ -124,6 +143,7 @@ export default function Map(props) {
             attribution=''
             url='https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg'
           />
+           <GeoJSON key="my-geojson" data={countries} style={style} />
           {chemin.map(({ lat, lng, price }) => (
             <Marker
               key={lat + lng}
