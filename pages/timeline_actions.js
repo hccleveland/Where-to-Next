@@ -4,6 +4,10 @@ import { AppContext } from '../components/Layout';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import UploadedImage from '../components/UploadedImage';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import Grid from '@mui/material/Grid';
+import { Button, TextField, Box } from '@mui/material';
 
 var fbConfig = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -67,7 +71,7 @@ export default function timeline_actions({ queryData }) {
   }
 
   const uploadFile = async () => {
-    setMessage('uploading!');
+    setMessage('Uploading...');
 
     var returnData = await aws(file, uid, docid); //upload file
 
@@ -94,20 +98,40 @@ export default function timeline_actions({ queryData }) {
   }, [file]);
 
   return (
-    <div>
-      {queryData.picArray &&
-        queryData.picArray.map((picture, index) => {
-          return <UploadedImage key={index} imageUrl={picture}></UploadedImage>;
-        })}
-      <input
-        type='text'
-        onChange={handleHighlightChange}
-        onKeyDown={handleHighlightChange}
-        defaultValue={highlight}
-      ></input>
-      <p>Drag your image here or click in this area.</p>
+    <div className='timeline-actions-container'>
+      <Box id='highlight-container'>
+        <TextField
+          id='timeline-actions-highlight'
+          variant='standard'
+          onChange={handleHighlightChange}
+          onKeyDown={handleHighlightChange}
+          defaultValue={highlight}
+        />
+      </Box>
+      <Grid item xs={12}>
+        <ImageList
+          sx={{ width: 1000, height: 1000 }}
+          variant='quilted'
+          cols={4}
+          rowHeight={200}
+        >
+          {queryData.picArray.map((item, index) => (
+            <ImageListItem key={index}>
+              <img
+                src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
+                data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
+                alt={item.title}
+                loading='lazy'
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Grid>
       <p style={{ color: 'red' }}>{error}</p>
-      <input type='file' onChange={(e) => storeFile(e)} />
+      <Button variant='contained' component='label' id='upload-file-button'>
+        Upload File
+        <input type='file' hidden onChange={(e) => storeFile(e)} />
+      </Button>
     </div>
   );
 }
