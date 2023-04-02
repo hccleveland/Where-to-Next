@@ -1,8 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import { useEffect } from 'react';
-
 import Container from '@mui/material/Container';
 import './styles.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -15,7 +13,7 @@ export default function App({ Component, pageProps }) {
     const friend = router.pathname.replace('/friend/', '');
     return (
       <Layout>
-        <Container>
+        <Container disableGutters>
           <Component {...pageProps} friend={friend} />
         </Container>
       </Layout>
@@ -24,7 +22,7 @@ export default function App({ Component, pageProps }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Layout>
-        <Container>
+        <Container disableGutters>
           <Component {...pageProps} />
         </Container>
       </Layout>

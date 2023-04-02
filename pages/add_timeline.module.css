@@ -1,0 +1,78 @@
+.container {
+  width: 100vw;
+  display: flex;
+}
+
+.left_container {
+  display: flex;
+  width: 40vw;
+  height: 100vh;
+  background-color: #708090;
+  border-right: 10px solid black;
+}
+
+.left_container_inner {
+  width: 100%;
+  margin-top: 5rem;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  margin-bottom: 100px;
+  background-color: #545f72;
+  border-radius: 20px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.title {
+  width: 100%;
+  font-size: 5rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.inputs {
+  width: 100%;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-bottom: 25rem;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.datepicker_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+}
+.datepicker_container .datepicker:last-child {
+  margin-left: auto;
+}
+
+.place_container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 5rem;
+}
+
+.place_container .aplace:last-child {
+  margin-left: auto;
+}
+
+.search_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10rem;
+}
+
+.right_container {
+  width: 60vw;
+  height: 100vh;
+  background-color: #708090;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+}
