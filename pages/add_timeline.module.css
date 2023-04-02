@@ -72,7 +72,14 @@
   height: 100vh;
   background-color: #708090;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   justify-content: center;
   align-content: center;
+}
+
+.highlight_container {
+  border-bottom: 10px solid black;
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+  display: flex;
 }

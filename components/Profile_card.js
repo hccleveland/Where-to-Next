@@ -176,10 +176,11 @@ export default function Profile_card(props) {
           xs={3}
           paddingTop={4}
           paddingLeft={1.5}
+          paddingRight={1.5}
           className='background card-left-border'
         >
           <ImageList
-            sx={{ width: 500, height: 480 }}
+            sx={{ width: '100%', height: 480 }}
             variant='quilted'
             cols={4}
             rowHeight={164}
