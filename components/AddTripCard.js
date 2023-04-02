@@ -8,7 +8,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { TextField } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
+import styles from './AddTripCard.module.css';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -467,7 +468,7 @@ export default function AddTripCard(props) {
 
   return (
     <div
-      className={'timeline_card'}
+      className={styles.add_trip_card_container}
       //   owner={uid}
       //   docid={doc_id}
       //   onClick={handleClick}
@@ -497,7 +498,20 @@ export default function AddTripCard(props) {
             {end_date}
           </span>
         </Typography>
-        <button onClick={handleTimelineSubmission}>Add Trip to Timeline</button>
+        <div className={styles.button_container}>
+          <Button
+            variant='contained'
+            id='add-button'
+            onClick={handleTimelineSubmission}
+            style={{
+              padding: '1rem',
+              fontSize: '1.5rem',
+              width: '15rem',
+            }}
+          >
+            Add Trip to Timeline
+          </Button>
+        </div>
       </Paper>
     </div>
   );

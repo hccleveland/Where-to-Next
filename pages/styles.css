@@ -14,7 +14,7 @@ font-face {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto';
+  font-family: 'goudy-trajan-regular';
 }
 
 .timeline_img {
@@ -101,6 +101,7 @@ font-face {
   text-align: center;
   align-content: center;
   justify-content: center;
+  font-size: 3rem;
 }
 
 .timeline_dates {
@@ -109,6 +110,7 @@ font-face {
   text-align: center;
   align-content: center;
   justify-content: center;
+  font-size: 1.5rem;
 }
 
 .card-container {

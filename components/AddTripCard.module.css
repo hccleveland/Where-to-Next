@@ -1,0 +1,20 @@
+.add_trip_card_container {
+  border: 10px solid black;
+}
+
+.button_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  background-color: rgb(225, 215, 170);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.timeline_location {
+  font-size: 3rem;
+}
+
+.timeline_dates {
+  font-size: 1.5rem;
+}

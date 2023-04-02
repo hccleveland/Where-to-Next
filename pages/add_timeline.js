@@ -195,6 +195,7 @@ export default function addTimeline() {
                   svg: { white },
                   input: { white },
                   label: { white },
+                  fontSize: '1.5rem',
                 }}
               />
               <DatePicker
@@ -209,7 +210,7 @@ export default function addTimeline() {
                 id='standard-basic'
                 variant='outlined'
                 placeholder='Search Country'
-                className={styles.country}
+                className={styles.aplace}
                 ref={countryAutoFillRef}
                 value={countryValue}
                 onChange={handleCountrySearchChange}
@@ -218,7 +219,6 @@ export default function addTimeline() {
                 InputProps={{
                   style: {
                     fontSize: '1.5rem',
-                    width: '100%',
                     color: 'white',
                   },
                 }}
@@ -246,7 +246,7 @@ export default function addTimeline() {
                 id='standard-basic'
                 variant='outlined'
                 placeholder='Search City'
-                className={styles.city}
+                className={styles.aplace}
                 ref={cityAutoFillRef}
                 value={cityValue}
                 onChange={handleCitySearchChange}
@@ -256,8 +256,6 @@ export default function addTimeline() {
                   style: {
                     fontSize: '1.5rem',
                     color: 'white',
-                    width: '82%',
-                    marginLeft: '3rem',
                   },
                 }}
               />
@@ -283,6 +281,11 @@ export default function addTimeline() {
                 variant='contained'
                 id='search-button'
                 onClick={createSearchResults}
+                style={{
+                  padding: '1rem',
+                  fontSize: '1.5rem',
+                  width: '15rem',
+                }}
               >
                 Find Trip Event
               </Button>
@@ -291,25 +294,18 @@ export default function addTimeline() {
         </div>
       </div>
       <div className={styles.right_container}>
-        <Grid container spacing={2}>
-          {showSearchResult && (
-            <Grid item xs={6}>
-              <AddTripCard key={searchResult} time={searchResult} />
-            </Grid>
-          )}
-          <Grid item xs={6}>
-            {madeHighlights.length > 0 &&
-              madeHighlights.map((doc) => (
-                <div>
-                  <div>
-                    {' '}
-                    {doc.data().display_name} : {doc.data().highlight}
-                  </div>
-                  {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
-                </div>
-              ))}
-          </Grid>
-        </Grid>
+        {showSearchResult && (
+          <AddTripCard key={searchResult} time={searchResult} />
+        )}
+        {madeHighlights.length > 0 &&
+          madeHighlights.map((doc) => (
+            <div className={styles.highlight_container}>
+              <div>
+                {doc.data().display_name} : {doc.data().highlight}
+              </div>
+              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
+            </div>
+          ))}
       </div>
 
       <div style={{ display: 'none' }}>
