@@ -6,8 +6,8 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/css2?family=Palatino&display=swap"
           
         />
       </Head>
