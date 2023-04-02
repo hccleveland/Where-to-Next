@@ -37,7 +37,7 @@ export default function profile() {
     const coordinateToPlace = [];
     let data = await db
       .collection('users')
-      .doc(uid) 
+      .doc(uid)
       .collection('places_visited')
       .get();
     let docs = data.docs;
@@ -47,7 +47,7 @@ export default function profile() {
 
       coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
     });
-    
+
     await setDatan({ coordinateToPlace });
   }
 
@@ -141,7 +141,7 @@ export default function profile() {
   }, [uid]);
 
   return (
-    <>
+    <div className='profile-page'>
       <h1>{display_name}'s Map</h1>
       {datan && (
         <DynamicMap
@@ -167,6 +167,6 @@ export default function profile() {
           />
         ))}
       </Grid>
-    </>
+    </div>
   );
 }
