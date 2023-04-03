@@ -550,8 +550,10 @@ export default function ResultCard(props) {
           points: thePoints + 200,
         });
         Swal.fire({
-          title: "You've earned 200 points for adding your trip!",
-          imageUrl:"/asia0.png"
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip! </h5>`,
+          imageUrl:"/asiaPopup0.png",
+          background:"#3A4B4B",
+          showConfirmButton:false
         })
       }
       if (africaCounter != africa) {
@@ -560,8 +562,10 @@ export default function ResultCard(props) {
           points: thePoints + 200,
         });
         Swal.fire({
-          title: "You've earned 200 points for adding your trip!",
-          imageUrl:"/africa0.png"
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip! </h5>`,
+          imageUrl:"/africaPopup0.png",
+          background:"#3A4B4B",
+          showConfirmButton:false
         })
       }
       if (europeCounter != europe) {
@@ -570,8 +574,10 @@ export default function ResultCard(props) {
           points: thePoints + 200,
         });
         Swal.fire({
-          title: "You've earned 200 points for adding your trip!",
-          imageUrl:"/europe0.png"
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
+          imageUrl:"/europePopup0.png",
+          background:"#3A4B4B",
+          showConfirmButton:false
         })
       }
       if (oceaniaCounter != oceania) {
@@ -580,8 +586,10 @@ export default function ResultCard(props) {
           points: thePoints + 200,
         });
         Swal.fire({
-          title: "You've earned 200 points for adding your trip!",
-          imageUrl:"/oceania0.png"
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
+          imageUrl:"/oceaniaPopup0.png",
+          background:"#3A4B4B",
+          showConfirmButton:false
         })
       }
       if (northAmericaCounter != northAmerica) {
@@ -590,8 +598,10 @@ export default function ResultCard(props) {
           points: thePoints + 200,
         });
         Swal.fire({
-          title: "You've earned 200 points for adding your trip!",
-          imageUrl:"/namerica0.png"
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
+          imageUrl:"/namericaPopup0.png",
+          background:"#3A4B4B",
+          showConfirmButton:false
         })
       }
       if (southAmericaCounter != southAmerica) {
@@ -600,8 +610,10 @@ export default function ResultCard(props) {
           points: thePoints + 200,
         });
         Swal.fire({
-          title: "You've earned 200 points for adding your trip!",
-          imageUrl:"/samerica0.png"
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
+          imageUrl:"/samericaPopup0.png",
+          background:"#3A4B4B",
+          showConfirmButton:false
         })
       }
     }

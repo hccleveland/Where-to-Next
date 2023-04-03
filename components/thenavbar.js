@@ -21,6 +21,7 @@ import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
+import { Height } from '@mui/icons-material';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -101,11 +102,11 @@ export default function MenuAppBar() {
       <AppBar style={{ background: 'grey', color:"pink", opacity:0.5 }} position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none", color:'inherit'}} href='/profile'>{display_name}</Link></Grid>
-          <Grid item xs={2} style={{cursor:"default", textDecoration:"none"}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="add_timeline">AddTrip</Link></Grid>
-          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/explore">FindTrip</Link></Grid>
-          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/achievements">Achievements</Link></Grid>
-          <Grid item xs={2} onClick={logout}style={{cursor:"default", textDecoration:"none"}}>Logout</Grid></Grid>:<Grid container spacing={2}>
+          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none", color:'inherit'}} href='/profile'><img src='/user.png' style={{width:"30px",Height:"30px"}}></img><span>{display_name}</span></Link></Grid>
+          <Grid item xs={2} style={{cursor:"default", textDecoration:"none"}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="add_timeline"><img src='/image.png' style={{width:"30px",Height:"30px"}}></img> AddTrip</Link></Grid>
+          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/explore"><img src='/plane.png' style={{width:"30px",Height:"30px"}}></img>           FindTrip</Link></Grid>
+          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/achievements"><img src='/achievement.png' style={{width:"30px",Height:"30px"}}></img>        Achievements</Link></Grid>
+          </Grid>:<Grid container spacing={2}>
         <Grid item xs={2}><TextField
                  variant='filled'
                  label="Email"
@@ -121,7 +122,7 @@ export default function MenuAppBar() {
                  sx={{ input: { color: 'pink' } }}
         onChange={(event) => {setPassword(event.target.value);}}/></Grid>
          <Grid item xs={2}onClick={login} style={{cursor:"default", textDecoration:"none"}}>Login</Grid>
-        <Grid item xs={2} style={{cursor:"default"}}>Register</Grid></Grid>}
+         <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/signup">Register</Link></Grid></Grid>}
           </Typography>
           {uid && (
             <div>
@@ -150,9 +151,9 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} style={{cursor:"default"}}><Link href={"/"}>Home</Link></MenuItem>
-                <MenuItem onClick={handleClose} style={{cursor:"default"}}>Ranking</MenuItem>
-                <MenuItem onClick={handleClose} style={{cursor:"default"}}><Link href={"/settings"}>Setting</Link></MenuItem>
+                <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/index"><img src='/home.png' style={{width:"30px",Height:"30px"}}></img>Home</Link></MenuItem>
+                <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/settings"><img src='/settings.png' style={{width:"30px",Height:"30px"}}></img>Settings</Link></MenuItem>
+                <MenuItem onClick={logout} style={{cursor:"default", textDecoration:"none"}}><img src='/power-off.png' style={{width:"30px",Height:"30px"}}></img>Logout</MenuItem>
               </Menu>
             </div>
           )}
