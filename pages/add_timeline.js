@@ -191,11 +191,17 @@ export default function addTimeline() {
                 label='Start date'
                 className={styles.datepicker}
                 onChange={setStartDate}
-                sx={{
-                  svg: { white },
-                  input: { white },
-                  label: { white },
-                  fontSize: '1.5rem',
+                renderInput={(params) => {
+                  return (
+                    <TextField
+                      {...params}
+                      sx={{
+                        svg: { white },
+                        input: { white },
+                        label: { white },
+                      }}
+                    />
+                  );
                 }}
               />
               <DatePicker
@@ -236,6 +242,7 @@ export default function addTimeline() {
                     <li
                       onClick={() => handleCountryListClick(country)}
                       key={country}
+                      className={styles.li}
                     >
                       {country}
                     </li>
@@ -269,7 +276,11 @@ export default function addTimeline() {
                   }}
                 >
                   {cityAutoFill.map((city) => (
-                    <li onClick={() => handleCityListClick(city)} key={city}>
+                    <li
+                      onClick={() => handleCityListClick(city)}
+                      key={city}
+                      className={styles.li}
+                    >
                       {city}
                     </li>
                   ))}

@@ -555,10 +555,10 @@ export default function ResultCard(props) {
           });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip! </h5>`,
-          imageUrl:"/asiaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/asiaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (africaCounter != africa) {
         db.collection('users')
@@ -569,10 +569,10 @@ export default function ResultCard(props) {
           });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip! </h5>`,
-          imageUrl:"/africaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/africaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (europeCounter != europe) {
         db.collection('users')
@@ -583,10 +583,10 @@ export default function ResultCard(props) {
           });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/europePopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/europePopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (oceaniaCounter != oceania) {
         db.collection('users')
@@ -597,10 +597,10 @@ export default function ResultCard(props) {
           });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/oceaniaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/oceaniaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (northAmericaCounter != northAmerica) {
         db.collection('users')
@@ -611,10 +611,10 @@ export default function ResultCard(props) {
           });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/namericaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/namericaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (southAmericaCounter != southAmerica) {
         db.collection('users')
@@ -625,10 +625,10 @@ export default function ResultCard(props) {
           });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/samericaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/samericaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
     }
 
@@ -640,59 +640,95 @@ export default function ResultCard(props) {
   getCheapestFlights();
 
   return (
-    <>
-      <Grid item xs={6}>
-        <div className='result-card'>
-          <div className='img-hover-zoom'>
-            <img
-              className='result-card-image'
-              src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
-            ></img>
-          </div>
-          <div className='result-card-desc'>
+    <div className='result-card-container'>
+      <Paper elevation={3}>
+        <Typography variant='h6' component='h2'>
+          <span className='timeline_location background'>
             {cityName}, {countryNameEnglish}
-            <br></br>
-            {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
-            <br></br>From ${Math.floor(price)}
-          </div>
-
-          {cheapestFlights.map((flight) => {
-            return (
-              <a
-                key={flight.items[0].deeplink}
-                onClick={addToPlacesVisited}
-                target='_blank'
-                rel='noopener noreferrer'
-                href={flight.items[0].deeplink.replace(
-                  'www.skyscanner.net',
-                  'www.skyscanner.com'
-                )}
-              >
-                ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
-              </a>
-            );
-          })}
+          </span>
+        </Typography>
+        <div className='img-hover-zoom background'>
+          <img
+            className='result-card-image'
+            src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
+          ></img>
         </div>
-      </Grid>
-      <Grid item xs={6}>
-        {madeHighlights.length > 0 &&
-          madeHighlights.map((doc) => (
-            <div>
-              <div>
-                {' '}
-                {doc.data().display_name} : {doc.data().highlight}
-              </div>
-              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
-            </div>
-          ))}
-      </Grid>
-    </>
+        <Typography variant='subtitle1' component='p'>
+          <span className='timeline_dates background'>
+            {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
+            <br></br>
+            From ${Math.floor(price)}
+          </span>
+        </Typography>
+        <Typography variant='subtitle1' component='p'>
+          <span className='timeline_dates background'>
+            {cheapestFlights.map((flight) => {
+              return (
+                <a
+                  key={flight.items[0].deeplink}
+                  onClick={addToPlacesVisited}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href={flight.items[0].deeplink.replace(
+                    'www.skyscanner.net',
+                    'www.skyscanner.com'
+                  )}
+                >
+                  ✈️ {originIata} → {flight.destinationIata} - Link to
+                  Skyscanner
+                </a>
+              );
+            })}
+          </span>
+        </Typography>
+      </Paper>
+    </div>
+    // <>
+    //   <Grid item xs={6}>
+    //     <div className='result-card'>
+    //       <div className='img-hover-zoom'>
+    //         <img
+    //           className='result-card-image'
+    //           src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
+    //         ></img>
+    //       </div>
+    //       <div className='result-card-desc'>
+    //         {cityName}, {countryNameEnglish}
+    //         <br></br>
+    //         {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
+    //         <br></br>From ${Math.floor(price)}
+    //       </div>
+
+    //       {cheapestFlights.map((flight) => {
+    //         return (
+    //           <a
+    //             key={flight.items[0].deeplink}
+    //             onClick={addToPlacesVisited}
+    //             target='_blank'
+    //             rel='noopener noreferrer'
+    //             href={flight.items[0].deeplink.replace(
+    //               'www.skyscanner.net',
+    //               'www.skyscanner.com'
+    //             )}
+    //           >
+    //             ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
+    //           </a>
+    //         );
+    //       })}
+    //     </div>
+    //   </Grid>
+    //   <Grid item xs={6}>
+    //     {madeHighlights.length > 0 &&
+    //       madeHighlights.map((doc) => (
+    //         <div>
+    //           <div>
+    //             {' '}
+    //             {doc.data().display_name} : {doc.data().highlight}
+    //           </div>
+    //           {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
+    //         </div>
+    //       ))}
+    //   </Grid>
+    // </>
   );
 }
-
-/*
-href={flight.items[0].deeplink.replace(
-              'www.skyscanner.net',
-              'www.skyscanner.com'
-            )}
-*/

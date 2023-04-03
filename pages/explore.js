@@ -35,34 +35,29 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 const auth = getAuth();
 
-
 export async function getServerSideProps() {
   const coordinateToPlace = [];
   let data = await db.collection('places_went').get();
   let docs = data.docs;
   docs.forEach((ele) => {
-
-    if(ele.data()['coordinates']){
+    if (ele.data()['coordinates']) {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
       const city = ele.data()['city'];
-      const country = ele.data()['country'];
       const counter = ele.data()['counter'];
       coordinateToPlace.push({
         lat: lat,
         lng: lng,
         city: city,
         counter: counter,
-        country: country,
       });
     }
-    
   });
 
   return { props: { data: coordinateToPlace } };
- }
+}
 
-export default function Home({ data }) {
+export default function Home({ data, data2 }) {
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const router = useRouter();
@@ -153,114 +148,114 @@ export default function Home({ data }) {
     <div className={styles.outer_container}>
       <div className={styles.input_container}>
         <div className={styles.title}>Find Trip</div>
-        <Grid container spacing={1}>
-          <Grid item xs={5}>
-            <div className={styles.left_input}>
-              <TextField
-                id='standard-basic'
-                variant='outlined'
-                placeholder='Flight Budget'
-                required
-                className={styles.budget}
-                value={budget}
-                onChange={handleBudgetChange}
-                InputProps={{
-                  style: {
-                    fontSize: '1rem',
-                    color: 'white',
-                  },
-                }}
-              />
-              <FormControlLabel
-                className={styles.oneway}
-                control={
-                  <Checkbox
-                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
-                    id='oneWay'
-                    name='oneWay'
-                    checked={oneWay}
-                    onChange={() => setOneWay(!oneWay)}
-                  />
-                }
-                label='One Way'
-              />
-              <TextField
-                id='origin'
-                variant='outlined'
-                placeholder='Departing Airport'
-                required
-                onChange={handleOriginChange}
-                className={styles.departing}
-                InputProps={{
-                  style: {
-                    fontSize: '1rem',
-                    color: 'white',
-                  },
-                }}
-              />
-              <FormControlLabel
-                className={styles.domestic}
-                control={
-                  <Checkbox
-                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
-                    id='domestic'
-                    name='domestic'
-                    checked={domestic}
-                    onChange={() => setDomestic(!domestic)}
-                  />
-                }
-                label='Domestic'
-              />
-            </div>
-          </Grid>
-          <Grid item xs={5}>
-            <div className={styles.center_input}>
-              <DatePicker
-                label='Start date'
-                className={styles.datepicker}
-                onChange={setStartDate}
-                sx={{
-                  svg: { white },
-                  input: { white },
-                  label: { white },
+        {/* <Grid container>
+          <Grid item xs={5}> */}
+        <div className={styles.input_center}>
+          <div className={styles.left_input}>
+            <TextField
+              id='standard-basic'
+              variant='outlined'
+              placeholder='Flight Budget'
+              required
+              className={styles.budget}
+              value={budget}
+              onChange={handleBudgetChange}
+              InputProps={{
+                style: {
                   fontSize: '1rem',
-                }}
-              />
-              <DatePicker
-                label='Return date'
-                disabled={oneWay}
-                className={styles.datepicker}
-                onChange={setEndDate}
-                sx={{
-                  svg: { white },
-                  input: { white },
-                  label: { white },
+                  color: 'white',
+                },
+              }}
+            />
+            <FormControlLabel
+              className={styles.oneway}
+              control={
+                <Checkbox
+                  sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                  id='oneWay'
+                  name='oneWay'
+                  checked={oneWay}
+                  onChange={() => setOneWay(!oneWay)}
+                />
+              }
+              label='One Way'
+            />
+            <TextField
+              id='origin'
+              variant='outlined'
+              placeholder='Departing Airport'
+              required
+              onChange={handleOriginChange}
+              className={styles.departing}
+              InputProps={{
+                style: {
                   fontSize: '1rem',
-                }}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={2}>
-            <div className={styles.right_input}>
-              <Button
-                variant='contained'
-                id='search-button'
-                onClick={handleSearch}
-                style={{
-                  padding: '1rem',
-                  fontSize: '1rem',
-                  width: '5rem',
-                  height: '2.5rem',
-                }}
-              >
-                Search
-              </Button>
-            </div>
-          </Grid>
-        </Grid>
-      </div>
+                  color: 'white',
+                  marginTop: '2rem',
+                },
+              }}
+            />
+            <FormControlLabel
+              className={styles.domestic}
+              control={
+                <Checkbox
+                  sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                  id='domestic'
+                  name='domestic'
+                  checked={domestic}
+                  onChange={() => setDomestic(!domestic)}
+                />
+              }
+              label='Domestic'
+            />
+          </div>
+          {/* </Grid>
+          <Grid item xs={5}> */}
+          <div className={styles.right_input}>
+            <DatePicker
+              label='Start date'
+              className={styles.start_date}
+              onChange={setStartDate}
+              sx={{
+                fontSize: '1rem',
+                width: '45%',
+              }}
+            />
+            <DatePicker
+              label='Return date'
+              disabled={oneWay}
+              className={styles.end_date}
+              onChange={setEndDate}
+              sx={{
+                fontSize: '1rem',
+                width: '45%',
+              }}
+            />
+          </div>
+        </div>
 
-      {/* <DynamicMap index={data} road={'/'}></DynamicMap> */}
+        {/* </Grid>
+          <Grid item xs={2}> */}
+        <div className={styles.button_input}>
+          <Button
+            variant='contained'
+            id='search-button'
+            onClick={handleSearch}
+            style={{
+              fontSize: '2rem',
+              width: '15rem',
+              height: '3rem',
+            }}
+          >
+            Search
+          </Button>
+        </div>
+        {/* </Grid>
+        </Grid> */}
+      </div>
+      <div className={styles.map_container}>
+        <DynamicMap index={data} road={'/'}></DynamicMap>
+      </div>
     </div>
   );
 }

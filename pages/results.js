@@ -9,7 +9,7 @@ import citiesJSON from '../data/cities.json';
 
 import Grid from '@mui/material/Grid';
 
-const MAX_RESULTS = 1;
+const MAX_RESULTS = 4;
 
 export async function getServerSideProps({ query }) {
   const countries = [];
@@ -227,14 +227,15 @@ export default function Result({ cities }) {
   if (!cities) return <div>No matches found! Try different another date.</div>;
 
   return (
-    <>
-      <Grid container spacing={2}>
+    <div className='results-page-container'>
+      <div className='results-container'>
         {cities.map((city, index) => (
           <ResultCard key={index} city={city} />
         ))}
-      </Grid>
-      <br></br>
-      <DynamicMap index={cities} road={'/results'}></DynamicMap>
-    </>
+      </div>
+      <div className='map-container' style={{ paddingTop: '5rem' }}>
+        <DynamicMap index={cities} road={'/results'}></DynamicMap>
+      </div>
+    </div>
   );
 }

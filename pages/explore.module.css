@@ -1,13 +1,12 @@
 .outer_container {
   background-color: #708090;
   width: 100vw;
-  height: 100vh;
-  padding: 1.5rem;
+  padding: 5rem;
 }
 
 .input_container {
   background-color: #545f72;
-  height: 20rem;
+  height: 25rem;
   width: 100%;
   border-radius: 20px;
   border: black 1px solid;
@@ -23,27 +22,37 @@
 }
 
 .left_input {
-  width: 100%;
+  width: 45%;
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem;
-}
-
-.center_input {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 1rem;
-}
-
-.right_input {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   margin: 1rem;
   align-content: center;
   justify-content: center;
   align-items: center;
+}
+
+.input_center {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.right_input {
+  width: 45%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+
+.button_input {
+  display: flex;
+  justify-content: center;
 }
 
 .budget {
@@ -62,4 +71,14 @@
 .domestic {
   width: 40%;
   margin-left: 10px;
+  margin-top: 2rem;
+}
+
+.end_date {
+  margin-top: 2rem;
+}
+
+.map_container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }

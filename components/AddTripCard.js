@@ -108,7 +108,7 @@ export default function AddTripCard(props) {
       await db.collection('places_went').add(placeDBObj);
     }
     getContinentCounter();
-   // route.push('/profile');
+    // route.push('/profile');
   };
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -380,7 +380,6 @@ export default function AddTripCard(props) {
     let oceaniaCounter = 0;
     let northAmericaCounter = 0;
     let southAmericaCounter = 0;
-    
 
     let asia;
     let africa;
@@ -388,11 +387,11 @@ export default function AddTripCard(props) {
     let oceania;
     let northAmerica;
     let southAmerica;
-    
-    let pointsdata=await db.collection('users').doc(uid).get();
-  
-    let pointsdoc=pointsdata.data().points;
-    let thePoints=pointsdoc;
+
+    let pointsdata = await db.collection('users').doc(uid).get();
+
+    let pointsdoc = pointsdata.data().points;
+    let thePoints = pointsdoc;
 
     let data = await db
       .collection('users')
@@ -435,81 +434,93 @@ export default function AddTripCard(props) {
           oceania = docRef.data().oceania;
           northAmerica = docRef.data().north_america;
           southAmerica = docRef.data().south_america;
-          points=docRef.data().points;
+          points = docRef.data().points;
         })
         .catch((error) => {});
 
       if (asianCounter != asia) {
-        db.collection('users').doc(uid).update({
-          asia: asianCounter,
-          points:thePoints+100
-        });
+        db.collection('users')
+          .doc(uid)
+          .update({
+            asia: asianCounter,
+            points: thePoints + 100,
+          });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/asiaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/asiaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (africaCounter != africa) {
-        db.collection('users').doc(uid).update({
-          africa: africaCounter,
-          points:thePoints+100
-        });
+        db.collection('users')
+          .doc(uid)
+          .update({
+            africa: africaCounter,
+            points: thePoints + 100,
+          });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/africaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/africaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (europeCounter != europe) {
-        db.collection('users').doc(uid).update({
-          europe: europeCounter,
-          points:thePoints+100
-        });
+        db.collection('users')
+          .doc(uid)
+          .update({
+            europe: europeCounter,
+            points: thePoints + 100,
+          });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'>  You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/europePopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/europePopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (oceaniaCounter != oceania) {
-        db.collection('users').doc(uid).update({
-          oceania: oceaniaCounter,
-          points:thePoints+100
-        });
+        db.collection('users')
+          .doc(uid)
+          .update({
+            oceania: oceaniaCounter,
+            points: thePoints + 100,
+          });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip! + </h5>`,
-          imageUrl:"/oceaniaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/oceaniaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
       if (northAmericaCounter != northAmerica) {
-        db.collection('users').doc(uid).update({
-          north_america: northAmericaCounter,
-          points:thePoints+100
-        });
-        Swal.fire({
-          title:`<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/namericaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
-      }
-      if (southAmericaCounter != southAmerica) {
-        db.collection('users').doc(uid).update({
-          south_america: southAmericaCounter,
-          points:thePoints+100
-        });
+        db.collection('users')
+          .doc(uid)
+          .update({
+            north_america: northAmericaCounter,
+            points: thePoints + 100,
+          });
         Swal.fire({
           title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip!  </h5>`,
-          imageUrl:"/samericaPopup0.png",
-          background:"#3A4B4B",
-          showConfirmButton:false
-        })
+          imageUrl: '/namericaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
+      }
+      if (southAmericaCounter != southAmerica) {
+        db.collection('users')
+          .doc(uid)
+          .update({
+            south_america: southAmericaCounter,
+            points: thePoints + 100,
+          });
+        Swal.fire({
+          title: `<h5 style='color:#E3D5A5; font-size:1.6rem'> You've earned 200 points for adding your trip!  </h5>`,
+          imageUrl: '/samericaPopup0.png',
+          background: '#3A4B4B',
+          showConfirmButton: false,
+        });
       }
     }
     updateCounterFromDB();
@@ -518,22 +529,7 @@ export default function AddTripCard(props) {
   ///////////////////////////////////////////////////////////////////////
 
   return (
-    <div
-      className={styles.add_trip_card_container}
-      //   owner={uid}
-      //   docid={doc_id}
-      //   onClick={handleClick}
-    >
-      {/* <img src={image_url} />
-      <div className='timeline_dates'>
-        {start_date} - {end_date}
-      </div>
-      <div className='timeline_location'>
-        {city}, {country}
-      </div>
-      <button
-        onClick={handleTimelineSubmission}
-      >Add Trip to Timeline</button> */}
+    <div className={styles.add_trip_card_container}>
       <Paper elevation={3}>
         <Typography variant='h6' component='h2'>
           <span className='timeline_location background'>
