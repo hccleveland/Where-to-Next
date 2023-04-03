@@ -115,7 +115,8 @@ export default function timeline_actions({ queryData }) {
           cols={4}
           rowHeight={200}
         >
-          {queryData.picArray.map((item, index) => (
+          {queryData.picArray && 
+          queryData.picArray.map((item, index) => (
             <ImageListItem key={index}>
               <img
                 src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
