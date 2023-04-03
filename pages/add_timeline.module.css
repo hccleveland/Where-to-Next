@@ -86,3 +86,7 @@
   border-right: 10px solid black;
   display: flex;
 }
+
+.li {
+  list-style-type: none;
+}

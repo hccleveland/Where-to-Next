@@ -35,29 +35,29 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 const auth = getAuth();
 
-// export async function getServerSideProps() {
-//   const coordinateToPlace = [];
-//   let data = await db.collection('places_went').get();
-//   let docs = data.docs;
-//   docs.forEach((ele) => {
-//     if (ele.data()['coordinates']) {
-//       const lat = ele.data()['coordinates'][1];
-//       const lng = ele.data()['coordinates'][0];
-//       const city = ele.data()['city'];
-//       const counter = ele.data()['counter'];
-//       coordinateToPlace.push({
-//         lat: lat,
-//         lng: lng,
-//         city: city,
-//         counter: counter,
-//       });
-//     }
-//   });
+export async function getServerSideProps() {
+  const coordinateToPlace = [];
+  let data = await db.collection('places_went').get();
+  let docs = data.docs;
+  docs.forEach((ele) => {
+    if (ele.data()['coordinates']) {
+      const lat = ele.data()['coordinates'][1];
+      const lng = ele.data()['coordinates'][0];
+      const city = ele.data()['city'];
+      const counter = ele.data()['counter'];
+      coordinateToPlace.push({
+        lat: lat,
+        lng: lng,
+        city: city,
+        counter: counter,
+      });
+    }
+  });
 
-//   return { props: { data: coordinateToPlace } };
-// }
+  return { props: { data: coordinateToPlace } };
+}
 
-export default function Home({ data }) {
+export default function Home({ data, data2 }) {
   const { Uid } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
   const router = useRouter();
@@ -255,7 +255,7 @@ export default function Home({ data }) {
         </Grid>
       </div>
 
-      {/* <DynamicMap index={data} road={'/'}></DynamicMap> */}
+      <DynamicMap index={data} road={'/'}></DynamicMap>
     </div>
   );
 }
