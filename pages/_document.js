@@ -8,7 +8,6 @@ export default function Document() {
         <link
          rel="stylesheet"
          href="https://fonts.googleapis.com/css2?family=Palatino&display=swap"
-          
         />
       </Head>
       <body>
