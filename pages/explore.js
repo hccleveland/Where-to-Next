@@ -59,8 +59,8 @@ export async function getServerSideProps() {
     
   });
 
-//   return { props: { data: coordinateToPlace } };
-// }
+  return { props: { data: coordinateToPlace } };
+ }
 
 export default function Home({ data }) {
   const { Uid } = React.useContext(AppContext);
