@@ -30,7 +30,7 @@ const Layout = ({ children }, props) => {
   const [first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
   const [uid, setUid] = useState('');
-
+  const [percent, setPercentage] = useState({});
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <CacheProvider value={emotionCache}>
@@ -47,6 +47,7 @@ const Layout = ({ children }, props) => {
               First_name: [first_name, setFirst_name],
               Last_name: [last_name, setLast_name],
               Uid: [uid, setUid],
+              Percent: [percent, setPercentage],
             }}
           >
             <Thenavbar />
