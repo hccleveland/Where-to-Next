@@ -183,8 +183,8 @@ function Achievement() {
   }, [uid]);
 
 
-  return (
-    <>
+  return (<>
+    <br></br>
       <Grid container spacing={2} justify="center" alignItems="center" style={{ backgroundColor: "#708090" }}>
         <Grid item xs={1} >
         </Grid>
@@ -208,8 +208,8 @@ function Achievement() {
         <Grid item xs={1}>
         </Grid>
       </Grid>
-    </>
-  );
+      </>);
+
 }
 
 export default Achievement;

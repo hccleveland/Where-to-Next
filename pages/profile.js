@@ -45,7 +45,7 @@ export default function profile() {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
 
-      coordinateToPlace.push({ lat: Number(lat), lng: Number(lng) });
+      coordinateToPlace.push({ lat: Number(lat), lng: Number(lng), city: ele.data()['city'], country: ele.data()['country'] });
     });
 
     await setDatan({ coordinateToPlace });

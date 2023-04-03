@@ -106,6 +106,7 @@ export default function timeline_actions({ queryData }) {
           onChange={handleHighlightChange}
           onKeyDown={handleHighlightChange}
           defaultValue={highlight}
+          placeholder='Input your highlight'
         />
       </Box>
       <Grid item xs={12}>
@@ -115,30 +116,26 @@ export default function timeline_actions({ queryData }) {
           cols={4}
           rowHeight={200}
         >
-          {queryData.picArray && 
-          queryData.picArray.map((item, index) => (
-            <ImageListItem key={index}>
-              <img
-                src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
-                data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
-                alt={item.title}
-                loading='lazy'
-              />
-            </ImageListItem>
-          ))}
+          {queryData.picArray &&
+            queryData.picArray.map((item, index) => (
+              <ImageListItem key={index}>
+                <img
+                  src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
+                  data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
+                  alt={item.title}
+                  loading='lazy'
+                />
+              </ImageListItem>
+            ))}
         </ImageList>
       </Grid>
       <p style={{ color: 'red' }}>{error}</p>
       <Button
         variant='contained'
+        color='warning'
         id='upload-file-button'
-        style={{
-          padding: '1rem',
-          fontSize: '1.5rem',
-          color: 'black',
-          backgroundColor: 'rgb(225, 215, 170)',
-          width: '15rem',
-        }}
+        size='lg'
+        component='label'
       >
         Upload File
         <input type='file' hidden onChange={(e) => storeFile(e)} />

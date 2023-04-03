@@ -78,7 +78,7 @@ export async function getServerSideProps() {
     const lat = ele.data()['coordinates'][1];
     const lng = ele.data()['coordinates'][0];
 
-    coordinatesOfNumberOne.push({ lat: Number(lat), lng: Number(lng) });
+    coordinatesOfNumberOne.push({ lat: Number(lat), lng: Number(lng), city: ele.data()['city'], country: ele.data()['country']  });
   });
   rankingAndCoord = [{ NumberOneCoord: coordinatesOfNumberOne, Rank: ranking }];
 
@@ -92,25 +92,23 @@ export default function Home({ rankingCoord }) {
     <>
       
       <br></br>
-      <Container>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
+      <Container >
+        <Grid container spacing={2} >
+          <Grid item xs={3} >
             <Paper elevation={3}>
               <Box padding={1}>
-                <h2>Ranking</h2>
+                <h2 style={{textAlign:"center"}}>Ranking</h2>
                 {Rank.map((el, i) => (
                   <Ranking index={el} key={i} myKey={i}></Ranking>
                 ))}
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={6}><DynamicMap index={NumberOneCoord} road={'/'} style={{innerHeight:"100%"}}></DynamicMap></Grid>
+          <Grid item xs={9}><DynamicMap index={NumberOneCoord} road={'/'} style={{innerHeight:"100%"}}></DynamicMap></Grid>
         </Grid>
       </Container>
     </>
   );
 }
 
-/*
 
-*/

@@ -3,7 +3,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AppContext } from '../components/Layout';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
+import styles from './explore.module.css';
+import { TextField, Button } from '@material-ui/core';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { Checkbox } from '@mui/material';
+import { white } from '@mui/material/colors';
 
 import {
   getAuth,
@@ -29,6 +35,7 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 const auth = getAuth();
 
+
 export async function getServerSideProps() {
   const coordinateToPlace = [];
   let data = await db.collection('places_went').get();
@@ -39,19 +46,21 @@ export async function getServerSideProps() {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
       const city = ele.data()['city'];
+      const country = ele.data()['country'];
       const counter = ele.data()['counter'];
       coordinateToPlace.push({
         lat: lat,
         lng: lng,
         city: city,
         counter: counter,
+        country: country,
       });
     }
     
   });
 
-  return { props: { data: coordinateToPlace } };
-}
+//   return { props: { data: coordinateToPlace } };
+// }
 
 export default function Home({ data }) {
   const { Uid } = React.useContext(AppContext);
@@ -60,6 +69,17 @@ export default function Home({ data }) {
   const [oneWay, setOneWay] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [origin, setOrigin] = useState('');
+  const [domestic, setDomestic] = useState(false);
+  const [budget, setBudget] = useState('');
+
+  const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+  };
+
+  const handleOriginChange = (event) => {
+    setOrigin(event.target.value);
+  };
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -112,12 +132,7 @@ export default function Home({ data }) {
   };
 
   const handleSearch = () => {
-    let origin = document.querySelector('#origin').value;
-    const domestic = document.querySelector('#domestic').checked;
-    const oneway = document.querySelector('#oneWay').checked;
-    const budget = document.querySelector('#budget').value;
-
-    origin = origin.split(' ')[0];
+    setOrigin(origin.split(' ')[0]);
 
     const data = {
       origin: origin,
@@ -135,31 +150,117 @@ export default function Home({ data }) {
   };
 
   return (
-    <div>
-      <input type='text' id='origin' placeholder='From' />
-      <input type='text' id='budget' placeholder='Budget' />
-      <input type='checkbox' id='domestic' name='domestic' />
-      <label htmlFor='domestic'>Domestic</label>
-      <DatePicker onChange={setStartDate} />
-      {!oneWay && <DatePicker onChange={setEndDate} />}
-      <input
-        type='checkbox'
-        id='oneWay'
-        name='oneWay'
-        checked={oneWay}
-        onChange={() => setOneWay(!oneWay)}
-      />
-      <label htmlFor='oneWay'>One Way</label>
-      <br />
-      <button
-        type='button'
-        className='btn btn-primary btn-lg'
-        onClick={handleSearch}
-      >
-        Search
-      </button>
+    <div className={styles.outer_container}>
+      <div className={styles.input_container}>
+        <div className={styles.title}>Find Trip</div>
+        <Grid container spacing={1}>
+          <Grid item xs={5}>
+            <div className={styles.left_input}>
+              <TextField
+                id='standard-basic'
+                variant='outlined'
+                placeholder='Flight Budget'
+                required
+                className={styles.budget}
+                value={budget}
+                onChange={handleBudgetChange}
+                InputProps={{
+                  style: {
+                    fontSize: '1rem',
+                    color: 'white',
+                  },
+                }}
+              />
+              <FormControlLabel
+                className={styles.oneway}
+                control={
+                  <Checkbox
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                    id='oneWay'
+                    name='oneWay'
+                    checked={oneWay}
+                    onChange={() => setOneWay(!oneWay)}
+                  />
+                }
+                label='One Way'
+              />
+              <TextField
+                id='origin'
+                variant='outlined'
+                placeholder='Departing Airport'
+                required
+                onChange={handleOriginChange}
+                className={styles.departing}
+                InputProps={{
+                  style: {
+                    fontSize: '1rem',
+                    color: 'white',
+                  },
+                }}
+              />
+              <FormControlLabel
+                className={styles.domestic}
+                control={
+                  <Checkbox
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 40 } }}
+                    id='domestic'
+                    name='domestic'
+                    checked={domestic}
+                    onChange={() => setDomestic(!domestic)}
+                  />
+                }
+                label='Domestic'
+              />
+            </div>
+          </Grid>
+          <Grid item xs={5}>
+            <div className={styles.center_input}>
+              <DatePicker
+                label='Start date'
+                className={styles.datepicker}
+                onChange={setStartDate}
+                sx={{
+                  svg: { white },
+                  input: { white },
+                  label: { white },
+                  fontSize: '1rem',
+                }}
+              />
+              <DatePicker
+                label='Return date'
+                disabled={oneWay}
+                className={styles.datepicker}
+                onChange={setEndDate}
+                sx={{
+                  svg: { white },
+                  input: { white },
+                  label: { white },
+                  fontSize: '1rem',
+                }}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={2}>
+            <div className={styles.right_input}>
+              <Button
+                variant='contained'
+                id='search-button'
+                onClick={handleSearch}
+                style={{
+                  padding: '1rem',
+                  fontSize: '1rem',
+                  width: '5rem',
+                  height: '2.5rem',
+                }}
+              >
+                Search
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
 
-      <DynamicMap index={data} road={'/'}></DynamicMap>
+      {/* <DynamicMap index={data} road={'/'}></DynamicMap> */}
     </div>
   );
 }

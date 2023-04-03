@@ -180,7 +180,7 @@ export default function Profile_card(props) {
           className='background card-left-border'
         >
           <ImageList
-            sx={{ width: '100%', height: 480 }}
+            sx={{ width: '100%', height: '30rem' }}
             variant='quilted'
             cols={4}
             rowHeight={164}
@@ -227,7 +227,7 @@ export default function Profile_card(props) {
                 marginLeft: '1rem',
                 marginTop: '2rem',
                 fontSize: '1.5rem',
-                width: '30rem',
+                width: '25rem',
               },
             }}
           />
