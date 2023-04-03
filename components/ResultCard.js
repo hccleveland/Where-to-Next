@@ -26,7 +26,7 @@ export default function ResultCard(props) {
   const [uid, setUid] = Uid;
   const [cheapestFlights, setCheapestFlights] = useState([]);
   const route = useRouter();
-  const [madeHighlights,setMadeHighlights] = useState(false);
+  const [madeHighlights, setMadeHighlights] = useState(false);
   let originIata = props.city['originIata'];
   let countryNameEnglish = props.city['countryNameEnglish'];
   let countryId = props.city['countryId'];
@@ -45,15 +45,19 @@ export default function ResultCard(props) {
   let coordinates = props.city['coordinates'];
   let oneWay = props.city['oneWay'];
 
-  async function getMadeHighlights(){
-    let data = await db.collection('places_went').where('city', '==', cityName).where('country', '==', countryNameEnglish).get();
-    let docs=data.docs;
+  async function getMadeHighlights() {
+    let data = await db
+      .collection('places_went')
+      .where('city', '==', cityName)
+      .where('country', '==', countryNameEnglish)
+      .get();
+    let docs = data.docs;
     setMadeHighlights(docs);
   }
 
   useEffect(() => {
     getMadeHighlights();
-  })
+  });
 
   const getCheapestFlights = async () => {
     if (cheapestFlights.length > 0) return;
@@ -85,7 +89,8 @@ export default function ResultCard(props) {
         console.error(error);
       });
 
-    if (cityAirports[0]['iata_code'].length === 4) cityAirports.splice(1);
+    if (cityAirports[0] && cityAirports[0]['iata_code'].length === 4)
+      cityAirports.splice(1);
 
     //loop through airports and get the cheapest flights for those
     for (let airport of cityAirports) {
@@ -478,7 +483,7 @@ export default function ResultCard(props) {
   ];
 
   async function getContinentCounter() {
-    console.log("enter?");
+    console.log('enter?');
     let visitedCountries = [];
     let asianCounter = 0;
     let africaCounter = 0;
@@ -569,53 +574,50 @@ export default function ResultCard(props) {
         });
       }
     }
-    updateCounterFromDB()
+    updateCounterFromDB();
   }
- 
+
   ///////////////////////////////////////////////////////////////////////
-
-
 
   getCheapestFlights();
 
   return (
     <>
-    <Grid item xs={6}>
-    <div className='result-card'>
-      <div className='img-hover-zoom'>
-        <img
-          className='result-card-image' 
-          src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
-        ></img>
-      </div>
-      <div className='result-card-desc'>
-        {cityName}, {countryNameEnglish}
-        <br></br>
-        {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
-        <br></br>From ${Math.floor(price)}
-      </div>
-      
-      {cheapestFlights.map((flight) => {
-        return (
-          <a
-            key={flight.items[0].deeplink}
-            onClick={addToPlacesVisited}
-            target='_blank'
-            rel='noopener noreferrer'
-            href={flight.items[0].deeplink.replace(
-              'www.skyscanner.net',
-              'www.skyscanner.com'
-            )}
-            
-          >
-            ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
-          </a>
-        );
-      })}
-    </div>
-    </Grid>
-    <Grid item xs={6}>
-    {madeHighlights.length > 0 &&
+      <Grid item xs={6}>
+        <div className='result-card'>
+          <div className='img-hover-zoom'>
+            <img
+              className='result-card-image'
+              src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
+            ></img>
+          </div>
+          <div className='result-card-desc'>
+            {cityName}, {countryNameEnglish}
+            <br></br>
+            {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
+            <br></br>From ${Math.floor(price)}
+          </div>
+
+          {cheapestFlights.map((flight) => {
+            return (
+              <a
+                key={flight.items[0].deeplink}
+                onClick={addToPlacesVisited}
+                target='_blank'
+                rel='noopener noreferrer'
+                href={flight.items[0].deeplink.replace(
+                  'www.skyscanner.net',
+                  'www.skyscanner.com'
+                )}
+              >
+                ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
+              </a>
+            );
+          })}
+        </div>
+      </Grid>
+      <Grid item xs={6}>
+        {madeHighlights.length > 0 &&
           madeHighlights.map((doc) => (
             <div>
               <div>
@@ -625,8 +627,7 @@ export default function ResultCard(props) {
               {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
             </div>
           ))}
-
-    </Grid>
+      </Grid>
     </>
   );
 }

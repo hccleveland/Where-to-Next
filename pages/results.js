@@ -14,14 +14,15 @@ const MAX_RESULTS = 1;
 export async function getServerSideProps({ query }) {
   const countries = [];
   let cities = [];
-
   const queryData = JSON.parse(query.data);
   const domestic = queryData.domestic;
 
-  const iataorigin = iatadata(queryData.origin);
+  const iataorigin = iatadata(queryData.origin.split(' ')[0]);
   const country_id = iataorigin[0].country_id;
 
   if (queryData.oneWay) queryData.endDate = null;
+
+  console.log(iataorigin, country_id);
 
   if (domestic) {
     cities = await getDomesticFlights(queryData, country_id);
