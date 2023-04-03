@@ -117,6 +117,7 @@ export default function MenuAppBar() {
         <Grid item xs={2}><TextField
                  variant='filled' 
                  label="Password"
+                 type='password'
                  id="outlined-size-small"
                  size="small"
                  sx={{ input: { color: 'pink' } }}
