@@ -18,9 +18,9 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 
 function Achievement() {
-  const { Uid, Display_name } = React.useContext(AppContext);
+  const { Uid, Display_name, Percent } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
-  const [percent, setPercentage] = useState({});
+  const [percent, setPercentage] = Percent;
 
   async function getPercentageToTransfert() {
     let counters = {};
@@ -184,7 +184,6 @@ function Achievement() {
 
 
   return (
-    <>
       <Grid container spacing={2} justify="center" alignItems="center" style={{ backgroundColor: "#708090" }}>
         <Grid item xs={1} >
         </Grid>
@@ -208,7 +207,6 @@ function Achievement() {
         <Grid item xs={1}>
         </Grid>
       </Grid>
-    </>
   );
 }
 

@@ -9,19 +9,19 @@ export default function Badges(props) {
   let titleAsia = '';
   switch (true) {
     case asiaCounter >= 42:
-      imageAsia = '/asiaPlane.png';
+      imageAsia = '/asia3.png';
       titleAsia = 'Explorator';
       break;
     case asiaCounter >= 20 && asiaCounter < 42:
-      imageAsia = '/asiaBoat.png';
+      imageAsia = '/asia2.png';
       titleAsia = 'Connoisseur';
       break;
     case asiaCounter >= 10 && asiaCounter < 20:
-      imageAsia = '/asiaTrain.png';
+      imageAsia = '/asia1.png';
       titleAsia = 'Traveler';
       break;
     case asiaCounter < 10:
-      imageAsia = '/asiaCar.png';
+      imageAsia = '/asia0.png';
       titleAsia = 'Rookie';
       break;
   }
@@ -31,19 +31,19 @@ export default function Badges(props) {
   let titleAfrica = '';
   switch (true) {
     case africaCounter >= 50:
-      imageAfrica = '/africaPlane.png';
+      imageAfrica = '/africa3.png';
       titleAfrica = 'Explorator';
       break;
     case africaCounter >= 25 && africaCounter < 50:
-      imageAfrica = '/africaBoat.png';
+      imageAfrica = '/africa2.png';
       titleAfrica = 'Connoisseur';
       break;
     case africaCounter >= 10 && africaCounter < 25:
-      imageAfrica = '/africaTrain.png';
+      imageAfrica = '/africa1.png';
       titleAfrica = 'Traveler';
       break;
     case africaCounter < 10:
-      imageAfrica = '/africaCar.png';
+      imageAfrica = '/africa0.png';
       titleAfrica = 'Rookie';
       break;
   }
@@ -53,19 +53,19 @@ export default function Badges(props) {
   let titleEurope = '';
   switch (true) {
     case europeCounter >= 40:
-      imageEurope = '/europePlane.png';
+      imageEurope = '/europe3.png';
       titleEurope = 'Explorator';
       break;
     case europeCounter >= 20 && europeCounter < 40:
-      imageEurope = '/europeBoat.png';
+      imageEurope = '/europe2.png';
       titleEurope = 'Connoisseur';
       break;
     case europeCounter >= 10 && europeCounter < 20:
-      imageEurope = '/europeTrain.png';
+      imageEurope = '/europe1.png';
       titleEurope = 'Traveler';
       break;
     case europeCounter < 10:
-      imageEurope = '/europeCar.png';
+      imageEurope = '/europe0.png';
       titleEurope = 'Rookie';
       break;
   }
@@ -75,19 +75,19 @@ export default function Badges(props) {
   let titleOceania = '';
   switch (true) {
     case oceaniaCounter >= 12:
-      imageOceania = '/oceaniaPlane.png';
+      imageOceania = '/oceania3.png';
       titleOceania = 'Explorator';
       break;
     case oceaniaCounter >= 6 && oceaniaCounter < 12:
-      imageOceania = '/oceaniaBoat.png';
+      imageOceania = '/oceania2.png';
       titleOceania = 'Connoisseur';
       break;
     case oceaniaCounter >= 3 && oceaniaCounter < 6:
-      imageOceania = '/oceaniaTrain.png';
+      imageOceania = '/oceania1.png';
       titleOceania = 'Traveler';
       break;
     case oceaniaCounter < 3:
-      imageOceania = '/oceaniaCar.png';
+      imageOceania = '/oceania0.png';
       titleOceania = 'Rookie';
       break;
   }
@@ -97,19 +97,19 @@ export default function Badges(props) {
   let titleNAmerica = '';
   switch (true) {
     case NAmericaCounter >= 20:
-      imageNAmerica = '/namericaPlane.png';
+      imageNAmerica = '/namerica3.png';
       titleNAmerica = 'Explorator';
       break;
     case NAmericaCounter >= 10 && NAmericaCounter < 20:
-      imageNAmerica = '/namericaBoat.png';
+      imageNAmerica = '/namerica2.png';
       titleNAmerica = 'Connoisseur';
       break;
     case NAmericaCounter >= 5 && NAmericaCounter < 10:
-      imageNAmerica = '/namericaTrain.png';
+      imageNAmerica = '/namerica1.png';
       titleNAmerica = 'Traveler';
       break;
     case NAmericaCounter < 5:
-      imageNAmerica = '/namericaCar.png';
+      imageNAmerica = '/namerica0.png';
       titleNAmerica = 'Rookie';
       break;
   }
@@ -120,19 +120,19 @@ export default function Badges(props) {
   let titleSAmerica = '';
   switch (true) {
     case SAmericaCounter >= 10:
-      imageSAmerica = '/samericaPlane.png';
+      imageSAmerica = '/samerica3.png';
       titleSAmerica = 'Explorator';
       break;
     case SAmericaCounter >= 6 && SAmericaCounter < 10:
-      imageSAmerica = '/samericaBoat.png';
+      imageSAmerica = '/samerica2.png';
       titleSAmerica = 'Connoisseur';
       break;
     case SAmericaCounter >= 3 && SAmericaCounter < 6:
-      imageSAmerica = '/samericaTrain.png';
+      imageSAmerica = '/samerica1.png';
       titleSAmerica = 'Traveler';
       break;
     case SAmericaCounter < 3:
-      imageSAmerica = '/samericaCar.png';
+      imageSAmerica = '/samerica0.png';
       titleSAmerica = 'Rookie';
       break;
   }
@@ -148,19 +148,19 @@ export default function Badges(props) {
   let titleWorld = '';
   switch (true) {
     case worldCounter >= 150:
-      imageWorld = '/worldPlane.png';
+      imageWorld = '/world3.png';
       titleWorld = 'Explorator';
       break;
     case worldCounter >= 50 && worldCounter < 100:
-      imageWorld = '/worldBoat.png';
+      imageWorld = '/world2.png';
       titleWorld = 'Connoisseur';
       break;
     case worldCounter >= 5 && worldCounter < 50:
-      imageWorld = '/worldTrain.png';
+      imageWorld = '/world1.png';
       titleWorld = 'Traveler';
       break;
     case worldCounter < 5:
-      imageWorld = '/worldCar.png';
+      imageWorld = '/world0.png';
       titleWorld = 'Rookie';
       break;
   }
@@ -170,19 +170,19 @@ export default function Badges(props) {
   let titleHelper = '';
   switch (true) {
     case helperCounter >= 20000:
-      imageHelper = '/helperPlane.png';
+      imageHelper = '/helper3.png';
       titleHelper = 'Explorator';
       break;
     case helperCounter >= 2000 && helperCounter < 20000:
-      imageHelper = '/helperBoat.png';
+      imageHelper = '/helper2.png';
       titleHelper = 'Connoisseur';
       break;
     case helperCounter >= 200 && helperCounter < 2000:
-      imageHelper = '/helperTrain.png';
+      imageHelper = '/helper1.png';
       titleHelper = 'Traveler';
       break;
     case helperCounter < 200:
-      imageHelper = '/helperCar.png';
+      imageHelper = '/helper0.png';
       titleHelper = 'Rookie';
       break;
   }

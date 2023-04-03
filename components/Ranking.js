@@ -6,29 +6,29 @@ export default function Ranking(props) {
   const router = useRouter();
 
   const clickHandler = () => {
-    router.push(`/friend/${props.index.id}`);
+    //router.push(`/friend/${props.index.id}`);
   };
 
-  let rankimage = `rank${props.myKey + 1}.png`
+
 
   return (
     <div onClick={clickHandler}>
       <br />
-      <Grid container spacing={2} justify='center' alignItems='center'>
-        <Grid container item xs={3}><img src={rankimage} className='rankimage'></img></Grid>
-        <Grid container item xs={6}>{props.index.name}</Grid>
-        <Grid container item xs={3} >{props.index.point}</Grid>
+      <Grid container justifyContent="center" alignItems='center' style={{ backgroundColor: '#545F72', borderRadius: '10px'}}>
+        <Grid container item xs={2} style={{ display: 'flex', alignItems: 'center', border: 'none', paddingLeft: '10px', paddingRight: '10px'  }}>  {props.myKey + 1}</Grid>
+        <Grid container item xs={8} style={{ display: 'flex', alignItems: 'left', border: 'none', paddingLeft: '10px', paddingRight: '10px', color: props.myKey < 3 ? "#E3D5A5" : 'white'}}>{props.index.name}</Grid>
+        <Grid container item xs={2} style={{ display: 'flex', alignItems: 'center', border: 'none' }}>{props.index.point}</Grid>
       </Grid>
-       
+
     </div>
   );
 }
 
 
 
- /*pathname: `/friend/${props.index.name}`,
-      query: {
-        id: props.index.id,
-        points: props.index.points
-      }
-    });*/
+/*pathname: `/friend/${props.index.name}`,
+     query: {
+       id: props.index.id,
+       points: props.index.points
+     }
+   });*/

@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Swal from 'sweetalert2';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -483,7 +484,6 @@ export default function ResultCard(props) {
   ];
 
   async function getContinentCounter() {
-    console.log('enter?');
     let visitedCountries = [];
     let asianCounter = 0;
     let africaCounter = 0;
@@ -498,6 +498,9 @@ export default function ResultCard(props) {
     let oceania;
     let northAmerica;
     let southAmerica;
+    let pointsdata = await db.collection('users').doc(uid).get();
+    let pointsdoc = pointsdata.data().points;
+    let thePoints = pointsdoc;
 
     let data = await db
       .collection('users')
@@ -544,36 +547,79 @@ export default function ResultCard(props) {
         .catch((error) => {});
 
       if (asianCounter != asia) {
-        db.collection('users').doc(uid).update({
-          asia: asianCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            asia: asianCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/asia0.png',
         });
       }
       if (africaCounter != africa) {
-        db.collection('users').doc(uid).update({
-          africa: africaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            africa: africaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/africa0.png',
         });
       }
       if (europeCounter != europe) {
-        db.collection('users').doc(uid).update({
-          europe: europeCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            europe: europeCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/europe0.png',
         });
       }
       if (oceaniaCounter != oceania) {
-        db.collection('users').doc(uid).update({
-          oceania: oceaniaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            oceania: oceaniaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/oceania0.png',
         });
       }
       if (northAmericaCounter != northAmerica) {
-        db.collection('users').doc(uid).update({
-          north_america: northAmericaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            north_america: northAmericaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/namerica0.png',
         });
       }
       if (southAmericaCounter != southAmerica) {
-        db.collection('users').doc(uid).update({
-          south_america: southAmericaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            south_america: southAmericaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/samerica0.png',
         });
       }
     }
+
     updateCounterFromDB();
   }
 
