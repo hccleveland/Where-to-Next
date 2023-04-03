@@ -106,7 +106,7 @@ export default function Friend({ friendId }) {
           helperPoints: docRef.data().helper_points,
         };
       })
-      .catch((error) => { });
+      .catch((error) => {});
     setCounters(counters);
   }
 
@@ -117,7 +117,7 @@ export default function Friend({ friendId }) {
   }, [friendId]);
 
   return (
-    <>
+    <div className='friends-page'>
       <Grid container spacing={2}>
         <Grid item xs={1}></Grid>
         <Grid item xs={10}>
@@ -140,6 +140,6 @@ export default function Friend({ friendId }) {
           <Timeline_card key={index} time={time} friendId={friendId} />
         ))}
       </Grid>
-    </>
+    </div>
   );
 }

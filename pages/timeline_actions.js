@@ -128,7 +128,17 @@ export default function timeline_actions({ queryData }) {
         </ImageList>
       </Grid>
       <p style={{ color: 'red' }}>{error}</p>
-      <Button variant='contained' component='label' id='upload-file-button'>
+      <Button
+        variant='contained'
+        id='upload-file-button'
+        style={{
+          padding: '1rem',
+          fontSize: '1.5rem',
+          color: 'black',
+          backgroundColor: 'rgb(225, 215, 170)',
+          width: '15rem',
+        }}
+      >
         Upload File
         <input type='file' hidden onChange={(e) => storeFile(e)} />
       </Button>
