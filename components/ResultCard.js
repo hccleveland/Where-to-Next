@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Swal from 'sweetalert2';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -26,7 +27,7 @@ export default function ResultCard(props) {
   const [uid, setUid] = Uid;
   const [cheapestFlights, setCheapestFlights] = useState([]);
   const route = useRouter();
-  const [madeHighlights,setMadeHighlights] = useState(false);
+  const [madeHighlights, setMadeHighlights] = useState(false);
   let originIata = props.city['originIata'];
   let countryNameEnglish = props.city['countryNameEnglish'];
   let countryId = props.city['countryId'];
@@ -45,15 +46,19 @@ export default function ResultCard(props) {
   let coordinates = props.city['coordinates'];
   let oneWay = props.city['oneWay'];
 
-  async function getMadeHighlights(){
-    let data = await db.collection('places_went').where('city', '==', cityName).where('country', '==', countryNameEnglish).get();
-    let docs=data.docs;
+  async function getMadeHighlights() {
+    let data = await db
+      .collection('places_went')
+      .where('city', '==', cityName)
+      .where('country', '==', countryNameEnglish)
+      .get();
+    let docs = data.docs;
     setMadeHighlights(docs);
   }
 
   useEffect(() => {
     getMadeHighlights();
-  })
+  });
 
   const getCheapestFlights = async () => {
     if (cheapestFlights.length > 0) return;
@@ -85,7 +90,8 @@ export default function ResultCard(props) {
         console.error(error);
       });
 
-    if (cityAirports[0]['iata_code'].length === 4) cityAirports.splice(1);
+    if (cityAirports[0] && cityAirports[0]['iata_code'].length === 4)
+      cityAirports.splice(1);
 
     //loop through airports and get the cheapest flights for those
     for (let airport of cityAirports) {
@@ -478,7 +484,6 @@ export default function ResultCard(props) {
   ];
 
   async function getContinentCounter() {
-    console.log("enter?");
     let visitedCountries = [];
     let asianCounter = 0;
     let africaCounter = 0;
@@ -493,6 +498,9 @@ export default function ResultCard(props) {
     let oceania;
     let northAmerica;
     let southAmerica;
+    let pointsdata = await db.collection('users').doc(uid).get();
+    let pointsdoc = pointsdata.data().points;
+    let thePoints = pointsdoc;
 
     let data = await db
       .collection('users')
@@ -539,83 +547,123 @@ export default function ResultCard(props) {
         .catch((error) => {});
 
       if (asianCounter != asia) {
-        db.collection('users').doc(uid).update({
-          asia: asianCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            asia: asianCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/asia0.png',
         });
       }
       if (africaCounter != africa) {
-        db.collection('users').doc(uid).update({
-          africa: africaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            africa: africaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/africa0.png',
         });
       }
       if (europeCounter != europe) {
-        db.collection('users').doc(uid).update({
-          europe: europeCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            europe: europeCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/europe0.png',
         });
       }
       if (oceaniaCounter != oceania) {
-        db.collection('users').doc(uid).update({
-          oceania: oceaniaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            oceania: oceaniaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/oceania0.png',
         });
       }
       if (northAmericaCounter != northAmerica) {
-        db.collection('users').doc(uid).update({
-          north_america: northAmericaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            north_america: northAmericaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/namerica0.png',
         });
       }
       if (southAmericaCounter != southAmerica) {
-        db.collection('users').doc(uid).update({
-          south_america: southAmericaCounter,
+        db.collection('users')
+          .doc(uid)
+          .update({
+            south_america: southAmericaCounter,
+            points: thePoints + 200,
+          });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl: '/samerica0.png',
         });
       }
     }
-    updateCounterFromDB()
+
+    updateCounterFromDB();
   }
- 
+
   ///////////////////////////////////////////////////////////////////////
-
-
 
   getCheapestFlights();
 
   return (
     <>
-    <Grid item xs={6}>
-    <div className='result-card'>
-      <div className='img-hover-zoom'>
-        <img
-          className='result-card-image' 
-          src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
-        ></img>
-      </div>
-      <div className='result-card-desc'>
-        {cityName}, {countryNameEnglish}
-        <br></br>
-        {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
-        <br></br>From ${Math.floor(price)}
-      </div>
-      
-      {cheapestFlights.map((flight) => {
-        return (
-          <a
-            key={flight.items[0].deeplink}
-            onClick={addToPlacesVisited}
-            target='_blank'
-            rel='noopener noreferrer'
-            href={flight.items[0].deeplink.replace(
-              'www.skyscanner.net',
-              'www.skyscanner.com'
-            )}
-            
-          >
-            ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
-          </a>
-        );
-      })}
-    </div>
-    </Grid>
-    <Grid item xs={6}>
-    {madeHighlights.length > 0 &&
+      <Grid item xs={6}>
+        <div className='result-card'>
+          <div className='img-hover-zoom'>
+            <img
+              className='result-card-image'
+              src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
+            ></img>
+          </div>
+          <div className='result-card-desc'>
+            {cityName}, {countryNameEnglish}
+            <br></br>
+            {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
+            <br></br>From ${Math.floor(price)}
+          </div>
+
+          {cheapestFlights.map((flight) => {
+            return (
+              <a
+                key={flight.items[0].deeplink}
+                onClick={addToPlacesVisited}
+                target='_blank'
+                rel='noopener noreferrer'
+                href={flight.items[0].deeplink.replace(
+                  'www.skyscanner.net',
+                  'www.skyscanner.com'
+                )}
+              >
+                ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
+              </a>
+            );
+          })}
+        </div>
+      </Grid>
+      <Grid item xs={6}>
+        {madeHighlights.length > 0 &&
           madeHighlights.map((doc) => (
             <div>
               <div>
@@ -625,8 +673,7 @@ export default function ResultCard(props) {
               {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
             </div>
           ))}
-
-    </Grid>
+      </Grid>
     </>
   );
 }

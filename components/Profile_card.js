@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { TextField } from '@material-ui/core';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -134,78 +135,105 @@ export default function Profile_card(props) {
 
   return (
     <>
-      <Grid item xs={0.5}></Grid>
-      <Grid item xs={5}>
-        <Paper
-          elevation={3}
-          className={'profile_card'}
-          owner={uid}
-          docid={props.profileCard.docid}
-          onClick={handleClick}
-        >
-          <div className='img-hover-zoom'>
-            <img src={cardImage} className='timeline_img' />
-          </div>
-          <Box padding={1}>
+      <Grid container className='card-container'>
+        <Grid item xs={0.5}></Grid>
+        <Grid item xs={5} className='card-left-border'>
+          <Paper
+            elevation={3}
+            className={'profile_card'}
+            owner={uid}
+            docid={props.profileCard.docid}
+            onClick={handleClick}
+          >
             <Typography variant='h6' component='h2'>
-              <div
-                className='timeline_location'
+              <span
+                className='timeline_location background'
                 owner={uid}
                 docid={props.profileCard.docid}
               >
                 {card_city}, {card_country}
-              </div>
+              </span>
             </Typography>
-            <Typography variant='subtitle1' component='p'>
-              <div
-                className='timeline_dates'
-                owner={uid}
-                docid={props.profileCard.docid}
-              >
-                Visited : {card_start_date} {card_end_date}
-              </div>
-            </Typography>
-          </Box>
-        </Paper>
-      </Grid>
-      <Grid item xs={3}>
-        <ImageList
-          sx={{ width: 500, height: 550 }}
-          variant='quilted'
-          cols={4}
-          rowHeight={164}
-        >
-          {uploadedImages.map((item, index) => (
-            <ImageListItem key={index} onClick={handleImageClick}>
-              <img
-                src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
-                data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
-                alt={item.title}
-                loading='lazy'
-              />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      </Grid>
-      <Grid item xs={3}>
-        <div owner={uid}>{highlight}</div>
-        {madeComments.length > 0 &&
-          madeComments.map((doc) => (
-            <div>
-              <div key={doc.id}>
-                {' '}
-                {doc.data().display_name} : {doc.data().comment}
-              </div>
-              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
+            <div className='img-hover-zoom background'>
+              <img src={cardImage} className='timeline_img' />
             </div>
-          ))}
-        <input
-          onChange={handleComment}
-          onKeyDown={handleComment}
-          placeholder='commment here'
-        ></input>
+            <Box>
+              <Typography variant='subtitle1' component='p'>
+                <span
+                  className='timeline_dates background'
+                  owner={uid}
+                  docid={props.profileCard.docid}
+                >
+                  {card_start_date} <br></br>
+                  {card_end_date}
+                </span>
+              </Typography>
+            </Box>
+          </Paper>
+        </Grid>
+        <Grid
+          item
+          xs={3}
+          paddingTop={4}
+          paddingLeft={1.5}
+          paddingRight={1.5}
+          className='background card-left-border'
+        >
+          <ImageList
+            sx={{ width: '100%', height: '30rem' }}
+            variant='quilted'
+            cols={4}
+            rowHeight={164}
+          >
+            {uploadedImages.map((item, index) => (
+              <ImageListItem
+                key={index}
+                className='image-list-item'
+                onClick={handleImageClick}
+              >
+                <img
+                  src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
+                  data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
+                  alt={item.title}
+                  loading='lazy'
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Grid>
+        <Grid item xs={3} className='background card-right-border'>
+          <div owner={uid} className='highlight-with-comments'>
+            {highlight}
+          </div>
+          {madeComments.length > 0 &&
+            madeComments.map((doc) => (
+              <div className='comments'>
+                <div key={doc.id}>
+                  {' '}
+                  {doc.data().display_name} : {doc.data().comment}
+                </div>
+                {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
+              </div>
+            ))}
+          <TextField
+            id='standard-basic'
+            variant='outlined'
+            placeholder='comment here'
+            className='comment-input'
+            onChange={handleComment}
+            onKeyDown={handleComment}
+            InputProps={{
+              style: {
+                marginLeft: '1rem',
+                marginTop: '2rem',
+                fontSize: '1.5rem',
+                width: '25rem',
+              },
+            }}
+          />
+        </Grid>
+        <Grid item xs={0.5}></Grid>
       </Grid>
-      <Grid item xs={0.5}></Grid>
     </>
   );
 }

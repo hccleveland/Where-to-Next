@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'goudy-trajan-regular';
+  src: url('https://www.dafontfree.net/data/19/g/91933/GoudyTrajan-Regular-trial.otf')
+      format('woff'),
+    url('https://www.dafontfree.net/data/19/g/91933/GoudyTrajan-Regular-trial.otf')
+      format('opentype'),
+    url('https://www.dafontfree.net/data/19/g/91933/GoudyTrajan-Regular-trial.otf')
+      format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -49,15 +61,20 @@
   height: 200px;
 }
 
+.background {
+  background-color: rgb(225, 215, 170);
+  color: black;
+}
+
+.foreground {
+  color: black;
+}
+
 .timeline-actions-container {
   display: flex;
   flex-direction: column;
   justify-content: center; /* center the content horizontally */
   align-items: center; /* center the content vertically */
-  /* background-image: url('../public/background-image.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center; */
 }
 
 #timeline-actions-highlight {
@@ -78,4 +95,65 @@
   font-size: 1rem;
 }
 
+.timeline_location {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  font-size: 3rem;
+}
 
+.timeline_dates {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.card-container {
+  margin-bottom: 5rem;
+}
+
+.card-left-border {
+  border-top: 10px solid black;
+  border-bottom: 10px solid black;
+  border-left: 10px solid black;
+}
+
+.card-right-border {
+  border-top: 10px solid black;
+  border-bottom: 10px solid black;
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+}
+
+.highlight-with-comments {
+  display: flex;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10rem;
+  font-size: 2rem;
+  border-bottom: 10px solid black;
+  font-weight: bold;
+}
+
+.comments {
+  font-size: 1.5rem;
+  padding-top: 0.5;
+  padding-left: 1rem;
+}
+
+.friends-page,
+.profile-page {
+  background-color: rgb(101 117 133);
+}
+
+.image-list-item:hover {
+  cursor: pointer;
+}

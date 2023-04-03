@@ -4,6 +4,13 @@ import { AppContext } from './Layout';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { useRouter } from 'next/router';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { TextField, Button } from '@material-ui/core';
+import styles from './AddTripCard.module.css';
+import Swal from 'sweetalert2';
 
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
@@ -18,13 +25,12 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 
 export default function AddTripCard(props) {
-
   const convertDate = (date) => {
     if (!date) return '';
-    
+
     const convertedD = new Date(date).toDateString();
     const convertedDArr = convertedD.split(' ');
-    
+
     return (
       convertedDArr[0] +
       ', ' +
@@ -35,48 +41,51 @@ export default function AddTripCard(props) {
       convertedDArr[3]
     );
   };
-    
+
   const getGeocode = async (city, country) => {
     try {
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${city}+${country}&format=geojson`
-        );
+      );
       return response.data.features[0].geometry.coordinates;
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
-  const { Uid } = React.useContext(AppContext);
+  const { Uid, Percent } = React.useContext(AppContext);
   const [uid, setUid] = Uid;
+  const [percent, setPercentage] = Percent;
   const country = props.time.country;
-  const country_id = props.time.country_id
+  const country_id = props.time.country_id;
   const city = props.time.city;
-  const image_url = props.time.image_url;
+  const image_url = props.time.image_url.replace(
+    'crop=400px:400px&quality=75',
+    'crop=1920px:1080px&quality=75'
+  );
+
   const start_date = convertDate(props.time.start_date);
   const end_date = convertDate(props.time.end_date);
   const route = useRouter();
 
-const handleTimelineSubmission = async () => {
+  const handleTimelineSubmission = async () => {
     const foundCoordinates = await getGeocode(city, country);
     const userDBObj = {
-        country: country,
-        country_id: country_id,
-        city: city,
-        coordinates: foundCoordinates,
-        image_url: image_url,
-        start_date: start_date,
-        end_date: end_date
-    }
+      country: country,
+      country_id: country_id,
+      city: city,
+      coordinates: foundCoordinates,
+      image_url: image_url,
+      start_date: start_date,
+      end_date: end_date,
+    };
     const placeDBObj = {
-        country: country,
-        country_id: country_id,
-        city: city,
-        coordinates: foundCoordinates,
-        image_url: image_url,
-        counter: 1
-    }
-    
+      country: country,
+      country_id: country_id,
+      city: city,
+      coordinates: foundCoordinates,
+      image_url: image_url,
+      counter: 1,
+    };
+
     await db
       .collection('users')
       .doc(uid)
@@ -98,11 +107,11 @@ const handleTimelineSubmission = async () => {
     } else {
       await db.collection('places_went').add(placeDBObj);
     }
-    getContinentCounter()
-    route.push('/profile');
-}
+    getContinentCounter();
+   // route.push('/profile');
+  };
 
-//////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
   // Update the continent counter on the DB
   //////////////////////////////////////////////////////////////////////////////////////
   const asianCountry = [
@@ -364,7 +373,6 @@ const handleTimelineSubmission = async () => {
   ];
 
   async function getContinentCounter() {
-    
     let visitedCountries = [];
     let asianCounter = 0;
     let africaCounter = 0;
@@ -372,6 +380,7 @@ const handleTimelineSubmission = async () => {
     let oceaniaCounter = 0;
     let northAmericaCounter = 0;
     let southAmericaCounter = 0;
+    
 
     let asia;
     let africa;
@@ -379,6 +388,11 @@ const handleTimelineSubmission = async () => {
     let oceania;
     let northAmerica;
     let southAmerica;
+    
+    let pointsdata=await db.collection('users').doc(uid).get();
+  
+    let pointsdoc=pointsdata.data().points;
+    let thePoints=pointsdoc;
 
     let data = await db
       .collection('users')
@@ -421,57 +435,84 @@ const handleTimelineSubmission = async () => {
           oceania = docRef.data().oceania;
           northAmerica = docRef.data().north_america;
           southAmerica = docRef.data().south_america;
+          points=docRef.data().points;
         })
         .catch((error) => {});
 
       if (asianCounter != asia) {
         db.collection('users').doc(uid).update({
           asia: asianCounter,
+          points:thePoints+100
         });
+        Swal.fire({
+          title: "You've earned 100 points for adding your trip!",
+          imageUrl:"/asia0.png"
+        })
       }
       if (africaCounter != africa) {
         db.collection('users').doc(uid).update({
           africa: africaCounter,
+          points:thePoints+100
         });
+        Swal.fire({
+          title: "You've earned 200 points for adding your trip!",
+          imageUrl:"/africa3.png"
+        })
       }
       if (europeCounter != europe) {
         db.collection('users').doc(uid).update({
           europe: europeCounter,
+          points:thePoints+100
         });
+        Swal.fire({
+          title: "You've earned 100 points for adding your trip!",
+          imageUrl:"/europe2.png"
+        })
       }
       if (oceaniaCounter != oceania) {
         db.collection('users').doc(uid).update({
           oceania: oceaniaCounter,
+          points:thePoints+100
         });
+        Swal.fire({
+          title: "You've earned 100 points for adding your trip!",
+          imageUrl:"/oceania8.png"
+        })
       }
       if (northAmericaCounter != northAmerica) {
         db.collection('users').doc(uid).update({
           north_america: northAmericaCounter,
+          points:thePoints+100
         });
+        Swal.fire({
+          title: "You've earned 100 points for adding your trip!",
+          imageUrl:"/namerica2.png"
+        })
       }
       if (southAmericaCounter != southAmerica) {
         db.collection('users').doc(uid).update({
           south_america: southAmericaCounter,
+          points:thePoints+100
         });
+        Swal.fire({
+          title: "You've earned 100 points for adding your trip!",
+          imageUrl:"/samerica0.png"
+        })
       }
     }
-    updateCounterFromDB()
+    updateCounterFromDB();
   }
- 
+
   ///////////////////////////////////////////////////////////////////////
 
-
-
-
-  
   return (
     <div
-      className={'timeline_card'}
-    //   owner={uid}
-    //   docid={doc_id}
-    //   onClick={handleClick}
+      className={styles.add_trip_card_container}
+      //   owner={uid}
+      //   docid={doc_id}
+      //   onClick={handleClick}
     >
-      <img src={image_url} />
+      {/* <img src={image_url} />
       <div className='timeline_dates'>
         {start_date} - {end_date}
       </div>
@@ -480,7 +521,37 @@ const handleTimelineSubmission = async () => {
       </div>
       <button
         onClick={handleTimelineSubmission}
-      >Add Trip to Timeline</button>
+      >Add Trip to Timeline</button> */}
+      <Paper elevation={3}>
+        <Typography variant='h6' component='h2'>
+          <span className='timeline_location background'>
+            {city}, {country}
+          </span>
+        </Typography>
+        <div className='img-hover-zoom background'>
+          <img src={image_url} className='timeline_img' />
+        </div>
+        <Typography variant='subtitle1' component='p'>
+          <span className='timeline_dates background'>
+            {start_date} <br></br>
+            {end_date}
+          </span>
+        </Typography>
+        <div className={styles.button_container}>
+          <Button
+            variant='contained'
+            id='add-button'
+            onClick={handleTimelineSubmission}
+            style={{
+              padding: '1rem',
+              fontSize: '1.5rem',
+              width: '15rem',
+            }}
+          >
+            Add Trip to Timeline
+          </Button>
+        </div>
+      </Paper>
     </div>
   );
 }
