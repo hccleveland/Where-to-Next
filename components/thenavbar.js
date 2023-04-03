@@ -99,7 +99,7 @@ export default function MenuAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
 
-      <AppBar style={{ background: 'grey', color:"pink", opacity:0.5 }} position="static">
+      <AppBar style={{ background: '#708090', color:"black", opacity:0.5 }} position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none", color:'inherit'}} href='/profile'><img src='/user.png' style={{width:"30px",Height:"30px"}}></img><span>{display_name}</span></Link></Grid>
@@ -152,7 +152,7 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/index"><img src='/home.png' style={{width:"30px",Height:"30px"}}></img>Home</Link></MenuItem>
+                <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/"><img src='/home.png' style={{width:"30px",Height:"30px"}}></img>Home</Link></MenuItem>
                 <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/settings"><img src='/settings.png' style={{width:"30px",Height:"30px"}}></img>Settings</Link></MenuItem>
                 <MenuItem onClick={logout} style={{cursor:"default", textDecoration:"none"}}><img src='/power-off.png' style={{width:"30px",Height:"30px"}}></img>Logout</MenuItem>
               </Menu>
