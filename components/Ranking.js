@@ -17,7 +17,7 @@ export default function Ranking(props) {
       <Grid container justifyContent="center" alignItems='center' style={{ backgroundColor: '#545F72', borderRadius: '10px'}}>
         <Grid container item xs={2} style={{ display: 'flex', alignItems: 'center', border: 'none', paddingLeft: '10px', paddingRight: '10px'  }}>  {props.myKey + 1}</Grid>
         <Grid container item xs={8} style={{ display: 'flex', alignItems: 'left', border: 'none', paddingLeft: '10px', paddingRight: '10px', color: props.myKey < 3 ? "#E3D5A5" : 'white'}}>{props.index.name}</Grid>
-        <Grid container item xs={2} style={{ display: 'flex', alignItems: 'center', border: 'none' }}>{props.index.point}</Grid>
+        <Grid container item xs={2} style={{ display: 'flex', alignItems: 'center', border: 'none',  paddingLeft: '10px', paddingRight: '10px'  }}>{props.index.point}</Grid>
       </Grid>
 
     </div>

@@ -39,12 +39,14 @@ export async function getServerSideProps() {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
       const city = ele.data()['city'];
+      const country = ele.data()['country'];
       const counter = ele.data()['counter'];
       coordinateToPlace.push({
         lat: lat,
         lng: lng,
         city: city,
         counter: counter,
+        country: country,
       });
     }
     

@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import React, { useState } from 'react';
 import Message from './Message';
 import * as ReactLeaflet from 'react-leaflet';
@@ -7,6 +7,7 @@ import { icon } from 'leaflet';
 import firebase from 'firebase/compat/app';
 import countriesCoordinates from '../public/worldCoordinates.json';
 import 'firebase/compat/firestore';
+import { Container } from '@mui/material';
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -128,10 +129,11 @@ export default function Map(props) {
 
   return (
     <>
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <MapContainer
           style={{
             height: '80vh',
+            width: '120vh',
           }}
           center={[35.6762, 139.6503]}
           zoom={2}
@@ -152,7 +154,7 @@ export default function Map(props) {
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              {<Tooltip> {city} - {country} </Tooltip>}
+              {<Tooltip > {city} - {country} </Tooltip>}
             </Marker>
           ))}
         </MapContainer>
