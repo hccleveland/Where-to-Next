@@ -26,7 +26,7 @@ const customIcon = new icon({
   popupAnchor: [-3, -76],
 });
 
-const { MapContainer, TileLayer, Marker, Popup, GeoJSON } = ReactLeaflet;
+const { MapContainer, TileLayer, Marker, Tooltip, GeoJSON } = ReactLeaflet;
 //const { countries } = require('./Countries');
 //console.log("countries",countries)
 
@@ -34,7 +34,7 @@ const { MapContainer, TileLayer, Marker, Popup, GeoJSON } = ReactLeaflet;
 
 export default function Map(props) {
 
-  console.log(props)
+  console.log("props",props)
   const countries = countriesCoordinates;
 
 
@@ -131,28 +131,28 @@ export default function Map(props) {
       <div>
         <MapContainer
           style={{
-            height: '107vh',
+            height: '80vh',
           }}
           center={[35.6762, 139.6503]}
           zoom={2}
           scrollWheelZoom={false}
           nowrap={true}
           maxBounds={maxBounds}
+          
         >
           <TileLayer
             attribution=''
             url='https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg'
           />
            <GeoJSON key="my-geojson" data={countries} style={style} />
-          {chemin.map(({ lat, lng, price }) => (
+          {chemin.map(({ lat, lng, city, country }) => (
             <Marker
               key={lat + lng}
               position={[lat, lng]}
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              if {price}
-              {<Popup> {price} </Popup>}
+              {<Tooltip> {city} - {country} </Tooltip>}
             </Marker>
           ))}
         </MapContainer>
