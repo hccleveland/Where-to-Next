@@ -9,7 +9,7 @@ import citiesJSON from '../data/cities.json';
 
 import Grid from '@mui/material/Grid';
 
-const MAX_RESULTS = 4;
+const MAX_RESULTS = 1;
 
 export async function getServerSideProps({ query }) {
   const countries = [];

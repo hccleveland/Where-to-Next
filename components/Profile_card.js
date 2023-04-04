@@ -155,7 +155,11 @@ export default function Profile_card(props) {
               </span>
             </Typography>
             <div className='img-hover-zoom background'>
-              <img src={cardImage} className='timeline_img' />
+              <img
+                src={cardImage}
+                className='timeline_img'
+                style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
+              />
             </div>
             <Box>
               <Typography variant='subtitle1' component='p'>

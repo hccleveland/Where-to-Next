@@ -537,7 +537,11 @@ export default function AddTripCard(props) {
           </span>
         </Typography>
         <div className='img-hover-zoom background'>
-          <img src={image_url} className='timeline_img' />
+          <img
+            src={image_url}
+            className='timeline_img'
+            style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
+          />
         </div>
         <Typography variant='subtitle1' component='p'>
           <span className='timeline_dates background'>

@@ -78,7 +78,12 @@ export async function getServerSideProps() {
     const lat = ele.data()['coordinates'][1];
     const lng = ele.data()['coordinates'][0];
 
-    coordinatesOfNumberOne.push({ lat: Number(lat), lng: Number(lng), city: ele.data()['city'], country: ele.data()['country']  });
+    coordinatesOfNumberOne.push({
+      lat: Number(lat),
+      lng: Number(lng),
+      city: ele.data()['city'],
+      country: ele.data()['country'],
+    });
   });
   rankingAndCoord = [{ NumberOneCoord: coordinatesOfNumberOne, Rank: ranking }];
 
@@ -89,26 +94,36 @@ export default function Home({ rankingCoord }) {
   const { NumberOneCoord, Rank } = rankingCoord[0];
 
   return (
-    <div style={{backgroundColor:"#708090"}}>
-      
+    <div className='index-container' style={{ backgroundColor: '#708090' }}>
       <br></br>
       <Container style={{ backgroundColor: '#708090' }}>
-        <Grid container spacing={2} >
-          <Grid item xs={3} >
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
             <Paper elevation={4} style={{ backgroundColor: '#708090' }}>
               <Box padding={1}>
-              <h2 className="black-outline" style={{ textAlign: "center", fontFamily: "Ubuntu" }}>Ranking</h2>
+                <h2
+                  className='black-outline'
+                  style={{ textAlign: 'center', fontFamily: 'Ubuntu' }}
+                >
+                  Ranking
+                </h2>
                 {Rank.map((el, i) => (
                   <Ranking index={el} key={i} myKey={i}></Ranking>
                 ))}
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={9}><DynamicMap index={NumberOneCoord} road={'/'} style={{innerHeight:"100%"}}></DynamicMap></Grid>
+          <Grid item xs={9}>
+            <div style={{ backgroundColor: '#708090' }}>
+              <DynamicMap
+                index={NumberOneCoord}
+                road={'/'}
+                style={{ innerHeight: '100%' }}
+              ></DynamicMap>
+            </div>
+          </Grid>
         </Grid>
       </Container>
     </div>
   );
 }
-
-

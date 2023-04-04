@@ -45,7 +45,12 @@ export default function profile() {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
 
-      coordinateToPlace.push({ lat: Number(lat), lng: Number(lng), city: ele.data()['city'], country: ele.data()['country'] });
+      coordinateToPlace.push({
+        lat: Number(lat),
+        lng: Number(lng),
+        city: ele.data()['city'],
+        country: ele.data()['country'],
+      });
     });
 
     await setDatan({ coordinateToPlace });
@@ -142,7 +147,7 @@ export default function profile() {
 
   return (
     <div className='profile-page'>
-      <h1>{display_name}</h1>
+      <h1 style={{ fontFamily: 'Ubuntu' }}>{display_name}</h1>
       {datan && (
         <DynamicMap
           index={datan.coordinateToPlace}
