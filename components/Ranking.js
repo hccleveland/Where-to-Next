@@ -36,12 +36,12 @@ export default function Ranking(props) {
           }}
         >
           {' '}
-          {props.myKey + 1}
+          <span style={{ fontSize: '25px' }}>{props.myKey + 1}</span>
         </Grid>
         <Grid
           container
           item
-          xs={8}
+          xs={7}
           style={{
             display: 'flex',
             alignItems: 'left',
@@ -51,21 +51,22 @@ export default function Ranking(props) {
             color: props.myKey < 3 ? '#E3D5A5' : 'white',
           }}
         >
-          {props.index.name}
+          <span style={{ fontSize: '25px' }}>{props.index.name}</span>
         </Grid>
         <Grid
           container
           item
-          xs={2}
+          xs={3}
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'right',
             border: 'none',
             paddingLeft: '10px',
+            justifyContent: 'right',
             paddingRight: '10px',
           }}
         >
-          {props.index.point}
+          <span style={{ fontSize: '25px' }}>{props.index.point}</span>
         </Grid>
       </Grid>
     </div>

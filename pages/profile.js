@@ -147,13 +147,14 @@ export default function profile() {
 
   return (
     <div className='profile-page'>
-      <h1 style={{ fontFamily: 'Ubuntu' }}>{display_name}</h1>
-      {datan && (
-        <DynamicMap
-          index={datan.coordinateToPlace}
-          road={'/profile'}
-        ></DynamicMap>
-      )}
+      <div style={{ paddingTop: '2rem' }}>
+        {datan && (
+          <DynamicMap
+            index={datan.coordinateToPlace}
+            road={'/profile'}
+          ></DynamicMap>
+        )}
+      </div>
       <br></br>
       <br></br>
       <Grid container spacing={2}>

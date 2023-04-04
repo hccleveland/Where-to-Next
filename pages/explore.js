@@ -145,7 +145,9 @@ export default function Home({ data, data2 }) {
   return (
     <div className={styles.outer_container}>
       <div className={styles.input_container}>
-        <div className={styles.title}>Find Trip</div>
+        <div className={styles.title} style={{ fontSize: '50px' }}>
+          Find Trip
+        </div>
         {/* <Grid container>
           <Grid item xs={5}> */}
         <div className={styles.input_center}>

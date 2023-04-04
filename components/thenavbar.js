@@ -43,28 +43,29 @@ export default function MenuAppBar() {
   const [email, setEmail] = React.useState('');
   const [display_name, setDisplay_name] = Display_name;
   const [uid, setUid] = Uid;
-  const router= useRouter();
+  const router = useRouter();
 
   function login() {
-    signInWithEmailAndPassword(auth, email, password).then((user) => {
-      setUid(user.user.uid);
-      getUserDisplayName(user.user.uid);
-    }).catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `Wrong password or email`,
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        setUid(user.user.uid);
+        getUserDisplayName(user.user.uid);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Wrong password or email`,
+        });
       });
-    });
   }
 
   async function getUserDisplayName(uid) {
-    
     let data = await db.collection('users').where('__name__', '==', uid).get();
     let docs = data.docs;
-  
+
     setDisplay_name(docs[0].data().display_name);
     setUid(uid);
   }
@@ -76,18 +77,17 @@ export default function MenuAppBar() {
     setDisplay_name('');
     setUid('');
     router.push('/');
-    
   }
-  useEffect(()=>{
-    auth.onAuthStateChanged(user => {
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setUid(user.uid);
         getUserDisplayName(user.uid);
       } else {
         setUid('');
       }
-    })
-  },[]);
+    });
+  }, []);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -98,47 +98,188 @@ export default function MenuAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-
-      <AppBar style={{ background: '#708090', color:"black" }} position="static">
+      <AppBar
+        style={{
+          background: '#E3D5A5',
+          color: 'black',
+          borderBottom: 'black solid 4px',
+          paddingTop: '10px',
+        }}
+        position='static'
+      >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {uid ? <Grid container spacing={2}><Grid item xs={2}><img src='/user.png' style={{width:"30px",Height:"30px"}}></img><Link style={{textDecoration:"none",color:"inherit"}} href='/profile'>{display_name}</Link></Grid>
-          <Grid item xs={2} style={{cursor:"default", textDecoration:"none"}}><Link style={{textDecoration:"none", color:'inherit'}} href="add_timeline"><img src='/image.png' style={{width:"30px",Height:"30px"}}></img> AddTrip</Link></Grid>
-          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{ textDecoration:"none", color:'inherit'}} href="/explore"><img src='/plane.png' style={{width:"30px",Height:"30px"}}></img>           FindTrip</Link></Grid>
-          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{ textDecoration:"none", color:'inherit'}} href="/achievements"><img src='/achievement.png' style={{width:"30px",Height:"30px"}}></img>        Achievements</Link></Grid>
-          </Grid>:<Grid container spacing={2}>
-        <Grid item xs={2}><TextField
-                 variant='filled'
-                 label="Email"
-                 id="outlined-size-small"
-                 size="small"
-                 sx={{ input: { color: 'black' } }}
-        onChange={(event) => {setEmail(event.target.value);}}/></Grid>
-        <Grid item xs={2}><TextField
-                 variant='filled' 
-                 label="Password"
-                 type='password'
-                 id="outlined-size-small"
-                 size="small"
-                 sx={{ input: { color: 'black' } }}
-        onChange={(event) => {setPassword(event.target.value);}}/></Grid>
-         <Grid item xs={2}onClick={login} style={{cursor:"default", textDecoration:"none"}}>Login</Grid>
-         <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/signup">Register</Link></Grid></Grid>}
+          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+            {uid ? (
+              <Grid container spacing={2}>
+                <Grid item xs={2}>
+                  <img
+                    src='/user.png'
+                    style={{ width: '30px', Height: '30px' }}
+                  ></img>
+                  <Link
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                    href='/profile'
+                  >
+                    <span style={{ fontSize: '35px', fontFamily: 'Papyrus' }}>
+                      {display_name}
+                    </span>
+                  </Link>
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <Link
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                    href='add_timeline'
+                  >
+                    <img
+                      src='/image.png'
+                      style={{ width: '30px', Height: '30px' }}
+                    ></img>{' '}
+                    <span style={{ fontSize: '35px', fontFamily: 'Papyrus' }}>
+                      AddTrip
+                    </span>
+                  </Link>
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <Link
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                    href='/explore'
+                  >
+                    <img
+                      src='/plane.png'
+                      style={{ width: '30px', Height: '30px' }}
+                    ></img>{' '}
+                    <span style={{ fontSize: '35px', fontFamily: 'Papyrus' }}>
+                      FindTrip
+                    </span>
+                  </Link>
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <Link
+                    style={{
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                    href='/achievements'
+                  >
+                    <img
+                      src='/achievement.png'
+                      style={{ width: '30px', Height: '30px' }}
+                    ></img>{' '}
+                    <span
+                      style={{
+                        fontSize: '35px',
+                        fontFamily: 'Papyrus',
+                      }}
+                    >
+                      Achievements
+                    </span>
+                  </Link>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container spacing={2}>
+                <Grid item xs={2}>
+                  <TextField
+                    variant='filled'
+                    label='Email'
+                    id='outlined-size-small'
+                    size='small'
+                    sx={{ input: { color: 'black' } }}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <TextField
+                    variant='filled'
+                    label='Password'
+                    type='password'
+                    id='outlined-size-small'
+                    size='small'
+                    sx={{ input: { color: 'black' } }}
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  onClick={login}
+                  style={{ cursor: 'default', textDecoration: 'none' }}
+                >
+                  Login
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <Link
+                    style={{
+                      cursor: 'default',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                    href='/signup'
+                  >
+                    Register
+                  </Link>
+                </Grid>
+              </Grid>
+            )}
           </Typography>
           {uid && (
             <div>
               <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
                 onClick={handleMenu}
-                color="inherit"
+                color='inherit'
               >
-               <MenuOutlinedIcon/>
+                <MenuOutlinedIcon />
               </IconButton>
               <Menu
-                id="menu-appbar"
+                id='menu-appbar'
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: 'top',
@@ -152,9 +293,68 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/"><img src='/home.png' style={{width:"30px",Height:"30px"}}></img>Home</Link></MenuItem>
-                <MenuItem onClick={handleClose} style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/settings"><img src='/settings.png' style={{width:"30px",Height:"30px"}}></img>Settings</Link></MenuItem>
-                <MenuItem onClick={logout} style={{cursor:"default", textDecoration:"none"}}><img src='/power-off.png' style={{width:"30px",Height:"30px"}}></img>Logout</MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <Link
+                    style={{
+                      cursor: 'default',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      fontFamily: 'papyrus',
+                    }}
+                    href='/'
+                  >
+                    <img
+                      src='/home.png'
+                      style={{ width: '30px', Height: '30px' }}
+                    ></img>
+                    Home
+                  </Link>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  <Link
+                    style={{
+                      cursor: 'default',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      fontFamily: 'papyrus',
+                    }}
+                    href='/settings'
+                  >
+                    <img
+                      src='/settings.png'
+                      style={{ width: '30px', Height: '30px' }}
+                    ></img>
+                    Settings
+                  </Link>
+                </MenuItem>
+                <MenuItem
+                  onClick={logout}
+                  style={{
+                    cursor: 'default',
+                    textDecoration: 'none',
+                    fontFamily: 'papyrus',
+                  }}
+                >
+                  <img
+                    src='/power-off.png'
+                    style={{ width: '30px', Height: '30px' }}
+                  ></img>
+                  Logout
+                </MenuItem>
               </Menu>
             </div>
           )}

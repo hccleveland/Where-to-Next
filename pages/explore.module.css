@@ -12,6 +12,7 @@
   border: black 1px solid;
   display: flex;
   flex-direction: column;
+  border: 4px black solid;
 }
 
 .title {
@@ -19,6 +20,8 @@
   font-size: 2.5rem;
   padding-top: 1rem;
   text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .left_input {
@@ -79,6 +82,5 @@
 }
 
 .map_container {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 2rem;
 }

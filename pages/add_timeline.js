@@ -170,7 +170,9 @@ export default function addTimeline() {
     <div className={styles.container}>
       <div className={styles.left_container}>
         <div className={styles.left_container_inner}>
-          <div className={styles.title}>Add Trip</div>
+          <div className={styles.title} style={{ fontSize: '50px' }}>
+            Add Trip
+          </div>
           <div className={styles.inputs}>
             <FormControlLabel
               control={

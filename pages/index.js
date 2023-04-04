@@ -99,21 +99,20 @@ export default function Home({ rankingCoord }) {
       <Container style={{ backgroundColor: '#708090' }}>
         <Grid container spacing={2}>
           <Grid item xs={3} style={{ backgroundColor: '#708090' }}>
-              <Box padding={1}>
-                <h2
-                  className='black-outline'
-                  style={{ textAlign: 'center', fontFamily: 'Ubuntu' }}
-                >
-                  Ranking
-                </h2>
-                {Rank.map((el, i) => (
-                  <Ranking index={el} key={i} myKey={i}></Ranking>
-                ))}
-              </Box>
-            
+            <Box padding={1}>
+              <h2
+                className='black-outline'
+                style={{ textAlign: 'center', fontFamily: 'Ubuntu' }}
+              >
+                <span style={{ fontSize: '50px' }}>Ranking</span>
+              </h2>
+              {Rank.map((el, i) => (
+                <Ranking index={el} key={i} myKey={i}></Ranking>
+              ))}
+            </Box>
           </Grid>
           <Grid item xs={9}>
-            <div style={{ backgroundColor: '#708090' }}>
+            <div style={{ backgroundColor: '#708090', paddingBottom: '8rem' }}>
               <DynamicMap
                 index={NumberOneCoord}
                 road={'/'}

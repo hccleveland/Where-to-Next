@@ -8,28 +8,29 @@
   width: 40vw;
   height: 100vh;
   background-color: #708090;
-  border-right: 10px solid black;
+  border-right: 6px solid black;
   padding: 1rem;
 }
 
 .left_container_inner {
-  border: black 1px solid;
+  border: black 4px solid;
   width: 100%;
   margin-top: 5rem;
   margin-left: 2.5rem;
   margin-right: 2.5rem;
   margin-bottom: 100px;
   background-color: #545f72;
-  border-radius: 20px;
   display: flex;
   flex-flow: row wrap;
 }
 
 .title {
   width: 100%;
-  font-size: 5rem;
+  font-size: 2rem;
   margin-top: 1rem;
   text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .inputs {
