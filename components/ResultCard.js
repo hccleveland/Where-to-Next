@@ -650,6 +650,7 @@ export default function ResultCard(props) {
         <div className='img-hover-zoom background'>
           <img
             className='result-card-image'
+            style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
             src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
           ></img>
         </div>

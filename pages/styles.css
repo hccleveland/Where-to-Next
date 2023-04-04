@@ -14,7 +14,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Palatino';
+  font-family: 'lato';
 }
 
 .timeline_img {
@@ -63,10 +63,6 @@
 
 .background {
   background-color: rgb(225, 215, 170);
-  color: black;
-}
-
-.foreground {
   color: black;
 }
 

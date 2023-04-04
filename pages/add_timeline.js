@@ -191,17 +191,9 @@ export default function addTimeline() {
                 label='Start date'
                 className={styles.datepicker}
                 onChange={setStartDate}
-                renderInput={(params) => {
-                  return (
-                    <TextField
-                      {...params}
-                      sx={{
-                        svg: { white },
-                        input: { white },
-                        label: { white },
-                      }}
-                    />
-                  );
+                sx={{
+                  fontSize: '1.5rem',
+                  width: '48%',
                 }}
               />
               <DatePicker
@@ -209,6 +201,10 @@ export default function addTimeline() {
                 disabled={oneWay}
                 className={styles.datepicker}
                 onChange={setEndDate}
+                sx={{
+                  fontSize: '1.5rem',
+                  width: '48%',
+                }}
               />
             </div>
             <div className={styles.place_container}>
@@ -226,6 +222,7 @@ export default function addTimeline() {
                   style: {
                     fontSize: '1.5rem',
                     color: 'white',
+                    width: '95%',
                   },
                 }}
               />
@@ -263,6 +260,8 @@ export default function addTimeline() {
                   style: {
                     fontSize: '1.5rem',
                     color: 'white',
+                    width: '95%',
+                    marginLeft: 'auto',
                   },
                 }}
               />

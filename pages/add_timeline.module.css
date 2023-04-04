@@ -46,7 +46,13 @@
   justify-content: space-between;
   width: 100%;
   margin-top: 1rem;
+  font-size: 1.5rem;
 }
+
+.datepicker {
+  font-size: 1.5rem;
+}
+
 .datepicker_container .datepicker:last-child {
   margin-left: auto;
 }
