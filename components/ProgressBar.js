@@ -235,7 +235,7 @@ const ProgressBar = (props) => {
   return (
     <Grid container spacing={2} justify="center" alignItems="center" style={{ fontFamily: 'Palatino, serif' }}>
       <Grid item xs={2}>
-        <img src={badgeImage} style={{ width: '100%', height: '100%', objectFit: 'cover', border: '5px solid black' }}></img>
+        <img src={badgeImage} style={{ width: '100%', height: '100%', objectFit: 'cover', border: '4px solid black' }}></img>
       </Grid>
       <Grid item xs={6}>
         <div>{titleArray[title]}</div>

@@ -98,8 +98,7 @@ export default function Home({ rankingCoord }) {
       <br></br>
       <Container style={{ backgroundColor: '#708090' }}>
         <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Paper elevation={4} style={{ backgroundColor: '#708090' }}>
+          <Grid item xs={3} style={{ backgroundColor: '#708090' }}>
               <Box padding={1}>
                 <h2
                   className='black-outline'
@@ -111,7 +110,7 @@ export default function Home({ rankingCoord }) {
                   <Ranking index={el} key={i} myKey={i}></Ranking>
                 ))}
               </Box>
-            </Paper>
+            
           </Grid>
           <Grid item xs={9}>
             <div style={{ backgroundColor: '#708090' }}>

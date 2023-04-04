@@ -135,6 +135,10 @@ export default function Map(props) {
           style={{
             height: '80vh',
             width: '120vh',
+            border: '4px solid black',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
           center={[35.6762, 139.6503]}
           zoom={2}

@@ -20,6 +20,7 @@ export default function Ranking(props) {
           backgroundColor: '#545F72',
           borderRadius: '10px',
           cursor: 'pointer',
+          border: '3px solid black',
         }}
       >
         <Grid
