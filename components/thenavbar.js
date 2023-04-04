@@ -102,7 +102,7 @@ export default function MenuAppBar() {
         style={{
           background: '#E3D5A5',
           color: 'black',
-          borderBottom: 'black solid 10px',
+          borderBottom: 'black solid 4px',
         }}
         position='static'
       >
@@ -123,7 +123,7 @@ export default function MenuAppBar() {
                     }}
                     href='/profile'
                   >
-                    {display_name}
+                    <span style={{ fontSize: '35px' }}>{display_name}</span>
                   </Link>
                 </Grid>
                 <Grid
@@ -146,7 +146,7 @@ export default function MenuAppBar() {
                       src='/image.png'
                       style={{ width: '30px', Height: '30px' }}
                     ></img>{' '}
-                    AddTrip
+                    <span style={{ fontSize: '35px' }}>AddTrip</span>
                   </Link>
                 </Grid>
                 <Grid
@@ -170,7 +170,7 @@ export default function MenuAppBar() {
                       src='/plane.png'
                       style={{ width: '30px', Height: '30px' }}
                     ></img>{' '}
-                    FindTrip
+                    <span style={{ fontSize: '35px' }}>FindTrip</span>
                   </Link>
                 </Grid>
                 <Grid
@@ -194,7 +194,7 @@ export default function MenuAppBar() {
                       src='/achievement.png'
                       style={{ width: '30px', Height: '30px' }}
                     ></img>{' '}
-                    Achievements
+                    <span style={{ fontSize: '35px' }}>Achievements</span>
                   </Link>
                 </Grid>
               </Grid>
