@@ -89,7 +89,7 @@ export default function Home({ rankingCoord }) {
   const { NumberOneCoord, Rank } = rankingCoord[0];
 
   return (
-    <>
+    <div style={{backgroundColor:"#708090"}}>
       
       <br></br>
       <Container >
@@ -107,7 +107,7 @@ export default function Home({ rankingCoord }) {
           <Grid item xs={9}><DynamicMap index={NumberOneCoord} road={'/'} style={{innerHeight:"100%"}}></DynamicMap></Grid>
         </Grid>
       </Container>
-    </>
+    </div>
   );
 }
 
