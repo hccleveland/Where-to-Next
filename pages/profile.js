@@ -147,7 +147,6 @@ export default function profile() {
 
   return (
     <div className='profile-page'>
-      <h1 style={{ fontFamily: 'Ubuntu' }}>{display_name}</h1>
       {datan && (
         <DynamicMap
           index={datan.coordinateToPlace}

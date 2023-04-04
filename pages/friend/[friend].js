@@ -45,7 +45,12 @@ export default function Friend({ friendId }) {
       const lat = ele.data()['coordinates'][1];
       const lng = ele.data()['coordinates'][0];
 
-      coordinateToPlace.push({ lat: Number(lat), lng: Number(lng), city: ele.data()['city'], country: ele.data()['country']});
+      coordinateToPlace.push({
+        lat: Number(lat),
+        lng: Number(lng),
+        city: ele.data()['city'],
+        country: ele.data()['country'],
+      });
     });
     await setCoord({ coordinateToPlace });
   }
@@ -116,6 +121,7 @@ export default function Friend({ friendId }) {
     }
   }, [friendId]);
 
+  console.log(friendId);
   return (
     <div className='friends-page'>
       <Grid container spacing={2}>

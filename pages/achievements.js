@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { AppContext } from '../components/Layout';
-import ProgressBar from "../components/ProgressBar";
+import ProgressBar from '../components/ProgressBar';
 import Grid from '@mui/material/Grid';
 
 var config = {
@@ -40,7 +40,7 @@ function Achievement() {
           helperPoints: docRef.data().helper_points,
         };
       })
-      .catch((error) => { });
+      .catch((error) => {});
 
     let asiaCounter = counters.asia;
     let asiaPercent = 0;
@@ -52,7 +52,7 @@ function Achievement() {
         asiaPercent = ((asiaCounter - 10) / (20 - 10)) * 100;
         break;
       case asiaCounter < 10:
-        asiaPercent = (asiaCounter / (10)) * 100;
+        asiaPercent = (asiaCounter / 10) * 100;
         break;
     }
 
@@ -66,7 +66,7 @@ function Achievement() {
         africaPercent = ((africaCounter - 10) / (25 - 10)) * 100;
         break;
       case africaCounter < 10:
-        africaPercent = (africaCounter / (10)) * 100;
+        africaPercent = (africaCounter / 10) * 100;
         break;
     }
 
@@ -80,7 +80,7 @@ function Achievement() {
         europePercent = ((europeCounter - 10) / (20 - 10)) * 100;
         break;
       case europeCounter < 10:
-        europePercent = (europeCounter / (10)) * 100;
+        europePercent = (europeCounter / 10) * 100;
         break;
     }
 
@@ -94,7 +94,7 @@ function Achievement() {
         oceaniaPercent = ((oceaniaCounter - 3) / (6 - 3)) * 100;
         break;
       case oceaniaCounter < 3:
-        oceaniaPercent = (oceaniaCounter / (3)) * 100;
+        oceaniaPercent = (oceaniaCounter / 3) * 100;
         break;
     }
 
@@ -108,7 +108,7 @@ function Achievement() {
         NamericaPercent = ((NAmericaCounter - 5) / (10 - 5)) * 100;
         break;
       case NAmericaCounter < 5:
-        NamericaPercent = (NAmericaCounter / (5)) * 100;
+        NamericaPercent = (NAmericaCounter / 5) * 100;
         break;
     }
 
@@ -122,7 +122,7 @@ function Achievement() {
         SamericaPercent = ((SAmericaCounter - 3) / (6 - 3)) * 100;
         break;
       case SAmericaCounter < 3:
-        SamericaPercent = (SAmericaCounter / (3)) * 100;
+        SamericaPercent = (SAmericaCounter / 3) * 100;
         break;
     }
 
@@ -136,7 +136,7 @@ function Achievement() {
         helperPercent = ((helperCounter - 200) / (2000 - 200)) * 100;
         break;
       case helperCounter < 200:
-        helperPercent = (helperCounter / (200)) * 100;
+        helperPercent = (helperCounter / 200) * 100;
         break;
     }
 
@@ -156,21 +156,59 @@ function Achievement() {
         worldPercent = ((worldCounter - 5) / (50 - 5)) * 100;
         break;
       case worldCounter < 5:
-        worldPercent = (worldCounter / (5)) * 100;
+        worldPercent = (worldCounter / 5) * 100;
         break;
     }
 
-
-
     let percent = [
-      { bgcolor: "#357929", percent: Math.floor(helperPercent), point: counters.helperPoints, info: 'helper' },
-      { bgcolor: "#A57929", percent: Math.floor(worldPercent), point: worldCounter, info: 'world' },
-      { bgcolor: "#357929", percent: Math.floor(asiaPercent), point: counters.asia, info: 'asia' }, //Green Asia
-      { bgcolor: "#CB7A43", percent: Math.floor(africaPercent), point: counters.africa, info: 'africa' }, //Orange Africa
-      { bgcolor: "#5A6AB2", percent: Math.floor(europePercent), point: counters.europe, info: 'europe' }, //Blue Europe
-      { bgcolor: "#c633c1", percent: Math.floor(oceaniaPercent), point: counters.oceania, info: 'oceania' }, //Purpule Oceania
-      { bgcolor: "#BEA234", percent: Math.floor(NamericaPercent), point: counters.northAmerica, info: 'namerica' }, //Yellowish Nort-America
-      { bgcolor: "#B2362D", percent: Math.floor(SamericaPercent), point: counters.southAmerica, info: 'samerica' }, //Red South America
+      {
+        bgcolor: '#357929',
+        percent: Math.floor(helperPercent),
+        point: counters.helperPoints,
+        info: 'helper',
+      },
+      {
+        bgcolor: '#A57929',
+        percent: Math.floor(worldPercent),
+        point: worldCounter,
+        info: 'world',
+      },
+      {
+        bgcolor: '#357929',
+        percent: Math.floor(asiaPercent),
+        point: counters.asia,
+        info: 'asia',
+      }, //Green Asia
+      {
+        bgcolor: '#CB7A43',
+        percent: Math.floor(africaPercent),
+        point: counters.africa,
+        info: 'africa',
+      }, //Orange Africa
+      {
+        bgcolor: '#5A6AB2',
+        percent: Math.floor(europePercent),
+        point: counters.europe,
+        info: 'europe',
+      }, //Blue Europe
+      {
+        bgcolor: '#c633c1',
+        percent: Math.floor(oceaniaPercent),
+        point: counters.oceania,
+        info: 'oceania',
+      }, //Purpule Oceania
+      {
+        bgcolor: '#BEA234',
+        percent: Math.floor(NamericaPercent),
+        point: counters.northAmerica,
+        info: 'namerica',
+      }, //Yellowish Nort-America
+      {
+        bgcolor: '#B2362D',
+        percent: Math.floor(SamericaPercent),
+        point: counters.southAmerica,
+        info: 'samerica',
+      }, //Red South America
     ];
 
     setPercentage({ percent });
@@ -182,14 +220,17 @@ function Achievement() {
     }
   }, [uid]);
 
-
-  return (<>
-    <br></br>
-      <Grid container spacing={2} justify="center" alignItems="center" style={{ backgroundColor: "#708090" }}>
-        <Grid item xs={1} >
-        </Grid>
-        <Grid item xs={10} >
-          <div className="App">
+  return (
+    <div>
+      <Grid
+        container
+        justify='center'
+        alignItems='center'
+        style={{ backgroundColor: '#708090', paddingTop: '0.5rem' }}
+      >
+        <Grid item xs={1}></Grid>
+        <Grid item xs={10}>
+          <div className='App'>
             {percent.percent && percent.percent.length > 0 && (
               <div>
                 {percent.percent.map((item, idx) => (
@@ -205,16 +246,10 @@ function Achievement() {
             )}
           </div>
         </Grid>
-        <Grid item xs={1}>
-        </Grid>
+        <Grid item xs={1}></Grid>
       </Grid>
-      </>);
-
+    </div>
+  );
 }
 
 export default Achievement;
-
-/*
-  
-
-*/

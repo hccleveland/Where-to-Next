@@ -114,7 +114,7 @@ export default function Home({ rankingCoord }) {
             </Paper>
           </Grid>
           <Grid item xs={9}>
-            <div style={{ backgroundColor: '#708090' }}>
+            <div style={{ backgroundColor: '#708090', paddingBottom: '8rem' }}>
               <DynamicMap
                 index={NumberOneCoord}
                 road={'/'}
