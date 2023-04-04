@@ -238,13 +238,13 @@ const ProgressBar = (props) => {
         <img src={badgeImage} style={{ width: '100%', height: '100%', objectFit: 'cover', border: '4px solid black' }}></img>
       </Grid>
       <Grid item xs={6}>
-        <div>{titleArray[title]}</div>
+        <div style={{ fontSize: '30px', paddingLeft: '50px' }}>{titleArray[title]}</div>
         <div style={containerStyles}>
           <div className="filler" style={fillerStyles} ref={fillerRef}>
             <span style={labelStyles}>{`${completed}%`}</span>
           </div>
         </div>
-        <div style={{ textAlign: "right" }}>
+        <div style={{ textAlign: "right", fontSize: '20px' }}>
           {info === 'helper' ? (
             <>
             <p>You have gathered {point} points</p>

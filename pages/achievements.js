@@ -184,7 +184,7 @@ function Achievement() {
 
 
   return (<>
-    <br></br>
+    
       <Grid container spacing={2} justify="center" alignItems="center" style={{ backgroundColor: "#708090" }}>
         <Grid item xs={1} >
         </Grid>
