@@ -142,7 +142,7 @@ export default function profile() {
 
   return (
     <div className='profile-page'>
-      <h1>{display_name}'s Map</h1>
+      <h1>{display_name}</h1>
       {datan && (
         <DynamicMap
           index={datan.coordinateToPlace}
@@ -150,7 +150,6 @@ export default function profile() {
         ></DynamicMap>
       )}
       <br></br>
-      <h2>{display_name}'s Timeline</h2>
       <br></br>
       <Grid container spacing={2}>
         <Badges index={counters}></Badges>
