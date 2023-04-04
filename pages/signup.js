@@ -45,7 +45,7 @@ export default function signup() {
         setUid('');
       }
     });
-  });
+  }, []);
 
   async function register() {
     let data = await createUserWithEmailAndPassword(auth, email, password);
@@ -64,7 +64,6 @@ export default function signup() {
       north_america: 0,
       south_america: 0,
       world: 0,
-
     });
     await signInWithEmailAndPassword(auth, email, password);
     setUid(data.user.uid);

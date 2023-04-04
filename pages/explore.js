@@ -84,7 +84,7 @@ export default function Home({ data, data2 }) {
         setUid('');
       }
     });
-  });
+  }, []);
 
   useEffect(() => {
     require('airport-autocomplete-js/dist/index.browser.min.js');
@@ -127,8 +127,6 @@ export default function Home({ data, data2 }) {
   };
 
   const handleSearch = () => {
-    setOrigin(origin.split(' ')[0]);
-
     const data = {
       origin: origin,
       domestic: domestic,
@@ -180,6 +178,7 @@ export default function Home({ data, data2 }) {
               }
               label='One Way'
             />
+            {/* <input type='text' id='origin' placeholder='From' /> */}
             <TextField
               id='origin'
               variant='outlined'

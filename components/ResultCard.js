@@ -58,7 +58,7 @@ export default function ResultCard(props) {
 
   useEffect(() => {
     getMadeHighlights();
-  });
+  }, []);
 
   const getCheapestFlights = async () => {
     if (cheapestFlights.length > 0) return;
