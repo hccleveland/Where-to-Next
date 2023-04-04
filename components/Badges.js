@@ -192,7 +192,7 @@ export default function Badges(props) {
       <Grid container spacing={2} justify='center' alignItems='center'>
         <Grid item xs={2}></Grid>
         <Grid container item xs={2}>
-          <img src={imageHelper} className='medals'></img>
+          <img src={imageHelper} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -205,7 +205,7 @@ export default function Badges(props) {
           </Box>
         </Grid>
         <Grid container item xs={2}>
-          <img src={imageWorld} className='medals'></img>
+          <img src={imageWorld} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -218,7 +218,7 @@ export default function Badges(props) {
           </Box>
         </Grid>
         <Grid container item xs={2}>
-          <img src={imageAsia} className='medals'></img>
+          <img src={imageAsia} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -231,7 +231,7 @@ export default function Badges(props) {
           </Box>
         </Grid>
         <Grid container item xs={2}>
-          <img src={imageAfrica} className='medals'></img>
+          <img src={imageAfrica} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -251,7 +251,7 @@ export default function Badges(props) {
       <Grid container spacing={2}>
         <Grid item xs={2}></Grid>
         <Grid container item xs={2}>
-          <img src={imageEurope} className='medals'></img>
+          <img src={imageEurope} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -264,7 +264,7 @@ export default function Badges(props) {
           </Box>
         </Grid>
         <Grid container item xs={2}>
-          <img src={imageOceania} className='medals'></img>
+          <img src={imageOceania} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -277,7 +277,7 @@ export default function Badges(props) {
           </Box>
         </Grid>
         <Grid container item xs={2}>
-          <img src={imageNAmerica} className='medals'></img>
+          <img src={imageNAmerica} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
@@ -290,7 +290,7 @@ export default function Badges(props) {
           </Box>
         </Grid>
         <Grid container item xs={2}>
-          <img src={imageSAmerica} className='medals'></img>
+          <img src={imageSAmerica} className='medals' style={{border: '4px solid black'}}></img>
           <Box
             display='flex'
             width={500}
