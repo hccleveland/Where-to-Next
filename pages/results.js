@@ -9,12 +9,12 @@ import citiesJSON from '../data/cities.json';
 
 import Grid from '@mui/material/Grid';
 
-const MAX_RESULTS = 1;
+const MAX_RESULTS = 4;
 
 export async function getServerSideProps({ query }) {
   const countries = [];
   let cities = [];
-  const queryData = JSON.parse(query.data);
+  const queryData = await JSON.parse(query.data);
   const domestic = queryData.domestic;
 
   const iataorigin = iatadata(queryData.origin.split(' ')[0]);
