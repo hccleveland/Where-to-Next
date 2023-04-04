@@ -96,12 +96,17 @@ export default function Home({ rankingCoord }) {
   return (
     <div className='index-container' style={{ backgroundColor: '#708090' }}>
       <br></br>
-      <Container>
+      <Container style={{ backgroundColor: '#708090' }}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Paper elevation={3}>
+            <Paper elevation={4} style={{ backgroundColor: '#708090' }}>
               <Box padding={1}>
-                <h2 style={{ textAlign: 'center' }}>Ranking</h2>
+                <h2
+                  className='black-outline'
+                  style={{ textAlign: 'center', fontFamily: 'Ubuntu' }}
+                >
+                  Ranking
+                </h2>
                 {Rank.map((el, i) => (
                   <Ranking index={el} key={i} myKey={i}></Ranking>
                 ))}

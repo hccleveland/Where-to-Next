@@ -8,6 +8,7 @@ import firebase from 'firebase/compat/app';
 import countriesCoordinates from '../public/worldCoordinates.json';
 import 'firebase/compat/firestore';
 import { Container } from '@mui/material';
+import styles from './Map.module.css';
 var config = {
   apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
   authDomain: 'where-to-next-7bc5f.firebaseapp.com',
@@ -35,7 +36,7 @@ const { MapContainer, TileLayer, Marker, Tooltip, GeoJSON } = ReactLeaflet;
 
 export default function Map(props) {
 
-  console.log("props",props)
+  console.log("props", props)
   const countries = countriesCoordinates;
 
 
@@ -87,13 +88,13 @@ export default function Map(props) {
     }
   }
 
- 
+
   let chemin;
- 
+
   if (props.road === '/' || props.road === '/friend') {
-    
+
     chemin = props.index;
-    
+
   }
 
   if (props.road === '/profile' || props.road === '/Map') {
@@ -140,13 +141,13 @@ export default function Map(props) {
           scrollWheelZoom={false}
           nowrap={true}
           maxBounds={maxBounds}
-          
+
         >
           <TileLayer
             attribution=''
             url='https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg'
           />
-           <GeoJSON key="my-geojson" data={countries} style={style} />
+          <GeoJSON key="my-geojson" data={countries} style={style} />
           {chemin.map(({ lat, lng, city, country }) => (
             <Marker
               key={lat + lng}
@@ -154,7 +155,7 @@ export default function Map(props) {
               icon={customIcon}
               eventHandlers={{ click: getCommentByCity }}
             >
-              {<Tooltip > {city} - {country} </Tooltip>}
+              {<Tooltip className='tooltip'> {city} - {country} </Tooltip>}
             </Marker>
           ))}
         </MapContainer>
