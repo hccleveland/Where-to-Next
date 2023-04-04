@@ -103,6 +103,7 @@ export default function MenuAppBar() {
           background: '#E3D5A5',
           color: 'black',
           borderBottom: 'black solid 4px',
+          paddingTop: '10px',
         }}
         position='static'
       >
@@ -119,11 +120,12 @@ export default function MenuAppBar() {
                     style={{
                       textDecoration: 'none',
                       color: 'inherit',
-                      fontFamily: 'papyrus',
                     }}
                     href='/profile'
                   >
-                    <span style={{ fontSize: '35px' }}>{display_name}</span>
+                    <span style={{ fontSize: '35px', fontFamily: 'Papyrus' }}>
+                      {display_name}
+                    </span>
                   </Link>
                 </Grid>
                 <Grid
@@ -138,7 +140,6 @@ export default function MenuAppBar() {
                     style={{
                       textDecoration: 'none',
                       color: 'inherit',
-                      fontFamily: 'papyrus',
                     }}
                     href='add_timeline'
                   >
@@ -146,7 +147,9 @@ export default function MenuAppBar() {
                       src='/image.png'
                       style={{ width: '30px', Height: '30px' }}
                     ></img>{' '}
-                    <span style={{ fontSize: '35px' }}>AddTrip</span>
+                    <span style={{ fontSize: '35px', fontFamily: 'Papyrus' }}>
+                      AddTrip
+                    </span>
                   </Link>
                 </Grid>
                 <Grid
@@ -162,7 +165,6 @@ export default function MenuAppBar() {
                     style={{
                       textDecoration: 'none',
                       color: 'inherit',
-                      fontFamily: 'papyrus',
                     }}
                     href='/explore'
                   >
@@ -170,7 +172,9 @@ export default function MenuAppBar() {
                       src='/plane.png'
                       style={{ width: '30px', Height: '30px' }}
                     ></img>{' '}
-                    <span style={{ fontSize: '35px' }}>FindTrip</span>
+                    <span style={{ fontSize: '35px', fontFamily: 'Papyrus' }}>
+                      FindTrip
+                    </span>
                   </Link>
                 </Grid>
                 <Grid
@@ -186,7 +190,6 @@ export default function MenuAppBar() {
                     style={{
                       textDecoration: 'none',
                       color: 'inherit',
-                      fontFamily: 'papyrus',
                     }}
                     href='/achievements'
                   >
@@ -194,7 +197,14 @@ export default function MenuAppBar() {
                       src='/achievement.png'
                       style={{ width: '30px', Height: '30px' }}
                     ></img>{' '}
-                    <span style={{ fontSize: '35px' }}>Achievements</span>
+                    <span
+                      style={{
+                        fontSize: '35px',
+                        fontFamily: 'Papyrus',
+                      }}
+                    >
+                      Achievements
+                    </span>
                   </Link>
                 </Grid>
               </Grid>
