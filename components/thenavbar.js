@@ -99,20 +99,20 @@ export default function MenuAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
 
-      <AppBar style={{ background: '#708090', color:"black", opacity:0.5 }} position="static">
+      <AppBar style={{ background: '#708090', color:"black" }} position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {uid ? <Grid container spacing={2}><Grid item xs={2} style={{cursor:"default"}}><Link style={{textDecoration:"none", color:'inherit'}} href='/profile'><img src='/user.png' style={{width:"30px",Height:"30px"}}></img><span>{display_name}</span></Link></Grid>
-          <Grid item xs={2} style={{cursor:"default", textDecoration:"none"}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="add_timeline"><img src='/image.png' style={{width:"30px",Height:"30px"}}></img> AddTrip</Link></Grid>
-          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/explore"><img src='/plane.png' style={{width:"30px",Height:"30px"}}></img>           FindTrip</Link></Grid>
-          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/achievements"><img src='/achievement.png' style={{width:"30px",Height:"30px"}}></img>        Achievements</Link></Grid>
+          {uid ? <Grid container spacing={2}><Grid item xs={2}><img src='/user.png' style={{width:"30px",Height:"30px"}}></img><Link style={{textDecoration:"none",color:"inherit"}} href='/profile'>{display_name}</Link></Grid>
+          <Grid item xs={2} style={{cursor:"default", textDecoration:"none"}}><Link style={{textDecoration:"none", color:'inherit'}} href="add_timeline"><img src='/image.png' style={{width:"30px",Height:"30px"}}></img> AddTrip</Link></Grid>
+          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{ textDecoration:"none", color:'inherit'}} href="/explore"><img src='/plane.png' style={{width:"30px",Height:"30px"}}></img>           FindTrip</Link></Grid>
+          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{ textDecoration:"none", color:'inherit'}} href="/achievements"><img src='/achievement.png' style={{width:"30px",Height:"30px"}}></img>        Achievements</Link></Grid>
           </Grid>:<Grid container spacing={2}>
         <Grid item xs={2}><TextField
                  variant='filled'
                  label="Email"
                  id="outlined-size-small"
                  size="small"
-                 sx={{ input: { color: 'pink' } }}
+                 sx={{ input: { color: 'black' } }}
         onChange={(event) => {setEmail(event.target.value);}}/></Grid>
         <Grid item xs={2}><TextField
                  variant='filled' 
@@ -120,7 +120,7 @@ export default function MenuAppBar() {
                  type='password'
                  id="outlined-size-small"
                  size="small"
-                 sx={{ input: { color: 'pink' } }}
+                 sx={{ input: { color: 'black' } }}
         onChange={(event) => {setPassword(event.target.value);}}/></Grid>
          <Grid item xs={2}onClick={login} style={{cursor:"default", textDecoration:"none"}}>Login</Grid>
          <Grid item xs={2}style={{cursor:"default", textDecoration:"none", color:'inherit'}}><Link style={{cursor:"default", textDecoration:"none", color:'inherit'}} href="/signup">Register</Link></Grid></Grid>}

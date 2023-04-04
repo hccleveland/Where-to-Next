@@ -20,6 +20,9 @@ const darkTheme = createTheme({
   palette: {
     type: 'dark',
   },
+  background: {
+    default: '#708090',
+  }
 });
 
 const Layout = ({ children }, props) => {
