@@ -196,6 +196,8 @@ export default function addTimeline() {
                 sx={{
                   fontSize: '1.5rem',
                   width: '48%',
+                  input: { color: 'white' },
+                  label: { color: 'white' },
                 }}
               />
               <DatePicker
@@ -206,6 +208,8 @@ export default function addTimeline() {
                 sx={{
                   fontSize: '1.5rem',
                   width: '48%',
+                  input: { color: 'white' },
+                  label: { color: 'white' },
                 }}
               />
             </div>

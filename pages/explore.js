@@ -217,6 +217,8 @@ export default function Home({ data, data2 }) {
               sx={{
                 fontSize: '1rem',
                 width: '45%',
+                input: { color: 'white' },
+                label: { color: 'white' },
               }}
             />
             <DatePicker
@@ -227,6 +229,8 @@ export default function Home({ data, data2 }) {
               sx={{
                 fontSize: '1rem',
                 width: '45%',
+                input: { color: 'white' },
+                label: { color: 'white' },
               }}
             />
           </div>
