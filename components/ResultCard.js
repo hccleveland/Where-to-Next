@@ -195,7 +195,7 @@ export default function ResultCard(props) {
     const month = dateArr[1];
     const day = dateArr[2];
 
-    const convertedD = new Date(year, month, day).toDateString();
+    const convertedD = new Date(year, parseInt(month) - 1, day).toDateString();
     const convertedDArr = convertedD.split(' ');
 
     return (
