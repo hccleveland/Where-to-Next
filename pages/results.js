@@ -181,7 +181,7 @@ const getDomesticFlights = async (queryData, country_id) => {
   const resCities = await axios.request(citiesOptions);
   let cities = [];
   if (resCities.data.data) {
-    for (let i = 0; i < MAX_RESULTS && i < resCities.data.data.length; i++) {
+    for (let i = 0; cities.length < 4 && i < resCities.data.data.length; i++) {
       let data = resCities.data.data[i];
       const coordinates = await getGeocode(
         data['title'],
@@ -200,7 +200,8 @@ const getDomesticFlights = async (queryData, country_id) => {
       city['oneWay'] = queryData.oneWay;
       city['endDate'] = queryData.endDate;
       city['coordinates'] = coordinates;
-      if (city['price'] < queryData.budget) cities.push(city);
+      if (city['price'] < queryData.budget && city['cityName'] != 'Osaka')
+        cities.push(city);
     }
   }
   return cities;
