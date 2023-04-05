@@ -201,6 +201,7 @@ export default function MenuAppBar() {
                       style={{
                         fontSize: '35px',
                         fontFamily: 'Papyrus',
+                        fontSize: '35px',
                       }}
                     >
                       Achievements
@@ -239,7 +240,7 @@ export default function MenuAppBar() {
                   item
                   xs={2}
                   onClick={login}
-                  style={{ cursor: 'default', textDecoration: 'none' }}
+                  style={{ cursor: 'default', textDecoration: 'none', fontFamily: 'papyrus', fontSize: '35px'}}
                 >
                   Login
                 </Grid>
@@ -257,6 +258,8 @@ export default function MenuAppBar() {
                       cursor: 'default',
                       textDecoration: 'none',
                       color: 'inherit',
+                      fontFamily: 'papyrus',
+                      fontSize: '35px',
                     }}
                     href='/signup'
                   >
