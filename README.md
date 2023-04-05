@@ -3,16 +3,7 @@
 
   <h3 align="center">https://where-to-next-cc.vercel.app </h3>
   <h2 align="center">Where to Next is currently only supported on Desktop browsers.</h2>
-  
-  <p align="center">
-    
-    <br />
-    <a href="https://github.com/Where-to-next/Where-to-next"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/Where-to-next/Where-to-next/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Where-to-next/Where-to-next/issues">Request Feature</a>
+ 
   </p>
 </div>
 
@@ -60,16 +51,11 @@ Best of luck for your upcoming adventure on Where to Next and beyond.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-- [![Next][next.js]][https://nextjs.org/]
-- [![Firebase][firebase.js]][https://firebase.google.com/]
-- [![Firestore][Firestore]][https://firebase.google.com/docs/firestore]
-- [![Vercel][vercel.com]][https://vercel.com/]
-- [![MaterialUI][MaterialUI]][https://mui.com/]
-- [![AWS S3][AWS]][https://aws.amazon.com/s3/]
-- [![Leaflet][Leaflet]][https://leafletjs.com/download.html]
-- [![Skyscanner][Skyscanner]][https://rapidapi.com/3b-data-3b-data-default/api/skyscanner44/]
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
