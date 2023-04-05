@@ -210,15 +210,19 @@ export default function ResultCard(props) {
   };
 
   const addToPlacesVisited = async () => {
-    await db.collection('users').doc(uid).collection('places_visited').add({
-      country: countryNameEnglish,
-      country_id: countryId,
-      city: cityName,
-      coordinates: coordinates,
-      image_url: imageUrl,
-      start_date: startDate,
-      end_date: endDate,
-    });
+    await db
+      .collection('users')
+      .doc(uid)
+      .collection('places_visited')
+      .add({
+        country: countryNameEnglish,
+        country_id: countryId,
+        city: cityName,
+        coordinates: coordinates,
+        image_url: imageUrl,
+        start_date: convertDate(startDate),
+        end_date: convertDate(endDate),
+      });
     getContinentCounter();
     route.push('/profile');
   };

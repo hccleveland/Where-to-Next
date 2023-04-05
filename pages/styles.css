@@ -39,7 +39,7 @@
 /* [1] The container */
 .img-hover-zoom {
   width: 100%; /* set the width of the container */
-  height: 30rem; /* set the height of the container */
+  height: 25rem; /* set the height of the container */
   display: flex; /* use flexbox to center the image */
   justify-content: center; /* center the content horizontally */
   align-items: center; /* center the content vertically */
