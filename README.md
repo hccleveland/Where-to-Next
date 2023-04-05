@@ -1,46 +1,219 @@
-Travel Web App
+<br />
+<div align="center">
 
-Welcome to the travel web app! This app is built using a variety of technologies, including:
+  <h3 align="center">https://where-to-next-cc.vercel.app </h3>
+  <h2 align="center">Where to Next is currently only supported on Desktop browsers.</h2>
+  
+  <p align="center">
+    
+    <br />
+    <a href="https://github.com/Where-to-next/Where-to-next"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Where-to-next/Where-to-next/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Where-to-next/Where-to-next/issues">Request Feature</a>
+  </p>
+</div>
 
-- JavaScript <img src="https://img.icons8.com/color/48/000000/javascript--v1.png"/>
-- Next.js <img src="https://img.icons8.com/color/48/000000/nextjs.png"/>
-- MaterialUI <img src="https://img.icons8.com/color/48/000000/material-ui.png"/>
-- Vercel <img src="https://img.icons8.com/color/48/000000/vercel.png"/>
-- AWS <img src="https://img.icons8.com/color/48/000000/amazon-web-services.png"/>
-- Firebase <img src="https://img.icons8.com/color/48/000000/firebase.png"/>
-- Firestore <img src="https://img.icons8.com/color/48/000000/firebase.png"/>
-- Leaflet <img src="https://img.icons8.com/color/48/000000/leafletjs.png"/>
-- Skyscanner <img src="https://img.icons8.com/color/48/000000/skyscanner.png"/>
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+       <li>
+      <a href="#basic-outline">Basic Outline</a>
+      <ul>
+        <li><a href="#frontend">Frontend</a></li>
+      </ul>
+    </li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-The app allows you to keep track of past trips you've taken, discover new destinations based on your budget, and share highlights from your travels with other users.
+## About The Project
 
-## Adding Past Trips
+[Rage](https://where-to-next-cc.vercel.app)
 
-To add a past trip you've taken, follow these steps:
+Missed traveling? Are you having daydreams of the next time you can get away?
+Many of us are planning on getting back out there in 2023. But sometimes the hardest part of planning for a trip is figuring out where to go.
+Where to Next has a new adventure ready for you. Where to Next is a friendly competition where travelers can earn points and badges by saving and sharing their travel memories. Try the Find Trip option to be given an exciting new locale and set off on your next best journey.
+These are the technologies that make Where to Next go.
+Best of luck for your upcoming adventure on Where to Next and beyond.
 
-1. Click the "Add Trip" button on the homepage.
-2. Enter the details of your trip, including the location, dates, and any notes or memories you want to include.
-3. Click "Save" to add your trip to your list of past travels.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Discovering New Destinations
+### Built With
 
-If you're looking for inspiration for your next trip, use the "Random Destination" feature to discover new places to visit based on your budget and preferred airport. Here's how it works:
+This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-1. Click the "Random Destination" button on the homepage.
-2. Enter your budget and preferred airport.
-3. The app will generate a list of possible destinations within your budget and provide information about each location, such as average weather, popular activities, and travel tips.
+- [![Next][next.js]][https://nextjs.org/]
+- [![Firebase][firebase.js]][https://firebase.google.com/]
+- [![Firestore][Firestore]][https://firebase.google.com/docs/firestore]
+- [![Vercel][vercel.com]][https://vercel.com/]
+- [![MaterialUI][MaterialUI]][https://mui.com/]
+- [![AWS S3][AWS]][https://aws.amazon.com/s3/]
+- [![Leaflet][Leaflet]][https://leafletjs.com/download.html]
+- [![Skyscanner][Skyscanner]][https://rapidapi.com/3b-data-3b-data-default/api/skyscanner44/]
 
-## Adding Highlights
 
-As you travel, you can use the app to keep track of your favorite memories and experiences from each trip. Here's how to add a highlight:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-1. Go to your list of past trips.
-2. Select the trip you want to add a highlight to.
-3. Click "Add Highlight" and enter the details of your experience.
-4. Click "Save" to add the highlight to your trip.
+<!-- GETTING STARTED -->
 
-## Sharing with Other Users
+## Getting Started
 
-Finally, you can share your travel experiences with other users on the app. Other users can view your list of past trips and highlights, but they cannot post comments. To view another user's travels, simply click on their username to access their profile.
+To get a local copy up and running follow these simple steps.
 
-Thank you for using the travel web app! We hope it helps you plan and remember
+### Prerequisites
+
+Each of the following platforms requires an account in order to service the Where to Next app.
+
+- Firebase
+- Vercel
+- AWS S3
+- Skyscanner
+
+After signing up for those accounts, refer to the .env.example to setting up the environment variables for those platforms.
+AWS S3 will require additional setup for an IAM user and S3 bucket.  Please refer to this detailed documentation for setting up AWS S3 - https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-examples.html
+
+
+### Installation
+
+_Below you will find the basics on installation and set up._
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Where-to-next/Where-to-next.git
+   ```
+2. Go to local cloned repository
+   ```sh
+   open terminal at ./Where-to-next
+   npm install
+   ```
+3. Install dependenty packages
+   ```sh
+   npm install --force
+   ```
+4. Build the application
+   ```sh
+   npm run build
+   ```
+5. Setup your .env.local file
+   ```js
+   Add credentials / keys of registered accounts to firebase, aws, and skyscanner
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## Basic Outline
+
+The following is a rough breakdown of the application.
+
+### Frontend
+
+#### Components
+
+Full front end functionality listed here for react
+
+    App → Profile
+    App → AddTrip
+    App → FindTrip
+    App → Achievements
+    App → Sidebar → Home
+    App → Sidebar → Settings
+    App → Sidebar → Logout
+
+#### Account
+
+User will be able to see his/her previously traveled destinations.  Clicking on a destination image will take the user to a personalization page where he/she can upload images of said trip and set highlight.
+
+
+#### AddTrip
+
+User will be able to add a previously traveled destination.
+
+
+### FindTrip
+
+User will be able to set the following criteria in order for Where to Next to generate 4 random destinations for travel:
+- budget
+- departing airport
+- start date
+- return date
+
+
+### Achievements
+
+User will be able to view his/her acquired points and badges.
+
+
+### Home
+
+This is the landing page.  The user will be able to see the top 10 most well-traveled members of this app.  Those top 10 members can be viewed when clicked upon and the user can leave comments for those traveled destinations.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Roadmap
+
+- [ ] Social media integration
+- [ ] captchas for frequent searches
+- [ ] fix autocomplete for airports
+- [ ] likes for comments
+- [ ] Ability to ban users who do not follow community guidelines
+- [ ] Mobile support
+- [ ] Multi-language Support
+
+See the [open issues](https://github.com/Where-to-next/Where-to-next/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Contact
+
+- Harry Cleveland - [@hccleveland](https://github.com/hccleveland) - hcleveland17@gmail.com
+- David Wattellier - [@DavidWattellier](https://github.com/DavidWattellier) - wattellierd@yahoo.fr
+- Kenneth Man - [@kman-cc](https://github.com/kman-cc) - kenneth_man@icloud.com
+- Eric Nicolas - [@ericNull](https://github.com/ericNull) - eric.e.nicolas@gmail.com
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Acknowledgments
+
+It's impossible to add every single resource that helped to make this possible, but below you will find a few.
+
+- [Img Shields](https://shields.io)
+- [GitHub Pages](https://pages.github.com)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
