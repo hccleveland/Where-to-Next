@@ -1,38 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Travel Web App
 
-## Getting Started
+Welcome to the travel web app! This app is built using a variety of technologies, including:
 
-First, run the development server:
+- JavaScript <img src="https://img.icons8.com/color/48/000000/javascript--v1.png"/>
+- Next.js <img src="https://img.icons8.com/color/48/000000/nextjs.png"/>
+- MaterialUI <img src="https://img.icons8.com/color/48/000000/material-ui.png"/>
+- Vercel <img src="https://img.icons8.com/color/48/000000/vercel.png"/>
+- AWS <img src="https://img.icons8.com/color/48/000000/amazon-web-services.png"/>
+- Firebase <img src="https://img.icons8.com/color/48/000000/firebase.png"/>
+- Firestore <img src="https://img.icons8.com/color/48/000000/firebase.png"/>
+- Leaflet <img src="https://img.icons8.com/color/48/000000/leafletjs.png"/>
+- Skyscanner <img src="https://img.icons8.com/color/48/000000/skyscanner.png"/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+The app allows you to keep track of past trips you've taken, discover new destinations based on your budget, and share highlights from your travels with other users.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Adding Past Trips
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+To add a past trip you've taken, follow these steps:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Click the "Add Trip" button on the homepage.
+2. Enter the details of your trip, including the location, dates, and any notes or memories you want to include.
+3. Click "Save" to add your trip to your list of past travels.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Discovering New Destinations
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+If you're looking for inspiration for your next trip, use the "Random Destination" feature to discover new places to visit based on your budget and preferred airport. Here's how it works:
 
-## Learn More
+1. Click the "Random Destination" button on the homepage.
+2. Enter your budget and preferred airport.
+3. The app will generate a list of possible destinations within your budget and provide information about each location, such as average weather, popular activities, and travel tips.
 
-To learn more about Next.js, take a look at the following resources:
+## Adding Highlights
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+As you travel, you can use the app to keep track of your favorite memories and experiences from each trip. Here's how to add a highlight:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Go to your list of past trips.
+2. Select the trip you want to add a highlight to.
+3. Click "Add Highlight" and enter the details of your experience.
+4. Click "Save" to add the highlight to your trip.
 
-## Deploy on Vercel
+## Sharing with Other Users
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Finally, you can share your travel experiences with other users on the app. Other users can view your list of past trips and highlights, but they cannot post comments. To view another user's travels, simply click on their username to access their profile.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Thank you for using the travel web app! We hope it helps you plan and remember
