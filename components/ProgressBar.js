@@ -244,7 +244,7 @@ const ProgressBar = (props) => {
             <span style={labelStyles}>{`${completed}%`}</span>
           </div>
         </div>
-        <div style={{ textAlign: "right", fontSize: '20px' }}>
+        <div style={{ textAlign: "left", fontSize: '20px', paddingLeft: '50px' }}>
           {info === 'helper' ? (
             <>
             <p>You have gathered {point} points</p>
