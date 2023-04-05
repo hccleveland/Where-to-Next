@@ -156,13 +156,13 @@ export default function addTimeline() {
           setShowSearchResult(true);
         }
       }
-      let data = await db
-        .collection('places_went')
-        .where('city', '==', cityValue)
-        .where('country', '==', countryValue)
-        .get();
-      let docs = data.docs;
-      setMadeHighlights(docs);
+      // let data = await db
+      //   .collection('places_went')
+      //   .where('city', '==', cityValue)
+      //   .where('country', '==', countryValue)
+      //   .get();
+      // let docs = data.docs;
+      // setMadeHighlights(docs);
     }
   };
 
@@ -184,7 +184,7 @@ export default function addTimeline() {
                   onChange={() => setOneWay(!oneWay)}
                 />
               }
-              label='One Way'
+              label='Day Trip'
               className='one-way-label'
               style={{ width: '100%' }}
             />
@@ -309,15 +309,6 @@ export default function addTimeline() {
         {showSearchResult && (
           <AddTripCard key={searchResult} time={searchResult} />
         )}
-        {madeHighlights.length > 0 &&
-          madeHighlights.map((doc) => (
-            <div className={styles.highlight_container}>
-              <div>
-                {doc.data().display_name} : {doc.data().highlight}
-              </div>
-              {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
-            </div>
-          ))}
       </div>
 
       <div style={{ display: 'none' }}>
@@ -329,18 +320,6 @@ export default function addTimeline() {
                 <AddTripCard key={searchResult} time={searchResult} />
               </Grid>
             )}
-            <Grid item xs={6}>
-              {madeHighlights.length > 0 &&
-                madeHighlights.map((doc) => (
-                  <div>
-                    <div>
-                      {' '}
-                      {doc.data().display_name} : {doc.data().highlight}
-                    </div>
-                    {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
-                  </div>
-                ))}
-            </Grid>
           </Grid>
         </div>
       </div>

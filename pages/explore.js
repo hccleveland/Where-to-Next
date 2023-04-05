@@ -87,37 +87,34 @@ export default function Home({ data, data2 }) {
   }, []);
 
   useEffect(() => {
-    require('airport-autocomplete-js/dist/index.browser.min.js');
-    const $ = require('jquery/dist/jquery.js');
-
-    const options = {
-      fuse_options: {
-        shouldSort: true,
-        threshold: 0.4,
-        maxPatternLength: 32,
-        keys: [
-          {
-            name: 'IATA',
-            weight: 0.25,
-          },
-          {
-            name: 'name',
-            weight: 0.25,
-          },
-          {
-            name: 'city',
-            weight: 0.5,
-          },
-        ],
-      },
-
-      formatting: `<div class="$(unique-result)"
-        single-result"
-        data-index="$(i)">
-        $(name) $(IATA) - $(city) ,$(country)</div>`,
-    };
-
-    AirportInput('origin', options);
+    // require('airport-autocomplete-js/dist/index.browser.min.js');
+    // const $ = require('jquery/dist/jquery.js');
+    // const options = {
+    //   fuse_options: {
+    //     shouldSort: true,
+    //     threshold: 0.4,
+    //     maxPatternLength: 32,
+    //     keys: [
+    //       {
+    //         name: 'IATA',
+    //         weight: 0.25,
+    //       },
+    //       {
+    //         name: 'name',
+    //         weight: 0.25,
+    //       },
+    //       {
+    //         name: 'city',
+    //         weight: 0.5,
+    //       },
+    //     ],
+    //   },
+    //   formatting: `<div class="$(unique-result)"
+    //     single-result"
+    //     data-index="$(i)">
+    //     $(name) $(IATA) - $(city) ,$(country)</div>`,
+    // };
+    // AirportInput('origin', options);
   }, []);
 
   const formatDate = (date) => {

@@ -195,7 +195,7 @@ export default function ResultCard(props) {
     const month = dateArr[1];
     const day = dateArr[2];
 
-    const convertedD = new Date(year, month, day).toDateString();
+    const convertedD = new Date(year, parseInt(month) - 1, day).toDateString();
     const convertedDArr = convertedD.split(' ');
 
     return (
@@ -210,15 +210,19 @@ export default function ResultCard(props) {
   };
 
   const addToPlacesVisited = async () => {
-    await db.collection('users').doc(uid).collection('places_visited').add({
-      country: countryNameEnglish,
-      country_id: countryId,
-      city: cityName,
-      coordinates: coordinates,
-      image_url: imageUrl,
-      start_date: startDate,
-      end_date: endDate,
-    });
+    await db
+      .collection('users')
+      .doc(uid)
+      .collection('places_visited')
+      .add({
+        country: countryNameEnglish,
+        country_id: countryId,
+        city: cityName,
+        coordinates: coordinates,
+        image_url: imageUrl,
+        start_date: convertDate(startDate),
+        end_date: convertDate(endDate),
+      });
     getContinentCounter();
     route.push('/profile');
   };
