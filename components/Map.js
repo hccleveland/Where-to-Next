@@ -29,10 +29,6 @@ const customIcon = new icon({
 });
 
 const { MapContainer, TileLayer, Marker, Tooltip, GeoJSON } = ReactLeaflet;
-//const { countries } = require('./Countries');
-//console.log("countries",countries)
-
-//Map
 
 export default function Map(props) {
 
@@ -171,9 +167,4 @@ export default function Map(props) {
       </div>
     </>
   );
-}
-/*
-
-
-
-*/
+};

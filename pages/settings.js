@@ -22,7 +22,6 @@ export default function settings() {
   const [displayLastName, setDisplayLastName] = useState('');
   const [displayDisplayName, setDisplayDisplayName] = useState('');
   const [displayAirport, setDisplayAirport] = useState('');
-  // const [password, setPassword] = useState('');
   const [first_name, setFirst_name] = useState(displayFirstName);
   const [last_name, setLast_name] = useState(displayLastName)
   const [display_name, setDisplay_name] = useState(displayDisplayName);
@@ -76,13 +75,6 @@ export default function settings() {
 
   return (
     <div>
-      <br></br>
-      {/* <input
-        name='password'
-        className='password'
-        placeholder='password'
-        onChange={(e) => setPassword(e.target.value)}
-      /> */}
       <br></br>
       {displayFirstName}
       <br></br>

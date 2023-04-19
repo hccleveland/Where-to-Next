@@ -69,10 +69,7 @@ export default function Timeline_card(props) {
       .get();
     let docs = data.docs;
     setMadeComments(docs);
-    // for (const doc of docs) {
-    //  setMadeComments([...madeComments, doc.data()]);
-    //}
-  }
+  };
   async function handleComment(event) {
     setComment(event.target.value);
     if (event.key === 'Enter') {

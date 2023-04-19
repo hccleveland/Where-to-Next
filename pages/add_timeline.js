@@ -156,13 +156,6 @@ export default function addTimeline() {
           setShowSearchResult(true);
         }
       }
-      // let data = await db
-      //   .collection('places_went')
-      //   .where('city', '==', cityValue)
-      //   .where('country', '==', countryValue)
-      //   .get();
-      // let docs = data.docs;
-      // setMadeHighlights(docs);
     }
   };
 
