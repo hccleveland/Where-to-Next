@@ -71,11 +71,4 @@ export default function Ranking(props) {
       </Grid>
     </div>
   );
-}
-
-/*pathname: `/friend/${props.index.name}`,
-     query: {
-       id: props.index.id,
-       points: props.index.points
-     }
-   });*/
+};

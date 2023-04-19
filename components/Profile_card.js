@@ -69,10 +69,6 @@ export default function Profile_card(props) {
       .get();
     let docs = data.docs;
     setMadeComments(docs);
-    //   let docs = data.docs;
-    //   for (const doc of docs) {
-    //   setMadeComments([...madeComments, doc.data()]);
-    // }
   }
 
   async function getUploadedImages() {
@@ -129,8 +125,7 @@ export default function Profile_card(props) {
           display_name: display_name,
           time_stamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
-      //setMadeComments([...madeComments, { comment: comment, display_name: display_name, time_stamp: firebase.firestore.FieldValue.serverTimestamp() }]);
-    }
+    };
   }
 
   return (

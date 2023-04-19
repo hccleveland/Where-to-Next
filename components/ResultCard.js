@@ -141,7 +141,7 @@ export default function ResultCard(props) {
             if ((bucket.id = 'Cheapest')) {
               bucket['destinationIata'] = airport['iata_code'];
               bucket['name'] = airport['name'];
-              // cheapestFlightsAirportArr.push(bucket);
+
               setCheapestFlights([...cheapestFlights, bucket]);
               break;
             }
@@ -150,42 +150,7 @@ export default function ResultCard(props) {
         .catch(function (error) {
           console.error(error);
         });
-    }
-    // if (uid) {
-    //   await db.collection('users').doc(uid).collection('places_visited').add({
-    //     country: countryNameEnglish,
-    //     country_id: countryId,
-    //     city: cityName,
-    //     coordinates: coordinates,
-    //     image_url: imageUrl,
-    //     start_date: startDate,
-    //     end_date: endDate,
-    //   });
-
-    //increment counter OR all entire city
-    // let data = await db
-    //   .collection('places_went')
-    //   .where('country', '==', countryNameEnglish)
-    //   .where('city', '==', cityName)
-    //   .limit(1)
-    //   .get();
-
-    // if (data.docs[0]) {
-    //   await db
-    //     .collection('places_went')
-    //     .doc(data.docs[0].ref.id)
-    //     .update({ counter: firebase.firestore.FieldValue.increment(1) });
-    // } else {
-    //   await db.collection('places_went').add({
-    //     country: countryNameEnglish,
-    //     country_id: countryId,
-    //     city: cityName,
-    //     coordinates: coordinates,
-    //     image_url: imageUrl,
-    //     counter: 1,
-    //   });
-    // }
-    // }
+    };
   };
   const convertDate = (date) => {
     if (!date) return '';
@@ -688,52 +653,4 @@ export default function ResultCard(props) {
         </Typography>
       </Paper>
     </div>
-    // <>
-    //   <Grid item xs={6}>
-    //     <div className='result-card'>
-    //       <div className='img-hover-zoom'>
-    //         <img
-    //           className='result-card-image'
-    //           src={imageUrl.includes('blurry') ? countryImageUrl : imageUrl}
-    //         ></img>
-    //       </div>
-    //       <div className='result-card-desc'>
-    //         {cityName}, {countryNameEnglish}
-    //         <br></br>
-    //         {convertDate(startDate)} {!oneWay && ' - ' + convertDate(endDate)}
-    //         <br></br>From ${Math.floor(price)}
-    //       </div>
-
-    //       {cheapestFlights.map((flight) => {
-    //         return (
-    //           <a
-    //             key={flight.items[0].deeplink}
-    //             onClick={addToPlacesVisited}
-    //             target='_blank'
-    //             rel='noopener noreferrer'
-    //             href={flight.items[0].deeplink.replace(
-    //               'www.skyscanner.net',
-    //               'www.skyscanner.com'
-    //             )}
-    //           >
-    //             ✈️ {originIata} → {flight.destinationIata} - Link to Skyscanner
-    //           </a>
-    //         );
-    //       })}
-    //     </div>
-    //   </Grid>
-    //   <Grid item xs={6}>
-    //     {madeHighlights.length > 0 &&
-    //       madeHighlights.map((doc) => (
-    //         <div>
-    //           <div>
-    //             {' '}
-    //             {doc.data().display_name} : {doc.data().highlight}
-    //           </div>
-    //           {/* <div key={doc.id}> {doc.display_name} : {doc.comment}</div> */}
-    //         </div>
-    //       ))}
-    //   </Grid>
-    // </>
-  );
-}
+  )};
