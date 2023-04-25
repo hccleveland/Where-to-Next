@@ -1,52 +1,47 @@
-# Where to Next?
-===
 
-### Table of Contents
+# Where to Next?
+
+---
+
+## Table of Contents
 1. [About the Project](#about-the-project)
-  - [Built With](#built-with)
+    - [Built With](#built-with)
 2. [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
 3. [Basic Outline](#basic-outline)
-  - [Frontend](#frontend)
+    - [Frontend](#frontend)
 4. [Roadmap](#roadmap)
 5. [Contributing](#contributing)
 6. [Contact](#contact)
 7. [Acknowledgments](#acknowledgments)
 
-## About The Project
+---
 
-[Where to Next?](https://where-to-next-cc.vercel.app)
+## About The Project
 
 **Where to Next? is currently only supported on Desktop browsers.**
 
-Missed traveling? Are you having daydreams of the next time you can get away?
-Many of us are planning on getting back out there in 2023. But sometimes the hardest part of planning for a trip is figuring out where to go.
-Where to Next has a new adventure ready for you. Where to Next is a friendly competition where travelers can earn points and badges by saving and sharing their travel memories. Try the Find Trip option to be given an exciting new locale and set off on your next best journey.
-These are the technologies that make Where to Next go.
+Missed traveling? Are you having daydreams of the next time you can get away?  
+Many of us are planning on getting back out there in 2023. But sometimes the hardest part of planning for a trip is figuring out where to go.  
+Where to Next has a new adventure ready for you. Where to Next is a friendly competition where travelers can earn points and badges by saving and sharing their travel memories. Try the Find Trip option to be given an exciting new locale and set off on your next best journey.  
 Best of luck for your upcoming adventure on Where to Next and beyond.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[(Back to Top)](#where-to-next)
 
-### Built With
-
+## Built With
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
+[(Back to Top)](#where-to-next)
 
 ## Getting Started
+To get a local copy up and running, follow these simple steps:
 
-To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-
+## Prerequisites
 Each of the following platforms requires an account in order to service the Where to Next app.
 
 - Firebase
@@ -54,48 +49,44 @@ Each of the following platforms requires an account in order to service the Wher
 - AWS S3
 - Skyscanner
 
-After signing up for those accounts, refer to the .env.example to setting up the environment variables for those platforms.
+After signing up for these accounts, refer to the `.env.example` to setting up the environment variables for those platforms.
+
 AWS S3 will require additional setup for an IAM user and S3 bucket.  Please refer to this detailed documentation for setting up AWS S3 - https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-examples.html
 
-
-### Installation
-
-_Below you will find the basics on installation and set up._
+## Installation
+*Below you will find the basics on installation and set up.*
 
 1. Clone the repo
-   ```sh
+   ```js
    git clone https://github.com/Where-to-next/Where-to-next.git
    ```
 2. Go to local cloned repository
-   ```sh
+   ```js
    open terminal at ./Where-to-next
    npm install
    ```
 3. Install dependenty packages
-   ```sh
+   ```js
    npm install --force
    ```
 4. Build the application
-   ```sh
+   ```js
    npm run build
    ```
-5. Setup your .env.local file
+5. Setup your `.env.local` file
    ```js
    Add credentials / keys of registered accounts to firebase, aws, and skyscanner
    ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+[(Back to Top)](#where-to-next)
 
 ## Basic Outline
-
 The following is a rough breakdown of the application.
 
-### Frontend
+## Frontend
 
-#### Components
-
-Full front end functionality listed here for react
+### Components
+Full frontend functionality listed here:
 
     App → Profile
     App → AddTrip
@@ -106,79 +97,63 @@ Full front end functionality listed here for react
     App → Sidebar → Logout
 
 #### Account
-
-User will be able to see his/her previously traveled destinations.  Clicking on a destination image will take the user to a personalization page where he/she can upload images of said trip and set highlight.
-
+Users will be able to see their previously traveled destinations.  Clicking on a destination image will take the user to a personalization page where they can upload images of said trip and set highlight.
 
 #### AddTrip
+Users will be able to add a previously-traveled destination.
 
-User will be able to add a previously traveled destination.
+#### FindTrip
+Users will be able to set the following criteria in order for Where to Next to generate 4 random destinations for travel:
+- Travel Budget
+- Departing Airport
+- Start Date
+- Return Date
 
+#### Achievements
+Users will be able to view their acquired points and badges.
 
-### FindTrip
-
-User will be able to set the following criteria in order for Where to Next to generate 4 random destinations for travel:
-- budget
-- departing airport
-- start date
-- return date
-
-
-### Achievements
-
-User will be able to view his/her acquired points and badges.
-
-
-### Home
-
+#### Home
 This is the landing page.  The user will be able to see the top 10 most well-traveled members of this app.  Those top 10 members can be viewed when clicked upon and the user can leave comments for those traveled destinations.
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[(Back to Top)](#where-to-next)
 
 ## Roadmap
+- [ ] Social Media Integration
+- [ ] Captchas for Frequent Searches
+- [ ] Set Autocomplete for Airport IATA Codes
+- [ ] Likes for Comments
+- [ ] Ability to Ban Users Who Do Not Follow Community Guidelines
+- [ ] Mobile Support
+- [ ] Multi-Language Support
 
-- [ ] Social media integration
-- [ ] captchas for frequent searches
-- [ ] fix autocomplete for airports
-- [ ] likes for comments
-- [ ] Ability to ban users who do not follow community guidelines
-- [ ] Mobile support
-- [ ] Multi-language Support
-
-See the [open issues](https://github.com/Where-to-next/Where-to-next/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[(Back to Top)](#where-to-next)
 
 ## Contributing
-
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make **Where to Next?** better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+2. Create Your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit Your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[(Back to Top)](#where-to-next)
 
 ## Contact
+- Harry Cleveland - [@hccleveland](https://github.com/hccleveland)
+- David Wattellier - [@DavidWattellier](https://github.com/DavidWattellier)
+- Kenneth Man - [@kman-cc](https://github.com/kman-cc)
+- Eric Nicolas - [@ericNull](https://github.com/ericNull)
 
-- Harry Cleveland - [@hccleveland](https://github.com/hccleveland) - hcleveland17@gmail.com
-- David Wattellier - [@DavidWattellier](https://github.com/DavidWattellier) - wattellierd@yahoo.fr
-- Kenneth Man - [@kman-cc](https://github.com/kman-cc) - kenneth_man@icloud.com
-- Eric Nicolas - [@ericNull](https://github.com/ericNull) - eric.e.nicolas@gmail.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[(Back to Top)](#where-to-next)
 
 ## Acknowledgments
-
-It's impossible to add every single resource that helped to make this possible, but below you will find a few.
+It's impossible to add every single resource that helped to make **Where to Next?** possible, but below you will find a few.
 
 - [Img Shields](https://shields.io)
 - [GitHub Pages](https://pages.github.com)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[(Back to Top)](#where-to-next)
