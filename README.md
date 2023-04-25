@@ -1,45 +1,24 @@
-<br />
-<div align="center">
+# Where to Next?
+===
 
-  <h3 align="center">https://where-to-next-cc.vercel.app </h3>
-  <h2 align="center">Where to Next is currently only supported on Desktop browsers.</h2>
- 
-  </p>
-</div>
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-       <li>
-      <a href="#basic-outline">Basic Outline</a>
-      <ul>
-        <li><a href="#frontend">Frontend</a></li>
-      </ul>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+### Table of Contents
+1. [About the Project](#about-the-project)
+  - [Built With](#built-with)
+2. [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+3. [Basic Outline](#basic-outline)
+  - [Frontend](#frontend)
+4. [Roadmap](#roadmap)
+5. [Contributing](#contributing)
+6. [Contact](#contact)
+7. [Acknowledgments](#acknowledgments)
 
 ## About The Project
 
-[Rage](https://where-to-next-cc.vercel.app)
+[Where to Next?](https://where-to-next-cc.vercel.app)
+
+**Where to Next? is currently only supported on Desktop browsers.**
 
 Missed traveling? Are you having daydreams of the next time you can get away?
 Many of us are planning on getting back out there in 2023. But sometimes the hardest part of planning for a trip is figuring out where to go.
