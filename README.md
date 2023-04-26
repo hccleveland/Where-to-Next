@@ -1,6 +1,6 @@
 
 # Where to Next?
----
+
 ## Table of Contents
 1. [About the Project](#about-the-project)
     - [Built With](#built-with)
@@ -12,7 +12,7 @@
 5. [Contributing](#contributing)
 6. [Contact](#contact)
 7. [Acknowledgments](#acknowledgments)
----
+
 
 ## About The Project
 Missed traveling? Are you having daydreams of the next time you can get away?
@@ -23,7 +23,7 @@ Where to Next has a new adventure ready for you. Where to Next is a friendly com
 
 Best of luck for your upcoming adventure on Where to Next and beyond.
 
-## Built With
+### Built With
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
@@ -31,7 +31,7 @@ Best of luck for your upcoming adventure on Where to Next and beyond.
 ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
 [Back to Top](#where-to-next)
----
+
 
 ## Basic Outline
 **Where to Next?** is a full-stack web application where travelers can save previous travels, interact with fellow travelers, earn points and badges, and find new destinations based on their budget and availability.
@@ -62,11 +62,12 @@ Achievements displays users' acquired points and badges. They can also see a pro
 - Travel Budget
 - Departing Airport
 - Start Date
-- Return Date
+- Return Date  
+
 Trip options include international or domestic, as well as one-way and return trips.
 
 [Back to Top](#where-to-next)
----
+
 
 ## Getting Started
 **Where to Next? is currently only supported on Desktop browsers.**
@@ -111,7 +112,7 @@ After signing up for these accounts, refer to the `.env.example` to set up the e
    ```
 
 [Back to Top](#where-to-next)
----
+
 
 ## Roadmap
 - [ ] Set Autocomplete for Airport IATA Codes
@@ -123,7 +124,7 @@ After signing up for these accounts, refer to the `.env.example` to set up the e
 - [ ] Multi-Language Support
 
 [Back to Top](#where-to-next)
----
+
 
 ## Contributing
 If you have a suggestion that would make **Where to Next?** better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
@@ -136,7 +137,7 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 [Back to Top](#where-to-next)
----
+
 
 ## Contact
 - **Harry Cleveland** - [@hccleveland](https://github.com/hccleveland)
@@ -144,8 +145,8 @@ Don't forget to give the project a star! Thanks again!
 - **Kenneth Man** - [@kman-cc](https://github.com/kman-cc)
 - **Eric Nicolas** - [@ericNull](https://github.com/ericNull)
 
-[(Back to Top)](#where-to-next)
----
+[Back to Top](#where-to-next)
+
 
 ## Acknowledgments
 It's impossible to add every single resource that helped to make **Where to Next?** possible, but below you will find a few.
@@ -154,4 +155,4 @@ It's impossible to add every single resource that helped to make **Where to Next
 - [GitHub Pages](https://pages.github.com)
 
 [Back to Top](#where-to-next)
----
+
