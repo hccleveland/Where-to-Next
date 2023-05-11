@@ -10,13 +10,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
 
+// Firebase + Firestore Config
 var config = {
-  apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
-  authDomain: 'where-to-next-7bc5f.firebaseapp.com',
-  projectId: 'where-to-next-7bc5f',
-  storageBucket: 'where-to-next-7bc5f.appspot.com',
-  messagingSenderId: '873346829271',
-  appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+  //apiKey: 
+  //authDomain:
+  //projectId:
+  //storageBucket:
+  //messagingSenderId:
+  //appId:
 };
 
 firebase.initializeApp(config);
@@ -72,9 +73,11 @@ export default function ResultCard(props) {
       method: 'GET',
       url: 'https://skyscanner44.p.rapidapi.com/autocomplete',
       params: { query: cityName },
+      
+      // Skyscanner API Config
       headers: {
-        'X-RapidAPI-Key': 'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
-        'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+        //'X-RapidAPI-Key':
+        //'X-RapidAPI-Host':
       },
     };
 
@@ -108,10 +111,11 @@ export default function ResultCard(props) {
             returnDate: endDate,
             currency: 'USD',
           },
+          
+          // Skyscanner API Config
           headers: {
-            'X-RapidAPI-Key':
-              'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
-            'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+            //'X-RapidAPI-Key':
+            //'X-RapidAPI-Host':
           },
         };
       } else {
@@ -125,10 +129,11 @@ export default function ResultCard(props) {
             departureDate: startDate,
             currency: 'USD',
           },
+          
+          // Skyscanner API Config
           headers: {
-            'X-RapidAPI-Key':
-              'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
-            'X-RapidAPI-Host': 'skyscanner44.p.rapidapi.com',
+            //'X-RapidAPI-Key':
+            //'X-RapidAPI-Host':
           },
         };
       }

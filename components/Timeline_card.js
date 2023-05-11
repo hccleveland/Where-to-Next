@@ -12,13 +12,14 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { TextField } from '@material-ui/core';
 
+// Firebase + Firestore Config
 var config = {
-  apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
-  authDomain: 'where-to-next-7bc5f.firebaseapp.com',
-  projectId: 'where-to-next-7bc5f',
-  storageBucket: 'where-to-next-7bc5f.appspot.com',
-  messagingSenderId: '873346829271',
-  appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+  //apiKey: 
+  //authDomain:
+  //projectId:
+  //storageBucket:
+  //messagingSenderId:
+  //appId:
 };
 firebase.initializeApp(config);
 const db = firebase.firestore();
@@ -178,8 +179,9 @@ export default function Timeline_card(props) {
                 onClick={handleImageClick}
               >
                 <img
-                  src={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}?w=164&h=164&fit=crop&auto=format`}
-                  data-fsrc={`https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/${item}`}
+                  // AWS S3 Bucket Sourcing
+                  //src={`  AWS URL  /${item}?w=164&h=164&fit=crop&auto=format`}
+                  //data-fsrc={` AWS URL /${item}`}
                   alt={item.title}
                   loading='lazy'
                 />

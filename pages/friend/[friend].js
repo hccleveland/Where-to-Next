@@ -6,13 +6,14 @@ import Badges from '../../components/Badges';
 import DynamicMap from '@/components/DynamicMap';
 import Grid from '@mui/material/Grid';
 
+// Firebase + Firestore Config
 var config = {
-  apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
-  authDomain: 'where-to-next-7bc5f.firebaseapp.com',
-  projectId: 'where-to-next-7bc5f',
-  storageBucket: 'where-to-next-7bc5f.appspot.com',
-  messagingSenderId: '873346829271',
-  appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+  //apiKey: 
+  //authDomain:
+  //projectId:
+  //storageBucket:
+  //messagingSenderId:
+  //appId:
 };
 
 firebase.initializeApp(config);

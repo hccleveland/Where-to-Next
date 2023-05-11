@@ -42,9 +42,11 @@ export async function getServerSideProps({ query }) {
       countryCode: 'US',
       market: 'en-US',
     },
+     
+    // Skyscanner API Config
     headers: {
-      'X-RapidAPI-Key': 'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
-      'X-RapidAPI-Host': 'skyscanner50.p.rapidapi.com',
+      //'X-RapidAPI-Key':
+      //'X-RapidAPI-Host':
     },
   };
 
@@ -55,7 +57,7 @@ export async function getServerSideProps({ query }) {
 
   let maxNumberOfCountries = countriesArray.length - 1;
   let budget = queryData.budget || 2000;
-  //pick 5 random countries - max tries 20x
+  //pick 4 random countries - max tries 20x
   for (let i = 0; i < 20; i++) {
     if (countries.length >= MAX_RESULTS) break;
     populateSearchResults(
@@ -81,9 +83,11 @@ export async function getServerSideProps({ query }) {
         countryCode: 'US',
         market: 'en-US',
       },
+       
+      // Skyscanner API Config
       headers: {
-        'X-RapidAPI-Key': 'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
-        'X-RapidAPI-Host': 'skyscanner50.p.rapidapi.com',
+        //'X-RapidAPI-Key':
+        //'X-RapidAPI-Host':
       },
     };
 
@@ -172,9 +176,11 @@ const getDomesticFlights = async (queryData, country_id) => {
       countryCode: 'US',
       market: 'en-US',
     },
+    
+    // Skyscanner API Config
     headers: {
-      'X-RapidAPI-Key': 'e77ffff0afmshcda39cd1eba7b9cp119345jsna1e0f891f377',
-      'X-RapidAPI-Host': 'skyscanner50.p.rapidapi.com',
+      //'X-RapidAPI-Key':
+      //'X-RapidAPI-Host':
     },
   };
 

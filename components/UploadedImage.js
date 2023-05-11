@@ -5,7 +5,7 @@ export default function UploadedImage(props) {
     <div>
       <img
         src={
-          'https://wheretonexts3bucket.s3.ap-northeast-1.amazonaws.com/' +
+          //' AWS URL ' +
           props.imageUrl
         }
       ></img>
