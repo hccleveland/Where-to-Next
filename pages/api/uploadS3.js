@@ -3,23 +3,25 @@ import axios from 'axios';
 import firebase from 'firebase/compat/app';
 import { updateDoc } from 'firebase/firestore';
 import 'firebase/compat/firestore';
+// Firebase + Firestore Config
 var fbConfig = {
-  apiKey: 'AIzaSyCChl_1U6qI2je2kdt4FVTvboLFcIecjgE',
-  authDomain: 'where-to-next-7bc5f.firebaseapp.com',
-  projectId: 'where-to-next-7bc5f',
-  storageBucket: 'where-to-next-7bc5f.appspot.com',
-  messagingSenderId: '873346829271',
-  appId: '1:873346829271:web:0f34484e5b41e6e35ed992',
+  //apiKey: 
+  //authDomain:
+  //projectId:
+  //storageBucket:
+  //messagingSenderId:
+  //appId:
 };
 
 firebase.initializeApp(fbConfig);
 const db = firebase.firestore();
 
+// AWS S3 Config
 const s3 = new S3({
-  region: 'ap-northeast-1',
-  accessKeyId: 'AKIA3BKYZCKX3QUOCDW5',
-  secretAccessKey: '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',
-  signatureVersion: 'v4',
+  //region:
+  //accessKeyId:
+  //secretAccessKey:
+  //signatureVersion:
 });
 
 export default async function aws(file, uid, docid) {
@@ -27,7 +29,7 @@ export default async function aws(file, uid, docid) {
 
   try {
     const fileParams = {
-      Bucket: 'wheretonexts3bucket',
+      //Bucket: ' AWS S3 Bucket ',
       Key: fullFileName,
       Expires: 600,
       ContentType: file.type,
